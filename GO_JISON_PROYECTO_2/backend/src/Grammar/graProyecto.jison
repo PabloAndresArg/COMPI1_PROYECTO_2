@@ -141,12 +141,12 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 
 INICIO :  LISTA_IMPORTE LISTA_CLASES EOF {$$ = new Tree($1); return $$;}
        |  LISTA_CLASES EOF {$$ = new Tree($1); return $$;}
-       | EOF {$$ = new Tree($1); return $$;}
+       |  LISTA_IMPORTE EOF {console.log("solo vienen importes en ese archivo");}
+       |  EOF {$$ = new Tree($1); return $$;}
        ;
 
 LISTA_IMPORTE: LISTA_IMPORTE IMPORTE
       	 | IMPORTE 
-        | epsilon 
         ; 
 
 IMPORTE: 'import' 'id' ';'   {console.log("venia un importe");}

@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="./codemirror//lib//codemirror.css">
         <link rel="stylesheet" href="./codemirror//theme//eclipse.css">
         <script src="./codemirror/mode/clike/clike.js"></script>
-        <script src="./js/pablo.js"></script>
+        
+    <script src="./MisScripts/comunicar.js"></script>
         <title>201800464</title>
     </head>
 
@@ -35,7 +36,7 @@
                 </div>
             </body>
         </div>
-    </body>
+   
    
     <div class="row">
           
@@ -46,12 +47,32 @@
 
 
     </div>
-    
-    <button id="analizarJAVA"  >
+    <button onclick="COMUNICAR_NODE();"  id="analizarJAVA" >
         <i class="fa fa-code" aria-hidden="true">ANALIZAR</i>
-        
       </button>
+
+      <button onclick="SALUDAR()">Click me</button>
   
-   
+    </body>
+
+    <script>
+    function COMUNICAR_NODE() {
+    // comunicar        http://localhost:3000/comunicar/
+    
+    var texto = document.getElementById("entrada_copia").value;
+    console.log(texto);
+
+    var url = 'http://localhost:3000/comunicar/';
+
+    $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
+        if (status.toString() == "success") {
+            alert("El resultado es: " + data.toString());
+        } else {
+            alert("Error estado de conexion:" + status);
+        }
+    });
+    console.log("OK LLAMANDO AL METODO");
+}
+    </script>
 
 </html>

@@ -8,7 +8,7 @@ const parser = require('./Grammar/Grammar.js');
 const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON 
 const cors = require('cors');
 const app = express();
-const port = 9000;
+const port = 3000;
 app.use(cors());
 
 app.use(express.static(__dirname + '/public'));
@@ -127,3 +127,12 @@ app.post('/analizarYO', (req, res) => {
   });
 });
 
+
+
+
+app.post('/comunicar/', function (req, res) {
+  var entrada1=req.body.text1;
+  var entrada2 = req.body.text2;
+  console.log("Respondiendo a la peticion: " + entrada1+" ENTRADA2 " +entrada2);
+  res.send(" CERO COPIAS MUY BIEN :) ,  VAMOS CON TODO :v");
+});
