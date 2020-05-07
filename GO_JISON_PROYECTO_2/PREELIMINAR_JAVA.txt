@@ -1,0 +1,256 @@
+// GRAMATICA ASCENDENTE 
+clases ya 
+imports ya 
+imprimir ya 
+do while ya
+while ya
+if ya
+expreison NO 
+condicion ya 
+for ya 
+switch ya 
+|asignacionSimple			  // YA 
+declaracion de variables adentro de metodos //YA 
+
+SentenciaImprime -> 'System' "." "out" "." OPCIONiMPRIME  "(" expresion' ")" ";"
+OPCIONiMPRIME-> println
+			 | print 
+
+INICIO :  LISTA_IMPORTE LISTA_CLASES EOF
+       | EOF
+       ;
+
+LISTA_IMPORTE: LISTA_IMPORTE IMPORTE
+      	 | IMPORTE 
+         ; 
+
+IMPORTE: 'import' 'id' ';'   {console.log("venia un importe");}
+       ;
+       
+LISTA_CLASES: LISTA_CLASES SENTENCIA_CLASE
+            | SENTENCIA_CLASE
+            ;
+
+SENTENCIA_CLASE:'class' 'id' '{' BLOQUE_DECLARACIONES '}'
+               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
+               ;
+
+
+
+
+BLOQUE_DECLARACIONES:
+                    |
+                    ;
+
+
+
+
+Instrucciones -> Instrucciones Instruccion
+			   | Instruccion
+
+sentencia_clase lista_clasesP  "sharp"
+lista_clasesP -> sentencia_clase lista_clasesP
+				| epsilon
+
+sentencia_clase -> "P_Class" "ID" "{" Lista_Declaraciones_metFunVar   "}"
+
+Lista_Declaraciones_metFunVar-> Declaracion Lista_Declaraciones_metFunVarP
+								|epsilon // puede venir solo la clase sin ninguna declaracion 
+Lista_Declaraciones_metFunVarP-> Declaracion Lista_Declaraciones_metFunVarP
+								| epsilon
+							   
+Lista_Declaraciones_metFunVar-> Lista_Declaraciones_metFunVar declaracion
+								|epsilon 
+
+Lista_inst -> Instruccion Lista_inst'
+Lista_inst'-> Instruccion Lista_inst'
+			|epsilon
+
+
+Instruccion->  DECLARACION_ADENTRO_DE_METODOS_FUNCIONES             // YA
+ 			  |Sentencia_while			  // YA 
+ 			  |Sentencia_for			  //YA
+ 			  |SentenciaImprime		      // YA 
+ 			  |Sentencia_if				  // YA 
+ 			  |SentenciaSwitch_case
+ 			  |asignacionSimple			  // YA 
+			  |Sentencia_do_while		  // YA
+			  |sentencia_llama_metodo     //NO SE PROGRAMAN YA INCLUIDAS EN PRODUCCION  asignacionSimple 
+			  |opcionMetodoFuncion     //NO SE PROGRAMAN YA INCLUIDAS EN PRODUCCION  topa Declaracion 
+			  |epsilon
+				// solo puede ser usadas en ciertos casos  seran Instruccion pero que tendran una condicion bool 
+			  |Sentencia_return_funciones
+			  |Sentencia_continue
+			  |sentencia_break
+
+
+// un sentencia_llama_metodo  sera considerado como una expresion 
+
+
+ListaIns_entreLLaves-> "{" Lista_inst "}"
+
+
+lista_parametros -> ","  Tipo ID  lista_parametros
+			| epsilon
+
+
+
+DECLARACION_ADENTRO_DE_METODOS_FUNCIONES-> tipo ID DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP
+										
+DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP -> Lista_ids asignacion ";"
+			 
+
+
+// en el void activo la bool de metodo 
+Declaracion-> p_res_void ID  "(" opcionMetodoFuncion
+			| tipo ID DeclaracionP
+
+// activo bool de funcion 
+DeclaracionP ->"(" opcionMetodoFuncion
+			  |Lista_ids asignacion ";"
+
+opcionMetodoFuncion-> Tipo ID  lista_parametros ")" "{" Lista_inst "}"
+					| ")" "{" Lista_inst "}"
+
+
+Lista_ids-> "," ID  lista_ids
+			| epsilon
+
+asignacion'-> "=" expresion 
+			| epsilon 
+
+
+
+asignacionSimple -> ID OpcionAsignacion
+OpcionAsignacion->  "="  expresion ";"
+				  | "(" sentencia_llama_metodo ";"
+
+
+
+
+
+
+sentencia_break-> p_break ";"
+
+Sentencia_do_while-> p_res_do ListaIns_entreLLaves  palabra_while "(" lista_expresiones_condicionales ")" ";"
+
+
+sentencia_continue-> p_res_continue	";"
+
+
+Sentencia_return_funciones-> p_res_return expresion ";"
+Sentencia_return_metodos-> p_res_return ";"
+
+
+
+
+
+Sentencia_if -> P_if "(" lista_expresiones_condicionales ")" ListaIns_entreLLaves else'
+
+else'-> P_else multiplesIf
+		|epsilon
+multiplesIf -> |  ListaIns_entreLLaves
+ 			   | sentencia_if
+		    
+
+Sentencia_while -> P_while "(" lista_expresiones_condicionales ")" ListaIns_entreLLaves
+
+Sentencia_for -> P_for "(" declaracionFOR ";" lista_expresiones_condicionales ";" ID DecrementoIncremento")" ListaIns_entreLLaves
+
+DecrementoIncremento -> "++"
+					   |"--"
+
+declaracionFOR -> Tipo ID "=" expresion 
+				| id "=" expresion
+
+
+
+
+
+lista_expresiones_condicionales -> expresion ListaExpresionesCondicionalesP
+ListaExpresionesCondicionalesP -> "&&"  expresion ListaExpresionesCondicionalesP
+								| "||"  expresion ListaExpresionesCondicionalesP
+								| epsilon
+Tipo -> Int 
+		|double 
+		|Char 
+		|String 
+		|Bool
+
+
+
+
+
+
+
+SentenciaSwitch_case -> P_switch "(" ID ")" "{"  ListaCases  Default'   "}"
+
+ListaCases -> case listaCase'
+listaCase' -> case listaCase'
+			|epsilon
+
+caseP ->p_case opcionCase ":" Lista_inst  sentencia_break
+
+OpcionBreak-> p_break ";"  // PREGUNTAR 
+			| epsilon
+
+OpcionCase->  Num
+			| cadena
+			| caracter
+			// ver si se puede bool tambien 
+
+Default' -> P_default ":" Lista_inst  p_break ";"
+		|epsilon
+
+
+
+Expresion->E  simboloComparacionOpcional 
+
+ simboloComparacionOpcional  ->  ==  E  
+							 | > E
+ 							 | < E
+							 | <= E
+ 							 | >= E
+ 							 | != E
+ 							 | Epsilon
+
+
+
+
+E-> TE'
+E'->+TE'
+ |-TE'
+ | Epsilon
+T-> FT'
+T'->*FT'
+ | / FT'
+ |Epsilon
+F-> Decimales
+ | Cadena
+ | ID ExpresionMetodo
+ | true
+ | false
+ | Numero
+ | caracter
+ | !E
+ | (Expresion)
+
+ExpresionMetodo -> "(" sentencia_llama_metodo 
+					| epsilon
+
+
+sentencia_llama_metodo -> ListaExpresiones ")"
+					    | ")" 
+
+
+
+sentencia_llama_metodoDEC -> Tipo ID  lista_parametros ")" 
+					| ")" 
+
+
+ListaExpresiones -> expresion Lista_expresionP
+Lista_expresionP -> "," expresion Lista_expresionP
+		   			|epsilon 
+
+lista_parametros -> ","  Tipo ID  lista_parametros
+			      | epsilon
