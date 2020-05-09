@@ -23,10 +23,11 @@
 
 %lex
 %options case-sensitive
+no  ([\"]*)
 entero [0-9]+
 decimal [0-9]+("."[0-9]+)
-stringliteral (\"[^"]*\")                  // FALTA ARREGLAR EL CASO DE COMILLAS ADENTRO DE COMILLAS 
-caracter (\'[^"]\')
+caracter (\'[^☼]\')
+stringliteral (\"[^☼]*[\\"]*\")                  // FALTA ARREGLAR EL CASO DE COMILLAS ADENTRO DE COMILLAS 
 
 
 id ([a-zA-Z_])[a-zA-Z0-9_]*
@@ -48,7 +49,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 
 {decimal}             return 'decimal'
 {entero}              {;return 'entero'} 
-{stringliteral}       return 'STRING_LITERAL'
+{stringliteral}       {console.log("string LITERAL....");return 'STRING_LITERAL'}
 {comentarioBloque}    {console.log("comBloque reconocido");return 'comentarioBloque'}
 {comentarioLinea}     {console.log("comLinea reconocido"); return 'comentarioLinea'}
 ":"                   return ':'
