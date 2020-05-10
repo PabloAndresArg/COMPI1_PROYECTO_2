@@ -22,6 +22,7 @@ export class Exception{
     }
 
     toString(){
+        // retorna el string del error 
         return `${this.type} ${this.description} ${this.line} ${this.column}`;
     }
 }
