@@ -117,8 +117,8 @@ app.post('/analizarYO', (req, res) => {
    
   
   });
-  console.log("end------------");
-  console.log(".");
+  console.log("---------end------------");
+  console.log(tree.instructions[1].contenido[0]);
 
   res.render('views/index', {
     entrada,
@@ -138,4 +138,5 @@ app.post('/comunicar/', function (req, res) {
   console.log(tree);
 
   res.send( tree );
+ 
 });

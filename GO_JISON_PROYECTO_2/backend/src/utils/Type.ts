@@ -13,6 +13,7 @@ export enum types {
  */
 export class Type{
     type : types;
+    typeString: string; 
 
     /**
      * 
@@ -22,6 +23,7 @@ export class Type{
      */
     constructor(type: types){
         this.type = type;
+        this.typeString = this.toString(); 
     }
 
     toString(){

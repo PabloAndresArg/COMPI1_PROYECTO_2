@@ -29,6 +29,9 @@
     const {Incre_decre} = require('../Instrucciones/incre_decre');
     const {For} = require('../Instrucciones/For');
     const {Llamada_metodo} = require('../Instrucciones/Llamada_metodo');
+
+    const {Declaracion_adentro_de_metodos_funciones} = require('../Otros/Declaracion_adentro_de_metodos_funciones');
+
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -350,28 +353,38 @@ LISTA_EXPRESIONES_LLAMADA_METODOP:LISTA_EXPRESIONES_LLAMADA_METODOP ',' EXPRESIO
                                  ;
 
 
-DECLARACION_ADENTRO_DE_METODOS_FUNCIONES: TIPO 'id' DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP
+DECLARACION_ADENTRO_DE_METODOS_FUNCIONES: TIPO LISTA_IDS ASIGNACION { $$ = new Declaracion_adentro_de_metodos_funciones($1,$2,$3 ,this._$.first_line , this._$.first_column ); console.log("dec adentro de metodos");}
                                         ;
 
-DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP: LISTA_IDS ASIGNACION 
-                                         ;        
-LISTA_IDS:',' 'id' LISTA_IDS
-         |{}
+/*
+DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP: LISTA_IDS ASIGNACION {$$ = new Declaracion_adentro_de_metodos_funcionesP($1,$2);}
+                                         ;     
+*/   
+
+LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
+         | id  { $$ = [$1]; }
          ; 
 
+         /*
+         
+INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
+              | INSTRUCCION               { $$ = [$1]; }
+         
+         */
 
-ASIGNACION: '=' EXPRESION ';'
-          | ';'
+
+ASIGNACION: '=' EXPRESION ';' {$$ = $2}
+          | ';' {$$ = [];}
           ;
 
 
 
 OPCION_ID_MAIN: 'main'  {$$ = $1}
-              | 'id'    {$$ = $1}
+              | id    {$$ = $1}
               ;
 
 DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new Declaracion_ambito_clase($1, $2 , $4 ,  this._$.first_line , this._$.first_column);}
-                        | TIPO 'id' DECLARACION_AMBITO_CLASEP
+                        | TIPO id DECLARACION_AMBITO_CLASEP
                         ; 
 
 DECLARACION_AMBITO_CLASEP: '(' OPCION_METODO_FUNCION   {console.log("funcion");}

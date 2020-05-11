@@ -1,2 +1,2 @@
-# Interprete-Jison
-Intérprete para la conferencia de OLC1
+# SERVER NODE
+npm install , npm run dev 
