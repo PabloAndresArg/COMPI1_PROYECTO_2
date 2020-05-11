@@ -16,7 +16,7 @@
     const {Excepcion} = require('../utils/Exception');
     const {Type, types} = require('../utils/Type');
     const {Tree} = require('../Simbols/Tree');
-    const {tacos} = require('../Expresiones/tacos');
+  
     const {Importe} = require('../Otros/Importe');
     const {ClaseInstruccion} = require('../Otros/ClaseInstruccion');
     const {Inicio} = require('../Otros/Inicio');
@@ -25,7 +25,10 @@
     const {Return_funcion} = require('../Instrucciones/Return_funcion');
     const {Sentencia_imprime} = require('../Instrucciones/Sentencia_imprime');
     const {Opcion_metodo_funcion} = require('../Otros/Opcion_metodo_funcion');
-
+    const {Do_while} = require('../Instrucciones/Do_while');
+    const {Incre_decre} = require('../Instrucciones/incre_decre');
+    const {For} = require('../Instrucciones/For');
+    const {Llamada_metodo} = require('../Instrucciones/Llamada_metodo');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -66,9 +69,9 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 ":"                   return ':'
 "/"                   return '/'
 ";"                   return ';'
-"--"                  {console.log("decremento");return 'decremento'}
+"--"                  return 'decremento'
 "-"                   return '-'
-"++"                 {console.log("incremento"); return 'incremento'}
+"++"                  return 'incremento'
 "+"                   return '+'
 "*"                   return '*'
 "^"                   return '^'
@@ -150,10 +153,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 *JISON ACEPTA AMBIGUEDAD 
 *LA GRAMATICA TIENE QUE SER ASCENDENTE 
 */
-/*
-INICIO : INSTRUCCIONES EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
-;
-*/
+
 
 
 INICIO : LISTA_IMPORTES_CLASES EOF {$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
@@ -175,7 +175,7 @@ LISTA_CLASES: LISTA_CLASES SENTENCIA_CLASE{ $1.push($2); $$ = $1; }
 
 
 
-IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, this._$.first_column); console.log('TOKEN:' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);}
+IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, this._$.first_column);}
        ;
        
 //        BLOQUE_DECLARACIONES_METFUNVAR                       
@@ -227,18 +227,18 @@ TIPO : 'int' {$$ = new Type(types.INT); console.log("TIPO INT"); }
      ;
 
 
-SENTENCIA_FOR:'for' '(' DEC_for ';' EXPRESION ';' INCRE_DECRE ')' BLOQUE_INSTRUCCIONES {console.log("sentencia_for");}
+SENTENCIA_FOR:'for' '(' DEC_for ';' EXPRESION ';' INCRE_DECRE ')' BLOQUE_INSTRUCCIONES {$$ = new For($3, $5,$7 , $9 , this._$.first_line , this._$.first_column); }
              ;
 
-DEC_for: TIPO 'id' '=' EXPRESION
-       | 'id' '=' EXPRESION
+DEC_for: TIPO 'id' '=' EXPRESION {$$ = new Declaracion($1 , $2 ,$4 , this._$.first_line , this._$.first_column );}
+       | 'id' '=' EXPRESION {$$ = new  Asignacion($1 , $3 , this._$.first_line , this._$.first_column ) ; }
        ;
-INCRE_DECRE: 'id' 'incremento'  {console.log("incre_decre");}
-           | 'id' 'decremento' {console.log("incre_decre");}
+INCRE_DECRE: 'id' 'incremento'  {$$ = new Incre_decre($1, "++", this._$.first_line , this._$.first_column ) ; console.log("incremento");}
+           | 'id' 'decremento' {$$ = new Incre_decre($1, "--", this._$.first_line , this._$.first_column ) ;  console.log("decremento");}
            ;
 
 
-DOWHILE: 'do' BLOQUE_INSTRUCCIONES 'while' CONDICION ';'
+DOWHILE: 'do' BLOQUE_INSTRUCCIONES 'while' CONDICION ';' {$$ = new Do_while($4 ,$2 , this._$.first_line , this._$.first_column );}
        ;
 
 SENTENCIAIMPRIME: 'System' '.' 'out' '.'  OPCIONIMPRIME '(' EXPRESION ')' ';' { $$ = new Sentencia_imprime($5,$7, this._$.first_line, this._$.first_column);}
@@ -289,7 +289,7 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, this._$.first_line, this._$.first_column); }
           | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, this._$.first_line, this._$.first_column); }
           | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), this._$.first_line, this._$.first_column); }
-          | id EXPRESION_METODO		    { $$ = new Identificador($1, this._$.first_line, this._$.first_column); }
+          | EXPRESION_METODO		    {}
           | caracter                          { $$ = new Primitive(new Type(types.CHAR), $1.replace(/\'/g,""), this._$.first_line, this._$.first_column); }
           | entero                            { $$ = new Primitive(new Type(types.INT), Number($1) , this._$.first_line, this._$.first_column); }
           | '(' EXPRESION ')'		    { $$ = $2; }
@@ -299,7 +299,7 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
 SENTENCIA_SWITCH: 'switch' '(' EXPRESION ')' BLOQUE_CASES
                 ;
               
-BLOQUE_CASES:  '{' LISTACASES OPCIONDEFAULT '}'                      {$$ = $2;}    
+BLOQUE_CASES:  '{' LISTACASES OPCIONDEFAULT '}' {$$ = $2;}    
             | '{' '}'    {$$ = [];}
             ;
         
@@ -313,30 +313,34 @@ LISTACASES: LISTACASES CASES_P
 CASES_P :'case' EXPRESION ':' BLOQUEINST_CON_OPCION_VACIA SENTENCIA_BREAK
         ;
 
-SENTENCIA_BREAK: 'break' ';'
+SENTENCIA_BREAK: 'break' ';'  {$$ = new Break(this._$.first_line, this._$.first_column) ;}
                ;
 
-BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONES
-                            | {}
+BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONES {$$=$1;}
+                            | {$$=[];}
                             ;
 
-
-ASIGNACION_SIMPLE: 'id' OPCION_ASIGNACION
+/* PUEDE SER UNA ASIGNACION O PUEDE SER UNA LLAMADA DE METODO */
+ASIGNACION_SIMPLE: id '=' EXPRESION ';'  {$$ = new Asignacion($1, $3,this._$.first_line, this._$.first_column); ;console.log("jeje simple asignacion")}
+                  |id '(' LISTA_EXPRESIONES_LLAMADA_METODO ')' ';'  {$$ = new Llamada_metodo($1 ,$3, this._$.first_line, this._$.first_column);console.log("call metodo")}
+                  |id '(' ')' ';'     {$$ = new Llamada_metodo($1 ,[], this._$.first_line, this._$.first_column); console.log("NO LLEVA PARAMAETTROS");}
                  ;
 
-
+/*
 OPCION_ASIGNACION: '=' EXPRESION ';'
-                 | '(' SENTENCIA_LLAMA_METODO ';'  
-                 ;
+                 | '(' LISTA_EXPRESIONES_LLAMADA_METODO ')' ';'   {console.log("lleva_parametros")}
+                 | ')' ';'                                   {console.log("NO LLEVA PARAMAETTROS")}
+                 ;*/
 
-EXPRESION_METODO: '(' SENTENCIA_LLAMA_METODO 
-                | {}
+EXPRESION_METODO: id '(' LISTA_EXPRESIONES_LLAMADA_METODO ')'  {$$ = new Llamada_metodo($1 ,$3, this._$.first_line, this._$.first_column);console.log("SI lleva parametros")}
+                | id '(' ')'     {$$ = new Llamada_metodo($1 ,[], this._$.first_line, this._$.first_column); console.log("NO LLEVA PARAMAETTROS");}
+                | id  { $$ = new Identificador($1, this._$.first_line, this._$.first_column); ;console.log("ID SIMPLE ")}
                 ;
 
-
-SENTENCIA_LLAMA_METODO : LISTA_EXPRESIONES_LLAMADA_METODO ')'
-		          | ')'
-                        ;
+/*
+SENTENCIA_LLAMA_METODO : LISTA_EXPRESIONES_LLAMADA_METODO ')'   {console.log("lleva_parametros")}
+		          | ')'                                   {console.log("NO LLEVA PARAMAETTROS")}
+                        ;*/
 
 LISTA_EXPRESIONES_LLAMADA_METODO :EXPRESION  LISTA_EXPRESIONES_LLAMADA_METODOP 
                                  ;

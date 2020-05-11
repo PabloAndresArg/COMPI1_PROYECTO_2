@@ -132,16 +132,10 @@ app.post('/analizarYO', (req, res) => {
 
 app.post('/comunicar/', function (req, res) {
 
-  Exception.errArray = []; // limpio mi lista de errores 
-  Exception.errArray.push(new Exception("LEXICO"," POR QUE SI :v ",0,0));
-  console.log(Exception.errArray[0].type+" "+Exception.errArray[0].description )
-  Exception.errArray.push(new Exception("d3"," ño :v ",0,0)); 
-  console.log(Exception.errArray[1].type+" "+Exception.errArray[0].description )
   var entrada1=req.body.text1;
   var entrada2 = req.body.text2;
   const tree = MyParser_300445.parse(entrada1); 
- // console.log("entra al arbol:"+ entrada);
- const tabla = new Table(null);
- console.log(tree);
-  res.send( Exception.errArray );
+  console.log(tree);
+
+  res.send( tree );
 });
