@@ -28,6 +28,7 @@ export class Relational extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         const LeftResult = this.leftOperator.execute(table, tree);
         if (LeftResult instanceof Exception) {
             return LeftResult;
@@ -114,6 +115,7 @@ export class Relational extends Node {
             tree.excepciones.push(error);
             tree.console.push(error.toString());
             return error;
-        }
+        
+        }*/
     }
 }

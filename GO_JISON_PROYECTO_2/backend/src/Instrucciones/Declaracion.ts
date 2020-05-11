@@ -30,6 +30,7 @@ export class Declaracion extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         const result = this.value.execute(table, tree);
         if (result instanceof Exception) {
             return result;
@@ -55,5 +56,6 @@ export class Declaracion extends Node {
             tree.console.push(error.toString());
         }
         return null;
+        */
     }
 }

@@ -13,8 +13,9 @@ export class Tree {
      * @param instructions AST generado por la gramatica
      */
     constructor(instructions: Array<Node>) {
-        console.log("new ARBOL ATS :v");
+        console.log(" /// SE GENERO EL ARBOL ATS  ///");
         this.instructions = instructions;
+       
         this.excepciones = new Array<Exception>();
         this.console = new Array<String>();
     }

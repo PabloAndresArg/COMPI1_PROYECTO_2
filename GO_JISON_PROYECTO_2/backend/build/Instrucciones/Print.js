@@ -18,9 +18,11 @@ class Print extends Node_1.Node {
         this.expression = expression;
     }
     execute(table, tree) {
+        /*
         const value = this.expression.execute(table, tree);
         tree.console.push(value);
         return null;
+        */
     }
 }
 exports.Print = Print;

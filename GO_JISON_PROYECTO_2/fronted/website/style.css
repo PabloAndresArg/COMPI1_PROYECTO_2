@@ -1,0 +1,19 @@
+body{
+    color: white;
+
+    background-color: black;
+}
+
+.tabl{
+    background-color: black;
+    text-align : center;
+    FONT-SIZE: 18px;
+    FONT-FAMILY: Arial;
+    color:white;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.tituloErr{
+    text-align: center;
+    color: deepskyblue;
+}

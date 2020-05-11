@@ -28,6 +28,7 @@ export class Asignacion extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         const result = this.value.execute(table, tree);
         if (result instanceof Exception) {
             return result;
@@ -56,5 +57,6 @@ export class Asignacion extends Node {
 
         variable.value = result;
         return null;
+        */
     }
 }

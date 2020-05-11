@@ -22,6 +22,7 @@ export class Identificador extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         let variable: Simbol;
         variable = table.getVariable(this.identifier);
         if (variable == null) {
@@ -34,5 +35,7 @@ export class Identificador extends Node {
         }
         this.type = variable.type;
         return variable.value;
+        */
     }
+    
 }

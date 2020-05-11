@@ -29,6 +29,8 @@ export class Primitive extends Node{
      * @param tree Arbol de instrucciones y excepciones
      */
     execute(table: Table, tree: Tree) {
+    /*
         return this.value;
+        */
     }
 }

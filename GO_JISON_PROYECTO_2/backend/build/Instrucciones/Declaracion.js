@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Node_1 = require("../Abstract/Node");
-const Exception_1 = require("../utils/Exception");
-const Simbol_1 = require("../Simbols/Simbol");
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
  */
@@ -21,25 +19,33 @@ class Declaracion extends Node_1.Node {
         this.value = value;
     }
     execute(table, tree) {
+        /*
         const result = this.value.execute(table, tree);
-        if (result instanceof Exception_1.Exception) {
+        if (result instanceof Exception) {
             return result;
         }
+
         if (this.type.type != this.value.type.type) {
-            const error = new Exception_1.Exception('Semantico', `No se puede declarar la variable porque los tipos no coinciden.`, this.line, this.column);
+            const error = new Exception('Semantico',
+                `No se puede declarar la variable porque los tipos no coinciden.`,
+                this.line, this.column);
             tree.excepciones.push(error);
             tree.console.push(error.toString());
             return error;
         }
-        let simbol;
-        simbol = new Simbol_1.Simbol(this.type, this.identifier, result);
+
+        let simbol: Simbol;
+        simbol = new Simbol(this.type, this.identifier, result);
         const res = table.setVariable(simbol);
         if (res != null) {
-            const error = new Exception_1.Exception('Semantico', res, this.line, this.column);
+            const error = new Exception('Semantico',
+                res,
+                this.line, this.column);
             tree.excepciones.push(error);
             tree.console.push(error.toString());
         }
         return null;
+        */
     }
 }
 exports.Declaracion = Declaracion;

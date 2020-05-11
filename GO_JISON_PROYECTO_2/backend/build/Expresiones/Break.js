@@ -14,7 +14,9 @@ class Break extends Node_1.Node {
         super(null, line, column);
     }
     execute(table, tree) {
-        return this;
+        /**
+         *   return this;
+        */
     }
 }
 exports.Break = Break;

@@ -2,6 +2,7 @@
  * @class Nodo para almacenar errores ya sean lexicos, sintacticos o semanticos
  */
 export class Exception{
+    public static errArray:Exception[] = []; 
     type: String;
     description: String;
     line: Number;
@@ -19,6 +20,7 @@ export class Exception{
         this.description = description;
         this.line = line;
         this.column = column;
+        /**/
     }
 
     toString(){

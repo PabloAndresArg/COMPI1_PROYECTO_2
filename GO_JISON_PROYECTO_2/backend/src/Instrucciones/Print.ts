@@ -20,8 +20,10 @@ export class Print extends Node{
     }
 
     execute(table: Table, tree: Tree): any {
+        /*
         const value = this.expression.execute(table, tree);
         tree.console.push(value);
         return null;
+        */
     }
 }

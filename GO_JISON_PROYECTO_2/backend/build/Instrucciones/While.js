@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Node_1 = require("../Abstract/Node");
-const Table_1 = require("../Simbols/Table");
-const Exception_1 = require("../utils/Exception");
-const Type_1 = require("../utils/Type");
-const Continue_1 = require("../Expresiones/Continue");
-const Break_1 = require("../Expresiones/Break");
 /**
  * @class Ejecuta una serie de instrucciones en caso la condicion sea verdadera sino ejecuta las instrucciones falsas
  */
@@ -23,15 +18,19 @@ class While extends Node_1.Node {
         this.List = List;
     }
     execute(table, tree) {
-        const newtable = new Table_1.Table(table);
-        let result;
+        /*
+        const newtable = new Table(table);
+        let result: Node;
         do {
             result = this.condition.execute(newtable, tree);
-            if (result instanceof Exception_1.Exception) {
+            if (result instanceof Exception) {
                 return result;
             }
-            if (this.condition.type.type !== Type_1.types.BOOLEAN) {
-                const error = new Exception_1.Exception('Semantico', `Se esperaba una expresion booleana para la condicion`, this.line, this.column);
+
+            if (this.condition.type.type !== types.BOOLEAN) {
+                const error = new Exception('Semantico',
+                    `Se esperaba una expresion booleana para la condicion`,
+                    this.line, this.column);
                 tree.excepciones.push(error);
                 tree.console.push(error.toString());
                 return error;
@@ -39,16 +38,16 @@ class While extends Node_1.Node {
             if (result) {
                 for (let i = 0; i < this.List.length; i++) {
                     const res = this.List[i].execute(newtable, tree);
-                    if (res instanceof Continue_1.Continue) {
+                    if (res instanceof Continue) {
                         break;
-                    }
-                    else if (res instanceof Break_1.Break) {
+                    } else if (res instanceof Break) {
                         return;
                     }
                 }
             }
         } while (result);
         return null;
+        */
     }
 }
 exports.While = While;

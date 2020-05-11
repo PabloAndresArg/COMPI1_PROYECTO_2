@@ -21,7 +21,7 @@ export abstract class Node {
      * @param column Columna de la instruccion o expresion
      */
     constructor(type: Type, line: Number, column: Number) {
-      //  console.log("new node :v ");
+        console.log(" nuevo node");
         this.type = type;
         this.line = line;
         this.column = column;

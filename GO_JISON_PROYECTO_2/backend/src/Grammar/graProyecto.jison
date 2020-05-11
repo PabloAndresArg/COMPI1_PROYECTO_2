@@ -17,8 +17,13 @@
     const {Type, types} = require('../utils/Type');
     const {Tree} = require('../Simbols/Tree');
     const {tacos} = require('../Expresiones/tacos');
-    console.log("se ejecuto el jison");
-
+    const {Importe} = require('../Otros/Importe');
+    const {ClaseInstruccion} = require('../Otros/ClaseInstruccion');
+    const {Inicio} = require('../Otros/Inicio');
+    var esta_en_un_ciclo = false;
+    var esta_en_un_metodo = false ; 
+    var esta_en_una_funcion = false; 
+  
 %}
 
 %lex
@@ -48,7 +53,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 {caracter}            return 'caracter'
 
 {decimal}             return 'decimal'
-{entero}              {;return 'entero'} 
+{entero}              return 'entero' 
 {stringliteral}       {console.log("string LITERAL....");return 'STRING_LITERAL'}
 {comentarioBloque}    {console.log("comBloque reconocido");return 'comentarioBloque'}
 {comentarioLinea}     {console.log("comLinea reconocido"); return 'comentarioLinea'}
@@ -102,7 +107,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 "for"                 return 'for'
 "false"               return 'false'
 "true"                return 'true'
-"class"              {console.log("viene class :v"); return 'class'}
+"class"               return 'class'
 "import"              return 'import'
 "char"                return 'char'
 "double"              return 'double'  
@@ -112,7 +117,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 {id}                  return 'id'
 <<EOF>>	          return 'EOF'
 
-.                       { console.error('Este es un error léxico: ' + yytext + '  en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.        {  console.error('Este es un error léxico: ' + yytext + '  en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
 
 
@@ -139,30 +144,39 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 *JISON ACEPTA AMBIGUEDAD 
 *LA GRAMATICA TIENE QUE SER ASCENDENTE 
 */
+/*
+INICIO : INSTRUCCIONES EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
+;
+*/
 
-INICIO :  LISTA_IMPORTE LISTA_CLASES EOF {$$ = new Tree($1); return $$;}
-       |  LISTA_CLASES EOF {$$ = new Tree($1); return $$;}
-       |  LISTA_IMPORTE EOF {console.log("solo vienen importes en ese archivo");}
-       |  EOF {$$ = new Tree($1); return $$;}
+
+INICIO : LISTA_IMPORTES_CLASES EOF {$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
+       |  LISTA_IMPORTE EOF {$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
+       |  LISTA_CLASES  EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
+       | EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
        ;
 
-LISTA_IMPORTE: LISTA_IMPORTE IMPORTE
-      	 | IMPORTE 
+LISTA_IMPORTES_CLASES:  LISTA_IMPORTE LISTA_CLASES {let init =  new Inicio($1, $2); $$ = init.Lista_importes_clases}
+                     ;
+
+LISTA_IMPORTE: LISTA_IMPORTE IMPORTE { $1.push($2); $$ = $1; }
+      	 | IMPORTE    { $$ = [$1]; }
         ; 
 
-IMPORTE: 'import' 'id' ';'   {console.log("venia un importe");}
-       ;
-       
-LISTA_CLASES: LISTA_CLASES SENTENCIA_CLASE
-            | SENTENCIA_CLASE
+LISTA_CLASES: LISTA_CLASES SENTENCIA_CLASE{ $1.push($2); $$ = $1; }
+            | SENTENCIA_CLASE  { $$ = [$1]; }
             ;
 
 
-                                   // POR EL MOMENTO SON INSTRUCCIONES PERO DEBE DE SER LISTA_DECLARACIONES_METFUNVAR 
-SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR
-               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
-               ;
 
+IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, this._$.first_column); console.log('TOKEN:' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);}
+       ;
+       
+                               
+SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $2 ,  this._$.first_line, this._$.first_column); console.log('TOKEN:' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);}
+               | error {$$ = [];console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + yylineno + ', en la columna: ' + this._$.first_column); }  
+               ;
+               
 
 
 BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;}              /* este es para que acepte vacios*/
@@ -170,7 +184,7 @@ BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;
                                | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                                ;
 
-LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P
+LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P  {  }
                              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                              ;
 
@@ -182,20 +196,19 @@ LISTA_DECLARACIONES_METFUNVAR_P: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_ME
 
 
 
-
-INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
-              | INSTRUCCION           
+INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
+              | INSTRUCCION               { $$ = [$1]; }
               |  error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
               ;
 
 INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
-            | WHILE              { /*console.log("ESTA EN UN WHILE"); */}
-            | IF                    {$$ = $1;}
-            | DOWHILE
-            | SENTENCIA_FOR
-            | SENTENCIA_SWITCH
-            | ASIGNACION_SIMPLE
-            | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES
+            | WHILE                {$$ = $1;}
+            | IF                   {$$ = $1;}
+            | DOWHILE              {$$ = $1;}
+            | SENTENCIA_FOR        {$$ = $1;}
+            | SENTENCIA_SWITCH      {$$ = $1;}
+            | ASIGNACION_SIMPLE     {$$ = $1;}
+            | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES    {$$ = $1;}
             ;
 TIPO : 'int' {$$ = new Type(types.NUMERIC); console.log("TIPO INT"); }
      | 'String' {$$ = new Type(types.STRING); console.log("TIPO STRING")}
@@ -252,13 +265,13 @@ BLOQUE_INSTRUCCIONES : '{' INSTRUCCIONES '}' {$$ = $2;}              /* este es 
                      ;
       
 EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', _$.first_line, _$.first_column); }
-          | '!' EXPRESION	                { $$ = new Arithmetic($1, null, '!', _$.first_line, _$.first_column); }
-          | EXPRESION '+' EXPRESION		    { $$ = new Arithmetic($1, $3, '+', _$.first_line, _$.first_column); }
-          | EXPRESION '-' EXPRESION		    { $$ = new Arithmetic($1, $3, '-', _$.first_line, _$.first_column); }
-          | EXPRESION '*' EXPRESION		    { $$ = new Arithmetic($1, $3, '*', _$.first_line, _$.first_column); }
-          | EXPRESION '/' EXPRESION	          { $$ = new Arithmetic($1, $3, '/', _$.first_line, _$.first_column); }
-          | EXPRESION '<' EXPRESION		    { $$ = new Relational($1, $3, '<', _$.first_line, _$.first_column); }
-          | EXPRESION '>' EXPRESION		    { $$ = new Relational($1, $3, '>', _$.first_line, _$.first_column); }
+          | '!' EXPRESION	                  { $$ = new Arithmetic($1, null, '!', _$.first_line, _$.first_column); }
+          | EXPRESION '+' EXPRESION           { $$ = new Arithmetic($1, $3, '+', _$.first_line, _$.first_column); }
+          | EXPRESION '-' EXPRESION           { $$ = new Arithmetic($1, $3, '-', _$.first_line, _$.first_column); }
+          | EXPRESION '*' EXPRESION           { $$ = new Arithmetic($1, $3, '*', _$.first_line, _$.first_column); }
+          | EXPRESION '/' EXPRESION	    { $$ = new Arithmetic($1, $3, '/', _$.first_line, _$.first_column); }
+          | EXPRESION '<' EXPRESION	    { $$ = new Relational($1, $3, '<', _$.first_line, _$.first_column); }
+          | EXPRESION '>' EXPRESION           { $$ = new Relational($1, $3, '>', _$.first_line, _$.first_column); }
           | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', _$.first_line, _$.first_column); }
           | EXPRESION '<=' EXPRESION	    { $$ = new Relational($1, $3, '<=', _$.first_line, _$.first_column); }
           | EXPRESION '==' EXPRESION	    { $$ = new Relational($1, $3, '==', _$.first_line, _$.first_column); }
@@ -269,7 +282,7 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, _$.first_line, _$.first_column); }
           | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, _$.first_line, _$.first_column); }
           | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), _$.first_line, _$.first_column); }
-          | id EXPRESION_METODO		          { /*console.log("VIENE ID ");*/ }
+          | id EXPRESION_METODO		    { $$ = new Identificador($1, _$.first_line, _$.first_column); }
           | caracter                           {/*console.log("caracter");*/}
           | entero                              {console.log("ENTERO");}
           | '(' EXPRESION ')'		          { $$ = $2; }
@@ -378,3 +391,5 @@ SENTENCIA_RETURN_FUNCION: 'return' EXPRESION ';'
                          ;
 SENTENCIA_BREAK_CON_CICLO: 'break' ';'
                          ; 
+
+

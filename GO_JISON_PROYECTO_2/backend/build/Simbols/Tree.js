@@ -9,6 +9,7 @@ class Tree {
      * @param instructions AST generado por la gramatica
      */
     constructor(instructions) {
+        console.log(" /// SE GENERO EL ARBOL ATS  ///");
         this.instructions = instructions;
         this.excepciones = new Array();
         this.console = new Array();

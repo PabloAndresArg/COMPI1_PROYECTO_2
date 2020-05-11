@@ -30,6 +30,7 @@ export class If extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         const newtable = new Table(table);
         let result: Node;
         result = this.condition.execute(newtable, tree);
@@ -63,5 +64,6 @@ export class If extends Node {
         }
 
         return null;
+        */
     }
 }

@@ -29,6 +29,7 @@ export class Arithmetic extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+/*
         if (this.rightOperator !== null) {
             const LeftResult = this.leftOperator.execute(table, tree);
             if (LeftResult instanceof Exception) {
@@ -128,10 +129,10 @@ export class Arithmetic extends Node {
                 const error = new Exception('Semantico',
                     `Error, Operador desconocido`,
                     this.line, this.column);
-                tree.excepciones.push(error);
+               tree.excepciones.push(error);
                 tree.console.push(error.toString());
                 return error;
             }
-        }
+        }*/
     }
 }

@@ -1,7 +1,4 @@
-function azx(){
-    console.log("OK LLAMANDO AL METODO");
-    console.log("OK LLAMANDO AL METODO");
-}
+
 
 var contador=0;
 function get_cont(){

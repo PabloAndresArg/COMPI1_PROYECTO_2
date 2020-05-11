@@ -23,7 +23,9 @@ class Primitive extends Node_1.Node {
      * @param tree Arbol de instrucciones y excepciones
      */
     execute(table, tree) {
-        return this.value;
+        /*
+            return this.value;
+            */
     }
 }
 exports.Primitive = Primitive;

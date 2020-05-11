@@ -90,15 +90,15 @@ app.post('/analizarYO', (req, res) => {
     return res.redirect('/');
   }
  const tree = MyParser_300445.parse(entrada); 
-  //const tree = parser.parse(entrada);
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null);
- 
-  var contador_de_sentencias = 0 ; 
-
- /* tree.instructions.map((m: any) => {
-    contador_de_sentencias++;
-   /* 
+  console.log("-------------INICIA EL ARBOL----------------");
+  console.log(tree);
+  console.log("------------------- FIN -------------------");
+  console.log("Elementos:------------");
+  /*tree.instructions.map((m: any) => {
+    console.log(m);
+    /*
     const res = m.execute(tabla, tree);
  
     if (res instanceof Break) {
@@ -113,12 +113,12 @@ app.post('/analizarYO', (req, res) => {
         res.line, res.column);
       tree.excepciones.push(error); 
       tree.console.push(error.toString());
-    }
+    }*/
    
-  */
- // });
-
-  console.log("TODO BIEN HASTA ACA");
+  
+  //});
+  console.log("end------------");
+  console.log(".");
 
   res.render('views/index', {
     entrada,
@@ -131,8 +131,17 @@ app.post('/analizarYO', (req, res) => {
 
 
 app.post('/comunicar/', function (req, res) {
+
+  Exception.errArray = []; // limpio mi lista de errores 
+  Exception.errArray.push(new Exception("LEXICO"," POR QUE SI :v ",0,0));
+  console.log(Exception.errArray[0].type+" "+Exception.errArray[0].description )
+  Exception.errArray.push(new Exception("d3"," ño :v ",0,0)); 
+  console.log(Exception.errArray[1].type+" "+Exception.errArray[0].description )
   var entrada1=req.body.text1;
   var entrada2 = req.body.text2;
-  console.log("Respondiendo a la peticion: " + entrada1+" ENTRADA2 " +entrada2);
-  res.send(" CERO COPIAS MUY BIEN :) ,  VAMOS CON TODO :v");
+  const tree = MyParser_300445.parse(entrada1); 
+ // console.log("entra al arbol:"+ entrada);
+ const tabla = new Table(null);
+ console.log(tree);
+  res.send( Exception.errArray );
 });

@@ -9,7 +9,7 @@ class Node {
      * @param column Columna de la instruccion o expresion
      */
     constructor(type, line, column) {
-        console.log("SE CREA EL ATS -->");
+        console.log(" nuevo node");
         this.type = type;
         this.line = line;
         this.column = column;

@@ -28,7 +28,7 @@ export class Logic extends Node {
     }
 
     execute(table: Table, tree: Tree) {
-        if (this.rightOperator !== null) {
+       /* if (this.rightOperator !== null) {
             const LeftResult = this.leftOperator.execute(table, tree);
             if (LeftResult instanceof Exception) {
                 return LeftResult;
@@ -92,6 +92,6 @@ export class Logic extends Node {
                 tree.console.push(error.toString());
                 return error;
             }
-        }
+        }*/
     }
 }

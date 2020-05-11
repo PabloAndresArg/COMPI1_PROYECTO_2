@@ -27,6 +27,7 @@ export class While extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        /*
         const newtable = new Table(table);
         let result: Node;
         do {
@@ -55,5 +56,6 @@ export class While extends Node {
             }
         } while (result);
         return null;
+        */
     }
 }

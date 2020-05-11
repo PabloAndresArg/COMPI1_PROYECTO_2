@@ -16,9 +16,12 @@ class Exception {
         this.description = description;
         this.line = line;
         this.column = column;
+        /**/
     }
     toString() {
+        // retorna el string del error 
         return `${this.type} ${this.description} ${this.line} ${this.column}`;
     }
 }
 exports.Exception = Exception;
+Exception.errArray = [];
