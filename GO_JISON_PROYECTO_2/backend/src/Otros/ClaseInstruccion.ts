@@ -15,7 +15,7 @@ import { Simbol } from "../Simbols/Simbol";
 
 export class ClaseInstruccion extends Node {
     identifier: String;
-    value: Node;
+    contenido: Node;
 
     /**
      * @constructor 
@@ -28,7 +28,7 @@ export class ClaseInstruccion extends Node {
         console.log("nodo class");
         super(null, line, column);
         this.identifier = identifier;
-        this.value = null;
+        this.contenido = value;
         ;
     }
 

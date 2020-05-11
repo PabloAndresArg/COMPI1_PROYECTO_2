@@ -23,7 +23,7 @@ export class Inicio extends Node{
         });     
 
         l_clases.map((m: any) => {
-            console.log(m);
+            
             this.Lista_importes_clases.push(m);
         });        
     }

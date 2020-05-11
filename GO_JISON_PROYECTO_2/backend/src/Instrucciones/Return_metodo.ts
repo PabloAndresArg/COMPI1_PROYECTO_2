@@ -3,10 +3,10 @@ import { Table } from "../Simbols/Table";
 import { Tree } from "../Simbols/Tree";
 
 /**
- * @class Nodo expresion continue, nos indica saltar iteraciones
+ * @class RETURN PARA LAS METODOS   
  */
-export class Continue extends Node {
-    nombre:string; 
+export class Return_metodo extends Node {
+    nombre :string; 
     /**
      * @constructor Retorna el objeto continue creado
      * @param line Linea del continue
@@ -14,7 +14,7 @@ export class Continue extends Node {
      */
     constructor(nombre:string,line: Number, column: Number) {
         super(null, line, column);
-        this.nombre = nombre; 
+        this.nombre = nombre;
     }
 
     execute(table: Table, tree: Tree){

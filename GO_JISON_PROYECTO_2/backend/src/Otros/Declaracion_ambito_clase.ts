@@ -23,10 +23,11 @@ export class Declaracion extends Node {
      * @param line Linea de la sentencia if
      * @param column Columna de la sentencia if
      */
-    constructor(type: Type, identifier: String, value: Node, line: Number, column: Number) {
+    constructor(type: Type, identifier: String, nodo1: Node , line: Number, column: Number) {
         super(type, line, column);
         this.identifier = identifier;
-        this.value = value;
+        
+       // this.value = value;
     }
 
     execute(table: Table, tree: Tree) {

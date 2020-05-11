@@ -20,6 +20,12 @@
     const {Importe} = require('../Otros/Importe');
     const {ClaseInstruccion} = require('../Otros/ClaseInstruccion');
     const {Inicio} = require('../Otros/Inicio');
+    const {Declaracion_ambito_clase} = require('../Otros/Inicio');
+    const {Return_metodo} = require('../Instrucciones/Return_metodo');
+    const {Return_funcion} = require('../Instrucciones/Return_funcion');
+
+
+
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -172,9 +178,9 @@ LISTA_CLASES: LISTA_CLASES SENTENCIA_CLASE{ $1.push($2); $$ = $1; }
 IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, this._$.first_column); console.log('TOKEN:' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);}
        ;
        
-                               
-SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $2 ,  this._$.first_line, this._$.first_column); console.log('TOKEN:' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);}
-               | error {$$ = [];console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + yylineno + ', en la columna: ' + this._$.first_column); }  
+//        BLOQUE_DECLARACIONES_METFUNVAR                       
+SENTENCIA_CLASE:'class' 'id' BLOQUE_INSTRUCCIONES {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
+              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }  
                ;
                
 
@@ -184,12 +190,12 @@ BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;
                                | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                                ;
 
-LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P  {  }
+LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P  { $$ = new Declaracion_ambito_clase($1 , $2);}
                              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                              ;
 
 LISTA_DECLARACIONES_METFUNVAR_P: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P
-                               |{}
+                               | {$$ = [];}
                                ;      
 
                  
@@ -209,12 +215,15 @@ INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
             | SENTENCIA_SWITCH      {$$ = $1;}
             | ASIGNACION_SIMPLE     {$$ = $1;}
             | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES    {$$ = $1;}
+            | SENTENCIA_CONTINUE {$$ = $1;}
+            | SENTENCIA_RETURN_FUNCION {$$ = $1;}
+            | SENTENCIA_RETURN_METODO{$$ = $1;}
             ;
-TIPO : 'int' {$$ = new Type(types.NUMERIC); console.log("TIPO INT"); }
+TIPO : 'int' {$$ = new Type(types.INT); console.log("TIPO INT"); }
      | 'String' {$$ = new Type(types.STRING); console.log("TIPO STRING")}
      | 'boolean' {$$ = new Type(types.BOOLEAN);}
-     | 'double'
-     | 'char'
+     | 'double' {$$ = new Type(types.DOUBLE);}
+     | 'char'{$$ = new Type(types.CHAR);}
      ;
 
 
@@ -278,13 +287,13 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           | EXPRESION '!=' EXPRESION	    { $$ = new Relational($1, $3, '!=', _$.first_line, _$.first_column); }
           | EXPRESION '||' EXPRESION	    { $$ = new Logic($1, $3, '&&', _$.first_line, _$.first_column); }
           | EXPRESION '&&' EXPRESION	    { $$ = new Logic($1, $3, '||', _$.first_line, _$.first_column); }
-          | 'decimal'				    { $$ = new Primitive(new Type(types.NUMERIC), Number($1), _$.first_line, _$.first_column); }
+          | 'decimal'		           { $$ = new Primitive(new Type(types.DOUBLE), Number($1), _$.first_line, _$.first_column); }
           | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, _$.first_line, _$.first_column); }
           | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, _$.first_line, _$.first_column); }
           | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), _$.first_line, _$.first_column); }
           | id EXPRESION_METODO		    { $$ = new Identificador($1, _$.first_line, _$.first_column); }
-          | caracter                           {/*console.log("caracter");*/}
-          | entero                              {console.log("ENTERO");}
+          | caracter                          { $$ = new Primitive(new Type(types.CHAR), $1.replace(/\'/g,""), _$.first_line, _$.first_column); }
+          | entero                            { $$ = new Primitive(new Type(types.INT), Number($1) , _$.first_line, _$.first_column); }
           | '(' EXPRESION ')'		          { $$ = $2; }
           ;
 
@@ -355,11 +364,11 @@ ASIGNACION: '=' EXPRESION ';'
 
 
 
-OPCION_ID_MAIN: 'main'  {console.log("tiene un metodo main :o");}
-              | 'id'
+OPCION_ID_MAIN: 'main'  {$$ = $1}
+              | 'id'    {$$ = $1}
               ;
 
-DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION
+DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new Declaracion_ambito_clase($1, $2 , $3 ,  _$.first_line , _$.first_column);}
                         | TIPO 'id' DECLARACION_AMBITO_CLASEP
                         ; 
 
@@ -383,13 +392,13 @@ LISTA_PARAMETROS_CON_TIPO : ','  TIPO 'id'  LISTA_PARAMETROS_CON_TIPO
 
 /*AUN NO SE COMO LLAMARLAS EN EL MOMENTO PRECISO*/
 
-SENTENCIA_CONTINUE: 'continue' ';'
+SENTENCIA_CONTINUE: 'continue' ';' {$$ = new Continue( $1, this._$.first_line, this._$.first_column) ;}
                   ;
-SENTENCIA_RETURN_METODO: 'return' ';'
+SENTENCIA_RETURN_METODO: 'return' ';' {$$ = new Return_metodo($1, this._$.first_line , this._$.first_column);}
                         ;
-SENTENCIA_RETURN_FUNCION: 'return' EXPRESION ';'
+SENTENCIA_RETURN_FUNCION: 'return' EXPRESION ';' {$$ = new Return_metodo($1, $2 , this._$.first_line , this._$.first_column);}
                          ;
-SENTENCIA_BREAK_CON_CICLO: 'break' ';'
+SENTENCIA_BREAK_CON_CICLO: 'break' ';' {$$ = new Break(this._$.first_line, this._$.first_column) ;}
                          ; 
 
 

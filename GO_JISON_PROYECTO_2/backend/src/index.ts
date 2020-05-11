@@ -96,7 +96,7 @@ app.post('/analizarYO', (req, res) => {
   console.log(tree);
   console.log("------------------- FIN -------------------");
   console.log("Elementos:------------");
-  /*tree.instructions.map((m: any) => {
+  tree.instructions.map((m: any) => {
     console.log(m);
     /*
     const res = m.execute(tabla, tree);
@@ -116,7 +116,7 @@ app.post('/analizarYO', (req, res) => {
     }*/
    
   
-  //});
+  });
   console.log("end------------");
   console.log(".");
 
