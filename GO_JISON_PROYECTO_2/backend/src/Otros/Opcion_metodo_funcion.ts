@@ -13,22 +13,24 @@ import { Simbol } from "../Simbols/Simbol";
 
 
 
-export class ClaseInstruccion extends Node {
-    identifier: String;
+export class Opcion_metodo_funcion extends Node {
+    identifier: any;
     contenido: Node;
+    listaParams:any;
 
     /**
-     * @constructor 
-     * @param identifier
-     * @param value valor de la variable
-     * @param line
-     * @param column 
+     * RECIBE LISTA DE INTRUCCIONES 
+     * TIPO
+     * ID
+     * LISTA_PARAMETROS_CON_TIPO
+     * FILA
      */
-    constructor(identifier: String, value: Node, line: Number, column: Number) {
-        super(null, line, column);
+    constructor(value: Node , type:any , identifier: any,listaParams:any , line: Number) {
+        super(null, line, null);
         this.identifier = identifier;
         this.contenido = value;
-        ;
+        this.listaParams = listaParams;
+        
     }
 
     execute(table: Table, tree: Tree) {

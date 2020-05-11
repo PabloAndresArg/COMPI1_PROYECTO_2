@@ -23,8 +23,8 @@
     const {Declaracion_ambito_clase} = require('../Otros/Inicio');
     const {Return_metodo} = require('../Instrucciones/Return_metodo');
     const {Return_funcion} = require('../Instrucciones/Return_funcion');
-
-
+    const {Sentencia_imprime} = require('../Instrucciones/Sentencia_imprime');
+    const {Opcion_metodo_funcion} = require('../Otros/Opcion_metodo_funcion');
 
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
@@ -190,7 +190,7 @@ BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;
                                | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                                ;
 
-LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P  { $$ = new Declaracion_ambito_clase($1 , $2);}
+LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P    {    }
                              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                              ;
 
@@ -241,24 +241,22 @@ INCRE_DECRE: 'id' 'incremento'  {console.log("incre_decre");}
 DOWHILE: 'do' BLOQUE_INSTRUCCIONES 'while' CONDICION ';'
        ;
 
-SENTENCIAIMPRIME: 'System' '.' 'out' '.'  OPCIONIMPRIME '(' EXPRESION ')' ';'
+SENTENCIAIMPRIME: 'System' '.' 'out' '.'  OPCIONIMPRIME '(' EXPRESION ')' ';' { $$ = new Sentencia_imprime($5,$7, this._$.first_line, this._$.first_column);}
                 ;
 
 
-OPCIONIMPRIME : 'println'
-	       | 'print'
+OPCIONIMPRIME : 'println' {$$ = $1 ; }
+	       | 'print' {$$ = $1;}
               ; 
 
 
-PRINT : 'print' '(' EXPRESION ')' ';' { $$ = new Print($3, _$.first_line, _$.first_column);}
+
+WHILE : 'while' CONDICION BLOQUE_INSTRUCCIONES {$$ = new While($2, $3, this._$.first_line, this._$.first_column);}
       ;
 
-WHILE : 'while' CONDICION BLOQUE_INSTRUCCIONES {$$ = new While($2, $3, _$.first_line, _$.first_column);}
-      ;
-
-IF : 'if' CONDICION BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, [], _$.first_line, _$.first_column); console.log("if acept");}
-   | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, $5, _$.first_line, _$.first_column);}
-   | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' IF {$$ = new If($2, $3, [$5], _$.first_line, _$.first_column);}
+IF : 'if' CONDICION BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, [], this._$.first_line, this._$.first_column); console.log("if acept");}
+   | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, $5, this._$.first_line, this._$.first_column);}
+   | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' IF {$$ = new If($2, $3, [$5], this._$.first_line, this._$.first_column);}
    ;
 
 
@@ -273,28 +271,28 @@ BLOQUE_INSTRUCCIONES : '{' INSTRUCCIONES '}' {$$ = $2;}              /* este es 
                      | '{' '}'    {$$ = [];}
                      ;
       
-EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', _$.first_line, _$.first_column); }
-          | '!' EXPRESION	                  { $$ = new Arithmetic($1, null, '!', _$.first_line, _$.first_column); }
-          | EXPRESION '+' EXPRESION           { $$ = new Arithmetic($1, $3, '+', _$.first_line, _$.first_column); }
-          | EXPRESION '-' EXPRESION           { $$ = new Arithmetic($1, $3, '-', _$.first_line, _$.first_column); }
-          | EXPRESION '*' EXPRESION           { $$ = new Arithmetic($1, $3, '*', _$.first_line, _$.first_column); }
-          | EXPRESION '/' EXPRESION	    { $$ = new Arithmetic($1, $3, '/', _$.first_line, _$.first_column); }
-          | EXPRESION '<' EXPRESION	    { $$ = new Relational($1, $3, '<', _$.first_line, _$.first_column); }
-          | EXPRESION '>' EXPRESION           { $$ = new Relational($1, $3, '>', _$.first_line, _$.first_column); }
-          | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', _$.first_line, _$.first_column); }
-          | EXPRESION '<=' EXPRESION	    { $$ = new Relational($1, $3, '<=', _$.first_line, _$.first_column); }
-          | EXPRESION '==' EXPRESION	    { $$ = new Relational($1, $3, '==', _$.first_line, _$.first_column); }
-          | EXPRESION '!=' EXPRESION	    { $$ = new Relational($1, $3, '!=', _$.first_line, _$.first_column); }
-          | EXPRESION '||' EXPRESION	    { $$ = new Logic($1, $3, '&&', _$.first_line, _$.first_column); }
-          | EXPRESION '&&' EXPRESION	    { $$ = new Logic($1, $3, '||', _$.first_line, _$.first_column); }
-          | 'decimal'		           { $$ = new Primitive(new Type(types.DOUBLE), Number($1), _$.first_line, _$.first_column); }
-          | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, _$.first_line, _$.first_column); }
-          | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, _$.first_line, _$.first_column); }
-          | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), _$.first_line, _$.first_column); }
-          | id EXPRESION_METODO		    { $$ = new Identificador($1, _$.first_line, _$.first_column); }
-          | caracter                          { $$ = new Primitive(new Type(types.CHAR), $1.replace(/\'/g,""), _$.first_line, _$.first_column); }
-          | entero                            { $$ = new Primitive(new Type(types.INT), Number($1) , _$.first_line, _$.first_column); }
-          | '(' EXPRESION ')'		          { $$ = $2; }
+EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', this._$.first_line, this._$.first_column); }
+          | '!' EXPRESION	                  { $$ = new Arithmetic($1, null, '!', this._$.first_line, this._$.first_column); }
+          | EXPRESION '+' EXPRESION           { $$ = new Arithmetic($1, $3, '+', this._$.first_line, this._$.first_column); }
+          | EXPRESION '-' EXPRESION           { $$ = new Arithmetic($1, $3, '-', this._$.first_line, this._$.first_column); }
+          | EXPRESION '*' EXPRESION           { $$ = new Arithmetic($1, $3, '*', this._$.first_line, this._$.first_column); }
+          | EXPRESION '/' EXPRESION	    { $$ = new Arithmetic($1, $3, '/', this._$.first_line, this._$.first_column); }
+          | EXPRESION '<' EXPRESION	    { $$ = new Relational($1, $3, '<', this._$.first_line, this._$.first_column); }
+          | EXPRESION '>' EXPRESION           { $$ = new Relational($1, $3, '>', this._$.first_line, this._$.first_column); }
+          | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', this._$.first_line, this._$.first_column); }
+          | EXPRESION '<=' EXPRESION	    { $$ = new Relational($1, $3, '<=', this._$.first_line, this._$.first_column); }
+          | EXPRESION '==' EXPRESION	    { $$ = new Relational($1, $3, '==', this._$.first_line, this._$.first_column); }
+          | EXPRESION '!=' EXPRESION	    { $$ = new Relational($1, $3, '!=', this._$.first_line, this._$.first_column); }
+          | EXPRESION '||' EXPRESION	    { $$ = new Logic($1, $3, '&&', this._$.first_line, this._$.first_column); }
+          | EXPRESION '&&' EXPRESION	    { $$ = new Logic($1, $3, '||', this._$.first_line, this._$.first_column); }
+          | 'decimal'		           { $$ = new Primitive(new Type(types.DOUBLE), Number($1), this._$.first_line, this._$.first_column); }
+          | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, this._$.first_line, this._$.first_column); }
+          | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, this._$.first_line, this._$.first_column); }
+          | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), this._$.first_line, this._$.first_column); }
+          | id EXPRESION_METODO		    { $$ = new Identificador($1, this._$.first_line, this._$.first_column); }
+          | caracter                          { $$ = new Primitive(new Type(types.CHAR), $1.replace(/\'/g,""), this._$.first_line, this._$.first_column); }
+          | entero                            { $$ = new Primitive(new Type(types.INT), Number($1) , this._$.first_line, this._$.first_column); }
+          | '(' EXPRESION ')'		    { $$ = $2; }
           ;
 
 
@@ -368,7 +366,7 @@ OPCION_ID_MAIN: 'main'  {$$ = $1}
               | 'id'    {$$ = $1}
               ;
 
-DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new Declaracion_ambito_clase($1, $2 , $3 ,  _$.first_line , _$.first_column);}
+DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new Declaracion_ambito_clase($1, $2 , $4 ,  this._$.first_line , this._$.first_column);}
                         | TIPO 'id' DECLARACION_AMBITO_CLASEP
                         ; 
 
@@ -377,12 +375,12 @@ DECLARACION_AMBITO_CLASEP: '(' OPCION_METODO_FUNCION   {console.log("funcion");}
                          ;
 
 
-OPCION_METODO_FUNCION: TIPO 'id'  LISTA_PARAMETROS_CON_TIPO ')' BLOQUE_INSTRUCCIONES    {console.log("CON PARAMETROS");}                                 
-                     |')' BLOQUE_INSTRUCCIONES     {console.log("SIN PARAMETROS ");}
+OPCION_METODO_FUNCION: TIPO 'id'  LISTA_PARAMETROS_CON_TIPO ')' BLOQUE_INSTRUCCIONES  {$$ = new Opcion_metodo_funcion($4 , $1 , $2 , $3 , this._$.first_line); console.log("CON PARAMETROS");}                                 
+                     |')' BLOQUE_INSTRUCCIONES    {$$ = new Opcion_metodo_funcion($2 , null ,null , null , this._$.first_line); console.log("CON PARAMETROS"); console.log("SIN PARAMETROS ");}
                      ;
                                    
 LISTA_PARAMETROS_CON_TIPO : ','  TIPO 'id'  LISTA_PARAMETROS_CON_TIPO
-			   | {/*EPSILON*/}
+			   | {$$ = [] ; /*EPSILON*/ }
                         ;
                         
 
@@ -396,7 +394,7 @@ SENTENCIA_CONTINUE: 'continue' ';' {$$ = new Continue( $1, this._$.first_line, t
                   ;
 SENTENCIA_RETURN_METODO: 'return' ';' {$$ = new Return_metodo($1, this._$.first_line , this._$.first_column);}
                         ;
-SENTENCIA_RETURN_FUNCION: 'return' EXPRESION ';' {$$ = new Return_metodo($1, $2 , this._$.first_line , this._$.first_column);}
+SENTENCIA_RETURN_FUNCION: 'return' EXPRESION ';' {$$ = new Return_funcion($1, $2 , this._$.first_line , this._$.first_column);}
                          ;
 SENTENCIA_BREAK_CON_CICLO: 'break' ';' {$$ = new Break(this._$.first_line, this._$.first_column) ;}
                          ; 
