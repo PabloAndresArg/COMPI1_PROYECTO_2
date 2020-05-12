@@ -31,7 +31,10 @@
     const {Llamada_metodo} = require('../Instrucciones/Llamada_metodo');
     const {Parametro} = require('../Instrucciones/Parametro');
     const {Declaracion_adentro_de_metodos_funciones} = require('../Otros/Declaracion_adentro_de_metodos_funciones');
-
+    const {Sentencia_switch} = require('../Instrucciones/Sentencia_switch');
+    const {Ins_case} = require('../Instrucciones/Ins_case');
+    const {Ins_Default} = require('../Instrucciones/Ins_Default');
+    const {Bloque_cases} = require('../Instrucciones/Bloque_cases');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -300,15 +303,15 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           ;
 
 
-SENTENCIA_SWITCH: 'switch' '(' EXPRESION ')' BLOQUE_CASES
+SENTENCIA_SWITCH: 'switch' '(' EXPRESION ')' BLOQUE_CASES {$$ = new Sentencia_switch($3,$5,this._$.first_line, this._$.first_column)}
                 ;
               
-BLOQUE_CASES:  '{' LISTACASES OPCIONDEFAULT '}' {$$ = $2;}    
+BLOQUE_CASES:  '{' LISTACASES OPCIONDEFAULT '}' {$$ = new Bloque_cases($2 ,$3);}    
             | '{' '}'    {$$ = [];}
             ;
         
-OPCIONDEFAULT:'default' ':' BLOQUEINST_CON_OPCION_VACIA  SENTENCIA_BREAK
-             | {} 
+OPCIONDEFAULT:'default' ':' BLOQUEINST_CON_OPCION_VACIA  SENTENCIA_BREAK { $$ = new Ins_Default($3,$4,this._$.first_line, this._$.first_column);}
+             | {$$ = [];} 
              ;
 
            /*             
@@ -318,10 +321,10 @@ LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
                         */
 
 
-LISTACASES: LISTACASES CASES_P 
-          | CASES_P
+LISTACASES: LISTACASES CASES_P  { $1.push($2); $$ = $1; }
+          | CASES_P  { $$ = [$1]; }
           ;
-CASES_P :'case' EXPRESION ':' BLOQUEINST_CON_OPCION_VACIA SENTENCIA_BREAK
+CASES_P :'case' EXPRESION ':' BLOQUEINST_CON_OPCION_VACIA SENTENCIA_BREAK { $$ = new Ins_case($2,$4,$5,this._$.first_line, this._$.first_column);}
         ;
 
 SENTENCIA_BREAK: 'break' ';'  {$$ = new Break(this._$.first_line, this._$.first_column) ;}

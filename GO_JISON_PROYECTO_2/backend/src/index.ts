@@ -95,9 +95,9 @@ app.post('/analizarYO', (req, res) => {
   console.log("-------------INICIA EL ARBOL----------------");
   console.log(tree);
   console.log("------------------- FIN -------------------");
-  console.log("Elementos:------------");
   tree.instructions.map((m: any) => {
     console.log(m);
+
 
     /*
     const res = m.execute(tabla, tree);
@@ -118,8 +118,7 @@ app.post('/analizarYO', (req, res) => {
    
   
   });
-  console.log("---------end------------");
-  console.log(tree.instructions[1].contenido[0].condition);
+  console.log(tree.instructions[1].contenido[0].Cases);
   // VIENDO LOS OBJETOS 
 
   res.render('views/index', {

@@ -92,10 +92,10 @@ break;
 case 5:
 let init =  new Inicio($$[$0-1], $$[$0]); this.$ = init.Lista_importes_clases
 break;
-case 6: case 8: case 20:
+case 6: case 8: case 20: case 82:
  $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
 break;
-case 7: case 9: case 21: case 95: case 98:
+case 7: case 9: case 21: case 83: case 95: case 98:
  this.$ = [$$[$0]]; 
 break;
 case 10:
@@ -110,7 +110,7 @@ break;
 case 13: case 52: case 53:
 this.$ = $$[$0-1];
 break;
-case 14: case 19: case 54: case 79: case 100:
+case 14: case 19: case 54: case 79: case 81: case 100:
 this.$ = [];
 break;
 case 16:
@@ -236,8 +236,17 @@ break;
 case 76:
  this.$ = $$[$0-1]; 
 break;
+case 77:
+this.$ = new Sentencia_switch($$[$0-2],$$[$0],this._$.first_line, this._$.first_column)
+break;
 case 78:
-this.$ = $$[$0-2];
+this.$ = new Bloque_cases($$[$0-2] ,$$[$0-1]);
+break;
+case 80:
+ this.$ = new Ins_Default($$[$0-1],$$[$0],this._$.first_line, this._$.first_column);
+break;
+case 84:
+ this.$ = new Ins_case($$[$0-3],$$[$0-1],$$[$0],this._$.first_line, this._$.first_column);
 break;
 case 85: case 114:
 this.$ = new Break(this._$.first_line, this._$.first_column) ;
@@ -589,7 +598,10 @@ _handle_error:
     const {Llamada_metodo} = require('../Instrucciones/Llamada_metodo');
     const {Parametro} = require('../Instrucciones/Parametro');
     const {Declaracion_adentro_de_metodos_funciones} = require('../Otros/Declaracion_adentro_de_metodos_funciones');
-
+    const {Sentencia_switch} = require('../Instrucciones/Sentencia_switch');
+    const {Ins_case} = require('../Instrucciones/Ins_case');
+    const {Ins_Default} = require('../Instrucciones/Ins_Default');
+    const {Bloque_cases} = require('../Instrucciones/Bloque_cases');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
