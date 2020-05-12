@@ -35,10 +35,11 @@
     const {Ins_case} = require('../Instrucciones/Ins_case');
     const {Ins_Default} = require('../Instrucciones/Ins_Default');
     const {Bloque_cases} = require('../Instrucciones/Bloque_cases');
+    const {DeclaracionMetodo} = require('../Instrucciones/DeclaracionMetodo');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
-  
+    var isMain = false; 
 %}
 
 %lex
@@ -201,7 +202,7 @@ LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METF
                              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                              ;
 
-LISTA_DECLARACIONES_METFUNVAR_P: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P
+LISTA_DECLARACIONES_METFUNVAR_P: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P { $1.push($2); $$ = $1; }
                                | {$$ = [];}
                                ;      
 
@@ -261,7 +262,7 @@ OPCIONIMPRIME : 'println' {$$ = $1 ; }
 WHILE : 'while' CONDICION BLOQUE_INSTRUCCIONES {$$ = new While($2, $3, this._$.first_line, this._$.first_column);}
       ;
 
-IF : 'if' CONDICION BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, [], this._$.first_line, this._$.first_column); console.log("if acept");}
+IF : 'if' CONDICION BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, [], this._$.first_line, this._$.first_column);}
    | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' BLOQUE_INSTRUCCIONES {$$ = new If($2, $3, $5, this._$.first_line, this._$.first_column);}
    | 'if' CONDICION BLOQUE_INSTRUCCIONES 'else' IF {$$ = new If($2, $3, [$5], this._$.first_line, this._$.first_column);}
    ;
@@ -314,11 +315,6 @@ OPCIONDEFAULT:'default' ':' BLOQUEINST_CON_OPCION_VACIA  SENTENCIA_BREAK { $$ = 
              | {$$ = [];} 
              ;
 
-           /*             
-LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
-         | id  { $$ = [$1]; }
-         ; 
-                        */
 
 
 LISTACASES: LISTACASES CASES_P  { $1.push($2); $$ = $1; }

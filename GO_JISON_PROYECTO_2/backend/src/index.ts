@@ -118,7 +118,7 @@ app.post('/analizarYO', (req, res) => {
    
   
   });
-  console.log(tree.instructions[1].contenido[0].Cases);
+  //console.log(tree.instructions[1].contenido[0].Cases);
   // VIENDO LOS OBJETOS 
 
   res.render('views/index', {
