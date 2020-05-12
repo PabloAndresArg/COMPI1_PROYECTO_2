@@ -237,6 +237,7 @@ INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
             | SENTENCIA_CONTINUE {$$ = $1;}
             | SENTENCIA_RETURN_FUNCION {$$ = $1;}
             | SENTENCIA_RETURN_METODO{$$ = $1;}
+            | SENTENCIA_BREAK {$$ = $1;}
             ;
 TIPO : 'int' {$$ = new Type(types.INT);}
      | 'String' {$$ = new Type(types.STRING);}
@@ -337,9 +338,44 @@ CASES_P :'case' EXPRESION ':' BLOQUEINST_CON_OPCION_VACIA SENTENCIA_BREAK { $$ =
 SENTENCIA_BREAK: 'break' ';'  {$$ = new Break(this._$.first_line, this._$.first_column) ;}
                ;
 
-BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONES {$$=$1;}
+BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONESWITCH {$$=$1;}
                             | {$$=[];}
                             ;
+
+
+INSTRUCCIONESWITCH : INSTRUCCIONESWITCH INSTRUCCIONSWITCH { $1.push($2); $$ = $1; }
+              | INSTRUCCIONSWITCH               { $$ = [$1]; }
+              |  error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+              ;
+// LO MISMO PERO NO TIENE EL BREAK para que no se encicle 
+INSTRUCCIONSWITCH : SENTENCIAIMPRIME     {$$ = $1;}
+            | WHILE                {$$ = $1;}
+            | IF                   {$$ = $1;}
+            | DOWHILE              {$$ = $1;}
+            | SENTENCIA_FOR        {$$ = $1;}
+            | SENTENCIA_SWITCH      {$$ = $1;}
+            | ASIGNACION_SIMPLE     {$$ = $1;}
+            | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES    {$$ = $1;}
+            | SENTENCIA_CONTINUE {$$ = $1;}
+            | SENTENCIA_RETURN_FUNCION {$$ = $1;}
+            | SENTENCIA_RETURN_METODO{$$ = $1;}
+            ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* PUEDE SER UNA ASIGNACION O PUEDE SER UNA LLAMADA DE METODO */
 ASIGNACION_SIMPLE: id '=' EXPRESION ';'  {$$ = new Asignacion($1, $3,this._$.first_line, this._$.first_column); ;console.log("jeje simple asignacion")}
@@ -402,18 +438,6 @@ ASIGNACION: '=' EXPRESION ';' {$$ = $2}
 
 
 
-/*
-DECLARACION_AMBITO_CLASEP: '(' OPCION_METODO_FUNCION   {console.log("funcion");}
-                         | LISTA_IDS ASIGNACION 
-                         ;*/
-
-/*
-
-
- REVISAR  OPCION_METODO_FUNCION 
-
-
-*/
 
                                                                       
 LISTA_PARAMETROS_CON_TIPO :LISTA_PARAMETROS_CON_TIPO  ','  TIPO 'id'     { $1.push(new Parametro($3 , $4 ,this._$.first_line , this._$.first_column)); $$ = $1; }
@@ -425,7 +449,7 @@ LISTA_PARAMETROS_CON_TIPO :LISTA_PARAMETROS_CON_TIPO  ','  TIPO 'id'     { $1.pu
 
 
 
-/*AUN NO SE COMO LLAMARLAS EN EL MOMENTO PRECISO*/
+/* SENTENCIA BREAK */
 
 SENTENCIA_CONTINUE: 'continue' ';' {$$ = new Continue( $1, this._$.first_line, this._$.first_column) ;}
                   ;
