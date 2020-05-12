@@ -14,7 +14,6 @@ import { Simbol } from "../Simbols/Simbol";
 
 
 export class Opcion_metodo_funcion extends Node {
-    identifier: any;
     contenido: Node;
     listaParams:any;
 
@@ -25,10 +24,10 @@ export class Opcion_metodo_funcion extends Node {
      * LISTA_PARAMETROS_CON_TIPO
      * FILA
      */
-    constructor(value: Node , type:any , identifier: any,listaParams:any , line: Number) {
+    constructor(listaParams:any , contenido:any , line: Number) {
         super(null, line, null);
-        this.identifier = identifier;
-        this.contenido = value;
+        
+        this.contenido = contenido;
         this.listaParams = listaParams;
         
     }

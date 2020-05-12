@@ -20,7 +20,6 @@
     const {Importe} = require('../Otros/Importe');
     const {ClaseInstruccion} = require('../Otros/ClaseInstruccion');
     const {Inicio} = require('../Otros/Inicio');
-    const {Declaracion_ambito_clase} = require('../Otros/Inicio');
     const {Return_metodo} = require('../Instrucciones/Return_metodo');
     const {Return_funcion} = require('../Instrucciones/Return_funcion');
     const {Sentencia_imprime} = require('../Instrucciones/Sentencia_imprime');
@@ -186,13 +185,13 @@ IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, thi
        ;
        
 //        BLOQUE_DECLARACIONES_METFUNVAR                       
-SENTENCIA_CLASE:'class' 'id' BLOQUE_INSTRUCCIONES {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
+SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }  
                ;
                
 
 
-BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;}              /* este es para que acepte vacios*/
+BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2; console.log("espera declaraciones...");}              /* este es para que acepte vacios*/
                                | '{' '}' {$$ = [];}
                                | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                                ;
@@ -394,7 +393,7 @@ OPCION_ID_MAIN: 'main'  {$$ = $1}
               | id    {$$ = $1}
               ;
 
-DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new Declaracion_ambito_clase($1, $2 , $4 ,  this._$.first_line , this._$.first_column);}
+DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new DeclaracionMetodo($1, $2 , $4 ,  this._$.first_line , this._$.first_column);}
                         | TIPO id DECLARACION_AMBITO_CLASEP
                         ; 
 
@@ -402,9 +401,15 @@ DECLARACION_AMBITO_CLASEP: '(' OPCION_METODO_FUNCION   {console.log("funcion");}
                          | LISTA_IDS ASIGNACION 
                          ;
 
+/*
 
-OPCION_METODO_FUNCION: TIPO 'id'  LISTA_PARAMETROS_CON_TIPO ')' BLOQUE_INSTRUCCIONES  {$$ = new Opcion_metodo_funcion($4 , $1 , $2 , $3 , this._$.first_line); console.log("CON PARAMETROS");}                                 
-                     |')' BLOQUE_INSTRUCCIONES    {$$ = new Opcion_metodo_funcion($2 , null ,null , null , this._$.first_line); console.log("SIN PARAMETROS ");}
+
+ REVISAR  OPCION_METODO_FUNCION 
+
+
+*/
+OPCION_METODO_FUNCION: LISTA_PARAMETROS_CON_TIPO ')' BLOQUE_INSTRUCCIONES  {$$ = new Opcion_metodo_funcion($1 , $3 , this._$.first_line); console.log("CON PARAMETROS");}                                 
+                     |')' BLOQUE_INSTRUCCIONES    {$$ = new Opcion_metodo_funcion( [], $2  , this._$.first_line); console.log("SIN PARAMETROS ");}
                      ;
                                                                       
 LISTA_PARAMETROS_CON_TIPO :LISTA_PARAMETROS_CON_TIPO  ','  TIPO 'id'     { $1.push(new Parametro($3 , $4 ,this._$.first_line , this._$.first_column)); $$ = $1; }
