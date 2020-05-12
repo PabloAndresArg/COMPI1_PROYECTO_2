@@ -29,7 +29,7 @@
     const {Incre_decre} = require('../Instrucciones/incre_decre');
     const {For} = require('../Instrucciones/For');
     const {Llamada_metodo} = require('../Instrucciones/Llamada_metodo');
-
+    const {Parametro} = require('../Instrucciones/Parametro');
     const {Declaracion_adentro_de_metodos_funciones} = require('../Otros/Declaracion_adentro_de_metodos_funciones');
 
     var esta_en_un_ciclo = false;
@@ -193,6 +193,7 @@ BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR '}' {$$ = $2;
                                | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                                ;
 
+
 LISTA_DECLARACIONES_METFUNVAR: DECLARACION_AMBITO_CLASE LISTA_DECLARACIONES_METFUNVAR_P    {    }
                              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
                              ;
@@ -292,7 +293,7 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           | 'true'				    { $$ = new Primitive(new Type(types.BOOLEAN), true, this._$.first_line, this._$.first_column); }
           | 'false'				    { $$ = new Primitive(new Type(types.BOOLEAN), false, this._$.first_line, this._$.first_column); }
           | STRING_LITERAL			    { $$ = new Primitive(new Type(types.STRING), $1.replace(/\"/g,""), this._$.first_line, this._$.first_column); }
-          | EXPRESION_METODO		    {}
+          | EXPRESION_METODO		    { $$ = $1}
           | caracter                          { $$ = new Primitive(new Type(types.CHAR), $1.replace(/\'/g,""), this._$.first_line, this._$.first_column); }
           | entero                            { $$ = new Primitive(new Type(types.INT), Number($1) , this._$.first_line, this._$.first_column); }
           | '(' EXPRESION ')'		    { $$ = $2; }
@@ -310,7 +311,14 @@ OPCIONDEFAULT:'default' ':' BLOQUEINST_CON_OPCION_VACIA  SENTENCIA_BREAK
              | {} 
              ;
 
-LISTACASES: LISTACASES CASES_P
+           /*             
+LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
+         | id  { $$ = [$1]; }
+         ; 
+                        */
+
+
+LISTACASES: LISTACASES CASES_P 
           | CASES_P
           ;
 CASES_P :'case' EXPRESION ':' BLOQUEINST_CON_OPCION_VACIA SENTENCIA_BREAK
@@ -334,7 +342,7 @@ OPCION_ASIGNACION: '=' EXPRESION ';'
                  | '(' LISTA_EXPRESIONES_LLAMADA_METODO ')' ';'   {console.log("lleva_parametros")}
                  | ')' ';'                                   {console.log("NO LLEVA PARAMAETTROS")}
                  ;*/
-
+// LISTA_EXPRESIONES A VECES DICE ARRAY ENTRE ARRAY :v 
 EXPRESION_METODO: id '(' LISTA_EXPRESIONES_LLAMADA_METODO ')'  {$$ = new Llamada_metodo($1 ,$3, this._$.first_line, this._$.first_column);console.log("SI lleva parametros")}
                 | id '(' ')'     {$$ = new Llamada_metodo($1 ,[], this._$.first_line, this._$.first_column); console.log("NO LLEVA PARAMAETTROS");}
                 | id  { $$ = new Identificador($1, this._$.first_line, this._$.first_column); ;console.log("ID SIMPLE ")}
@@ -344,13 +352,22 @@ EXPRESION_METODO: id '(' LISTA_EXPRESIONES_LLAMADA_METODO ')'  {$$ = new Llamada
 SENTENCIA_LLAMA_METODO : LISTA_EXPRESIONES_LLAMADA_METODO ')'   {console.log("lleva_parametros")}
 		          | ')'                                   {console.log("NO LLEVA PARAMAETTROS")}
                         ;*/
+/*
+LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
+         | id  { $$ = [$1]; }
+         ; 
+*/
+LISTA_EXPRESIONES_LLAMADA_METODO: LISTA_EXPRESIONES_LLAMADA_METODO ',' EXPRESION  { $1.push($3); $$ = $1; }
+                                | EXPRESION { $$ = [$1]; }
+                                ;
 
+                                /*
 LISTA_EXPRESIONES_LLAMADA_METODO :EXPRESION  LISTA_EXPRESIONES_LLAMADA_METODOP 
                                  ;
-LISTA_EXPRESIONES_LLAMADA_METODOP:LISTA_EXPRESIONES_LLAMADA_METODOP ',' EXPRESION 
-                                 | ',' EXPRESION 
+LISTA_EXPRESIONES_LLAMADA_METODOP: LISTA_EXPRESIONES_LLAMADA_METODOP ',' EXPRESION   { $1.push($3); $$ = $1; }
+                                 | ',' EXPRESION { $$ = [$1]; }
                                  | error { console.error('Este es un error sintáctico: [ ' + yytext + ' ] en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-                                 ;
+                                 ;*/
 
 
 DECLARACION_ADENTRO_DE_METODOS_FUNCIONES: TIPO LISTA_IDS ASIGNACION { $$ = new Declaracion_adentro_de_metodos_funciones($1,$2,$3 ,this._$.first_line , this._$.first_column ); console.log("dec adentro de metodos");}
@@ -365,12 +382,7 @@ LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
          | id  { $$ = [$1]; }
          ; 
 
-         /*
-         
-INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
-              | INSTRUCCION               { $$ = [$1]; }
-         
-         */
+
 
 
 ASIGNACION: '=' EXPRESION ';' {$$ = $2}
@@ -393,13 +405,13 @@ DECLARACION_AMBITO_CLASEP: '(' OPCION_METODO_FUNCION   {console.log("funcion");}
 
 
 OPCION_METODO_FUNCION: TIPO 'id'  LISTA_PARAMETROS_CON_TIPO ')' BLOQUE_INSTRUCCIONES  {$$ = new Opcion_metodo_funcion($4 , $1 , $2 , $3 , this._$.first_line); console.log("CON PARAMETROS");}                                 
-                     |')' BLOQUE_INSTRUCCIONES    {$$ = new Opcion_metodo_funcion($2 , null ,null , null , this._$.first_line); console.log("CON PARAMETROS"); console.log("SIN PARAMETROS ");}
+                     |')' BLOQUE_INSTRUCCIONES    {$$ = new Opcion_metodo_funcion($2 , null ,null , null , this._$.first_line); console.log("SIN PARAMETROS ");}
                      ;
-                                   
-LISTA_PARAMETROS_CON_TIPO : ','  TIPO 'id'  LISTA_PARAMETROS_CON_TIPO
-			   | {$$ = [] ; /*EPSILON*/ }
+                                                                      
+LISTA_PARAMETROS_CON_TIPO :LISTA_PARAMETROS_CON_TIPO  ','  TIPO 'id'     { $1.push(new Parametro($3 , $4 ,this._$.first_line , this._$.first_column)); $$ = $1; }
+			   | TIPO 'id'{ $$ = [new Parametro($1 , $2 ,this._$.first_line , this._$.first_column)]; }
                         ;
-                        
+
 
 
 

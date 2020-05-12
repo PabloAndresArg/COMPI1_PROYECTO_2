@@ -11,7 +11,7 @@ import { Break } from "../Expresiones/Break";
  */
 export class Llamada_metodo extends Node {
     id:string; 
-    ListParametros: Array<Node>;
+    Parametros: Node;
 
     /**
      * @constructor 
@@ -20,10 +20,10 @@ export class Llamada_metodo extends Node {
      * @param line Linea de la sentencia while
      * @param column 
      */
-    constructor(id:string , List: Array<Node>, line: Number, column: Number) {
+    constructor(id:string , List: Node, line: Number, column: Number) {
         super(null, line, column);
-       this.ListParametros = List; 
-       this.id = id; 
+        this.Parametros = List; 
+        this.id = id; 
     }
 
     execute(table: Table, tree: Tree) {

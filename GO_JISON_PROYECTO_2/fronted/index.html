@@ -13,6 +13,15 @@
         <link rel="stylesheet" href="./codemirror//lib//codemirror.css">
         <link rel="stylesheet" href="./codemirror//theme//eclipse.css">
         <script src="./codemirror/mode/clike/clike.js"></script>
+
+        <script src="../js/codemirror/lib/codemirror.js"></script>
+        <link rel="stylesheet" href="../js/codemirror//lib//codemirror.css">
+        <link rel="stylesheet" href="../js/codemirror//theme//dracula.css">
+   
+        
+        
+
+
         <title>201800464</title>
     </head>
 
@@ -34,20 +43,25 @@
                 </div>
             </body>
         </div>
+   <br>
+   <br>
+   <br>
    
-   
-    <div class="row">
-          
-           
-            <textarea class="ta" name="entrada_copia" id="entrada_copia"></textarea>    
-            </textarea>
-            <input id="fileInput2" title="Abrir" type="file" size="10" onchange="Abrir_2(this.files)" class="btn-dark">
 
-
-    </div>
-    <button onclick="COMUNICAR_NODE();"  id="analizarJAVA" >
+    <div class="row card col-8 bg-dark">
+        <div class="card-body">
+            <h2 class="card-title text-white">ENTRADA JAVA</h2>
+          </div>
+           <textarea  name="entrada_copia" id="entrada_copia"></textarea>    
+    <input id="fileInput2" title="Abrir" type="file" size="10" onchange="Abrir_2(this.files)" class="btn-dark col-5">
+    <button onclick="COMUNICAR_NODE();"  id="analizarJAVA" class="col-3" >
         <i class="fa fa-code" aria-hidden="true">ANALIZAR</i>
-    </button>
+    </button>          
+   
+
+</div>
+
+  
 
     
   
@@ -88,6 +102,20 @@
     
 }
 
+var editor_mirror= CodeMirror.fromTextArea(entrada_copia, {
+        lineNumbers: true,
+        value: entrada_copia.value,
+        styleActiveLine: true,
+        theme: "dracula",
+        mode: "text/x-java",
+       
+    }).on('change', editor_mirror => {
+        entrada_copia.value=editor_mirror.getValue();
+      //  editor_mirror.setSize(600, 600);
+    });
+
+
+
 function irA(){
     var texto = document.getElementById("entrada_copia").value;
     alert("ENTRADA: "+ texto);
@@ -96,6 +124,8 @@ function irA(){
    location.href = "http://localhost:7000/errores";*/
 } 
 </script>
+
+
 
 
 
