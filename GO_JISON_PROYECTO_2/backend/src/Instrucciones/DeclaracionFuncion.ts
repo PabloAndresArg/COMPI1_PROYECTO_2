@@ -10,11 +10,11 @@ import { Simbol } from "../Simbols/Simbol";
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
  */
-export class Declaracion extends Node {
+export class DeclaracionFuncion extends Node {
     type: Type;
     identifier: String;
     parametros: Node;
-
+    
     /**
      * @constructor Crea el nodo instruccion para la sentencia Declaracion
      * @param type Tipo de la variable
