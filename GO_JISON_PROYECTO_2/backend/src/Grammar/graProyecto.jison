@@ -37,6 +37,9 @@
     const {DeclaracionMetodo} = require('../Instrucciones/DeclaracionMetodo');
     const {DeclaracionFuncion} = require('../Instrucciones/DeclaracionFuncion');
     const {DeclaracionGlobales} = require('../Instrucciones/DeclaracionGlobales');
+
+    let CErrores=require('../ManejoErrores/Errores');
+    let CNodoError=require('../ManejoErrores/NodoError');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -134,7 +137,9 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 {id}                  return 'id'
 <<EOF>>	          return 'EOF'
 
-.        {  console.error('Este es un error léxico: ' + yytext + '  en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+//.        {  console.error('Este es un error léxico: ' + yytext + '  en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.          { CErrores.Errores.add(new CNodoError.NodoError("LEXICO","No se esperaba el caracter: "+yytext,yylloc.first_line));  console.error('Este es un error léxico: ' + yytext + '  en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);}
+
 /lex
 
 
@@ -188,14 +193,14 @@ IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, thi
        
                        
 SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
-              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }  
-               ;
+              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
+              ;
                
 
 
 BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR_P '}' {$$ = $2;}              /* este es para que acepte vacios*/
                                | '{' '}' {$$ = [];}
-                               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }   
+                               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
                                ;
 
 
@@ -223,7 +228,7 @@ DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$
 
 INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
               | INSTRUCCION               { $$ = [$1]; }
-              |  error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 
 INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
@@ -345,7 +350,7 @@ BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONESWITCH {$$=$1;}
 
 INSTRUCCIONESWITCH : INSTRUCCIONESWITCH INSTRUCCIONSWITCH { $1.push($2); $$ = $1; }
               | INSTRUCCIONSWITCH               { $$ = [$1]; }
-              |  error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 // LO MISMO PERO NO TIENE EL BREAK para que no se encicle 
 INSTRUCCIONSWITCH : SENTENCIAIMPRIME     {$$ = $1;}

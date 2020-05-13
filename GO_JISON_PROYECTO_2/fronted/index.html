@@ -17,7 +17,7 @@
         <script src="../js/codemirror/lib/codemirror.js"></script>
         <link rel="stylesheet" href="../js/codemirror//lib//codemirror.css">
         <link rel="stylesheet" href="../js/codemirror//theme//dracula.css">
-   
+        <link rel="stylesheet" href="./website/style.css">
         
         
 
@@ -25,7 +25,7 @@
         <title>201800464</title>
     </head>
 
-    <body class ="myFONDO">
+    <body class ="MIfondo" >
         <div class="contenedor">
             <input id="fileInput" title="Abrir" type="file" size="50" onchange="AbrirArchivo(this.files)" class="btnp">
             <button onclick="DescargarArchivo();" id="guardar" title="Guardar" class="btnp">Guardar</button>
@@ -48,18 +48,21 @@
    <br>
    
 
-    <div class="row card col-8 bg-dark">
+    <div class="row card col-8 MIfondo">
         <div class="card-body">
-            <h2 class="card-title text-white">ENTRADA JAVA</h2>
+            <h2 class="card-title  tituloTb">ENTRADA JAVA</h2>
           </div>
            <textarea  name="entrada_copia" id="entrada_copia"></textarea>    
     <input id="fileInput2" title="Abrir" type="file" size="10" onchange="Abrir_2(this.files)" class="btn-dark col-5">
-    <button onclick="COMUNICAR_NODE();"  id="analizarJAVA" class="col-3" >
-        <i class="fa fa-code" aria-hidden="true">ANALIZAR</i>
-    </button>          
-   
-
 </div>
+<div class="row">
+    <button onclick="COMUNICAR_NODE();"  id="analizarJAVA" class="">
+        <i class="fa fa-code" aria-hidden="true">ANALIZAR</i>
+    </button> 
+</div>
+<br>
+<br>
+   
 
   
 
@@ -67,13 +70,13 @@
   
     </body>
 
+<div class = "col-3">
 
-    <div id = "enterE"></div>
-
-
-
-
-
+</div>
+    <div id="RepErrores" class="bg-negro col-6 border-danger">
+        <ul id=lista>
+        </ul>
+    </div>
 
 
 
@@ -89,11 +92,12 @@
     
 
     var url = 'http://localhost:3000/comunicar/';
-
+    var repE = document.getElementById("RepErrores");
     $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
         if (status.toString() == "success") {
-            console.log(data)
-            alert("El resultado es: " + data.toString());
+            console.log(data);
+            repE.innerHTML = data.toString();
+            //alert("El resultado es: " + data.toString());
         } else {
             alert("Error estado de conexion:" + status);
         }
@@ -101,6 +105,8 @@
     console.log("OK LLAMANDO AL METODO");
     
 }
+
+
 
 var editor_mirror= CodeMirror.fromTextArea(entrada_copia, {
         lineNumbers: true,
@@ -111,18 +117,21 @@ var editor_mirror= CodeMirror.fromTextArea(entrada_copia, {
        
     }).on('change', editor_mirror => {
         entrada_copia.value=editor_mirror.getValue();
-      //  editor_mirror.setSize(600, 600);
+     //   editor_mirror.setSize(300, 600);
     });
+
+    
 
 
 
 function irA(){
-    var texto = document.getElementById("entrada_copia").value;
-    alert("ENTRADA: "+ texto);
-   // comunicar        http://localhost:3000/comunicar/
    /*
    location.href = "http://localhost:7000/errores";*/
 } 
+
+function hi(){
+    console.log("Bienvenido");
+}
 </script>
 
 

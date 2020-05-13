@@ -3,7 +3,7 @@ import { Table } from './Simbols/Table';
 import { Break } from './Expresiones/Break';
 import { Continue } from './Expresiones/Continue';
 import { Exception } from './utils/Exception';
-
+import { Errores } from "./ManejoErrores/Errores";
 const parser = require('./Grammar/Grammar.js');
 const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON 
 const cors = require('cors');
@@ -93,10 +93,11 @@ app.post('/analizarYO', (req, res) => {
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null);
   console.log("-------------INICIA EL ARBOL----------------");
+  console.log(" LISTA DE ERRORES ");
+  console.log(Errores.geterror());
 
   tree.instructions.map((m: any) => {
-    console.log(m);
-
+  
 
     /*
     const res = m.execute(tabla, tree);
@@ -132,12 +133,14 @@ app.post('/analizarYO', (req, res) => {
 
 
 app.post('/comunicar/', function (req, res) {
-
+  Errores.clear();// limpiamos la lista 
   var entrada1=req.body.text1;
   var entrada2 = req.body.text2;
   const tree = MyParser_300445.parse(entrada1); 
-  console.log(tree);
-
-  res.send( tree );
+  //console.log(tree);
+  console.log(" LISTA DE ERRORES ");
+  console.log(Errores.geterror());
+  res.send( Errores.geterror());
+ // res.send( tree );
  
 });

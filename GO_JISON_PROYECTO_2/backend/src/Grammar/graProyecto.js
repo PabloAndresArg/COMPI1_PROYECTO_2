@@ -105,7 +105,7 @@ case 11:
 this.$ = new ClaseInstruccion($$[$0-1], $$[$0] ,  this._$.first_line, this._$.first_column);
 break;
 case 12: case 15: case 27: case 96:
- console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); 
 break;
 case 13: case 58: case 59:
 this.$ = $$[$0-1];
@@ -604,6 +604,9 @@ _handle_error:
     const {DeclaracionMetodo} = require('../Instrucciones/DeclaracionMetodo');
     const {DeclaracionFuncion} = require('../Instrucciones/DeclaracionFuncion');
     const {DeclaracionGlobales} = require('../Instrucciones/DeclaracionGlobales');
+
+    let CErrores=require('../ManejoErrores/Errores');
+    let CNodoError=require('../ManejoErrores/NodoError');
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
@@ -1066,7 +1069,7 @@ case 63:return 11
 break;
 case 64:return 5
 break;
-case 65:  console.error('Este es un error léxico: ' + yy_.yytext + '  en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
+case 65: CErrores.Errores.add(new CNodoError.NodoError("LEXICO","No se esperaba el caracter: "+yy_.yytext,yy_.yylloc.first_line));  console.error('Este es un error léxico: ' + yy_.yytext + '  en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column);
 break;
 }
 },

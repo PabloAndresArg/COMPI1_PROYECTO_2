@@ -17,3 +17,68 @@ body{
     text-align: center;
     color: deepskyblue;
 }
+#analizarJAVA{
+    left: 1500px;
+    right: 30px;
+	background:rgb(16, 19, 65);
+	color:#fff;
+	border:none;
+	padding:10px;
+	font-size: 16px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-weight:1px;
+	letter-spacing: 1px;
+	cursor:pointer;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+    transition: all 0.7s ease;  
+	}
+#analizarJAVA:hover{
+	background:rgb(16, 215, 250,0.8);
+}
+
+
+
+.tabl{
+    background-color: black;
+    text-align : center;
+    FONT-SIZE: 18px;
+    FONT-FAMILY: Arial;
+    color:white;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.tituloTb{
+    text-align: center;
+    color:deepskyblue;
+}
+.tituloErr{
+    text-align: center;
+    color: orangered;
+}
+
+.bg-negro{
+    border-radius: 5px;
+    background: black;
+}
+
+.MIfondo{
+    background-color: black;
+    background-image: url(../css/bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    font-family: cursive;
+    }
+
+    #FONDO_PRINCIPAL{
+        background-color: black;
+        background-image: url(./Atomo.jpg);
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        font-family: cursive;
+        color: white;
+    }
