@@ -19,7 +19,7 @@ body {
 }
 
 .contenedor{
-    width: 1080px;
+    width: 1200px;
     margin: auto;
     background:#272829;
     color: rgb(0, 112, 163);
@@ -65,12 +65,12 @@ body {
 
 #contenidopestanas{
     clear: both;
-    background: rgb(179, 241, 8);
+    background: rgb(10, 109, 175);
     padding: 20px 0px 20px 20px;
     border-radius: 5px;
     border-top-left-radius: 0px;
     border: 2px solid rgb(0, 112, 163);
-    width: 1025px;
+    width: 1050px;
 }
 
 #pestanascon {
@@ -88,7 +88,7 @@ body {
     float: left;
     text-align: center;
     margin: 0px 2px -2px -0px;
-    background: #a7d60a;
+    background: #0a73d6;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border: 2px solid rgb(0, 112, 163);

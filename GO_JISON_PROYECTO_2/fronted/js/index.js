@@ -1,5 +1,20 @@
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var contador=0;
 function get_cont(){
     return contador++;
@@ -104,25 +119,20 @@ function agregar() {
     ta.rows=30;
     divp.appendChild(ta);
     contenido.appendChild(divp);
-    console.log("ACA TODO BIEN "); 
 
     var act=document.getElementById('cpestana'+x);
-    
     var tact=document.getElementById('textarea'+x);
     var editor=CodeMirror(act, {
         lineNumbers: true,
         value: tact.value,
         matchBrackets: true,
         styleActiveLine: true,
-        theme: "eclipse",
+        theme: "dracula",
         mode: "text/x-java"
     }).on('change', editor => {
         tact.value=editor.getValue();
     });
-    
 }
-
-
 
 function quitar(){
     try{
@@ -154,11 +164,12 @@ function AbrirArchivo(files){
             value: tact.value,
             matchBrackets: true,
             styleActiveLine: true,
-            theme: "eclipse",
+            theme: "dracula",
             mode: "text/x-java"
         }).on('change', editor => {
             tact.value=editor.getValue();
         });
+        
     };
     reader.readAsText(file);
     file.clear;
@@ -170,9 +181,6 @@ function AbrirArchivo(files){
     var file_input=document.getElementById("fileInput");
     document.getElementById('fileInput').value="";
 }
-
-
-
 
 function DescargarArchivo(){
     var ta=document.getElementById(get_vent());
@@ -203,4 +211,51 @@ function DescargarArchivo(){
             window.URL.revokeObjectURL(url);  
         },0); 
     }
+}
+
+
+
+
+
+
+
+
+function analisis() {
+    var ventana_actual=document.getElementById(get_vent());
+    var texto=ventana_actual.value;
+    alert("ENTRADA: "+ texto +" ");
+    alert("comunicandome con :" +' http://localhost:3000/comunicar/');
+    var url = 'http://localhost:3000/comunicar/';
+    $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
+        if (status.toString() == "success") {
+            console.log(data)
+            alert("El resultado es: " + data.toString());
+        } else {
+            alert("Error estado de conexion:" + status);
+        }
+    });
+    console.log("OK LLAMANDO AL METODO");    
+}
+
+
+
+
+function errores() {
+    var ventana_actual=document.getElementById(get_vent());
+  var texto=ventana_actual.value;
+  alert("ENTRADA: "+ texto);
+  var url = 'http://localhost:3000/errores/';
+      var capa = document.getElementById("capa");
+  $.post(url, { text1: texto }, function (data, status) {
+      if (status.toString() == "success") {
+          console.log(data)
+          alert("El resultado es: " + data.toString());
+ 
+/*                    ACA inyecto el html recibido desde el NodeJs         */     
+capa.innerHTML = data.toString();
+      } else {
+          alert("Error estado de conexion:" + status);
+      }
+  });
+  console.log("OK LLAMANDO AL METODO");    
 }
