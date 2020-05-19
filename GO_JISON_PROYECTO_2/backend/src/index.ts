@@ -91,17 +91,17 @@ app.post('/analizarYO', (req, res) => {
   }
  const tree = MyParser_300445.parse(entrada); 
  // console.log("entra al arbol:"+ entrada);
-  const tabla = new Table(null);
+  const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
   console.log("-------------INICIA EL ARBOL----------------");
   Errores.clear();// limpiamos la lista 
-  console.log(" LISTA DE ERRORES ");
+  /*console.log(" LISTA DE ERRORES ");
   console.log(Errores.geterror());
-  console.log(tree); 
+  console.log(tree); */
   tree.instructions.map((m: any) => {
-  
+    console.log(m);
+    const res = m.execute(tabla, tree);
 
     /*
-    const res = m.execute(tabla, tree);
  
     if (res instanceof Break) {
       const error = new Exception('Semantico',
@@ -141,7 +141,7 @@ app.post('/comunicar/', function (req, res) {
   //console.log(tree);
   console.log(" LISTA DE ERRORES ");
   console.log(Errores.geterror());
-  res.send( Errores.geterror());
+  res.send(tree);
  // res.send( tree );
  
 });

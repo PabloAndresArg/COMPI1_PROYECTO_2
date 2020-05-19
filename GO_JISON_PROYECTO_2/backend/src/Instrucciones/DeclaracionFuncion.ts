@@ -29,7 +29,11 @@ export class DeclaracionFuncion extends Node {
         this.parametros = parametros;
     }
 
-    execute(table: Table, tree: Tree) {
- 
+    execute(table: Table, tree: Tree) :any{
+        
+        console.log("EJECUTE UNA FUNCION");
+        /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
+        const newtable = new Table(table);
+        return null;     
     }
 }

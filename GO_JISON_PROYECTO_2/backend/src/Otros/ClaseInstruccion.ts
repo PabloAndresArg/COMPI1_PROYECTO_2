@@ -15,7 +15,7 @@ import { Simbol } from "../Simbols/Simbol";
 
 export class ClaseInstruccion extends Node {
     identifier: String;
-    contenido: Node;
+    contenido:  Array<Node>;
 
     /**
      * @constructor 
@@ -24,14 +24,28 @@ export class ClaseInstruccion extends Node {
      * @param line
      * @param column 
      */
-    constructor(identifier: String, value: Node, line: Number, column: Number) {
+    constructor(identifier: String, value:  Array<Node>, line: Number, column: Number) {
         super(null, line, column);
         this.identifier = identifier;
         this.contenido = value;
         ;
     }
 
-    execute(table: Table, tree: Tree) {
+    execute(table: Table, tree: Tree) :any{
+        
+        console.log("EJECUTE UNA CLASE");
+        /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
+        const newtable = new Table(table);
 
+        for (let i = 0; i < this.contenido.length; i++) { // RECORRO CADA COSA DE MI CLASE 
+            const res = this.contenido[i].execute(newtable, tree);
+            if (res instanceof Continue) {
+                break;
+            } else if (res instanceof Break) {
+                return;
+            }
+        }
+
+        return null;     
     }
 }

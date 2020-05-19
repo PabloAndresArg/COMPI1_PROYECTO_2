@@ -18,8 +18,8 @@ export class Continue extends Node {
     }
 
     execute(table: Table, tree: Tree){
-       /*
+       
         return this;
-        */
+    
     }
 }

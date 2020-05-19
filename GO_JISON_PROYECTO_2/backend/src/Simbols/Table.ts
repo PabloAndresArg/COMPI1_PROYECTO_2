@@ -40,6 +40,8 @@ export class Table{
      * @method getVariable Obtiene una variable dentro de la tabla de simbolos
      * @param identifier Nombre de la variable a obtener
      */
+
+     
     getVariable(identifier: String): Simbol{
         let env: Table;
         for(env = this; env != null; env = env.Previous){

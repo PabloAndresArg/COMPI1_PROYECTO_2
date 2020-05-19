@@ -28,36 +28,7 @@ export class Importe extends Node {
         ;
     }
 
-    execute(table: Table, tree: Tree) {
-        /*
-        const result = this.value.execute(table, tree);
-        if (result instanceof Exception) {
-            return result;
-        }
-
-        let variable: Simbol;
-        variable = table.getVariable(this.identifier);
-        if (variable == null) {
-            const error = new Exception('Semantico',
-                'No se ha encontrado la variable ' + this.identifier,
-                this.line, this.column);
-            tree.excepciones.push(error);
-            tree.console.push(error.toString());
-            return error;
-        }
-
-
-        if (this.value.type.type != variable.type.type) {
-            const error = new Exception('Semantico',
-                `No se puede asignar la variable porque los tipos no coinciden.`,
-                this.line, this.column);
-            tree.excepciones.push(error);
-            tree.console.push(error.toString());
-            return error;
-        }
-
-        variable.value = result;
-        return null;
-        */
+    execute(table: Table, tree: Tree) :any{
+        return null;     
     }
 }

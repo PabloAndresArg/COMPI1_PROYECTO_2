@@ -16,9 +16,9 @@ export class Break extends Node {
     }
 
     execute(table: Table, tree: Tree){
-        /** 
-         *   return this;
-        */
+        
+          return this;
+        
       
     }
 }
