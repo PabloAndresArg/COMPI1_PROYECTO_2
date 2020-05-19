@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Node_1 = require("../Abstract/Node");
 /**
- * @class Nodo expresion continue, nos indica saltar iteraciones
+ * @class RETURN PARA LAS METODOS
  */
-class Continue extends Node_1.Node {
+class Return_metodo extends Node_1.Node {
     /**
      * @constructor Retorna el objeto continue creado
      * @param line Linea del continue
@@ -20,4 +20,4 @@ class Continue extends Node_1.Node {
          */
     }
 }
-exports.Continue = Continue;
+exports.Return_metodo = Return_metodo;

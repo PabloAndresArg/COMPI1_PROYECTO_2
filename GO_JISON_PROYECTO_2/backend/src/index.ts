@@ -93,9 +93,10 @@ app.post('/analizarYO', (req, res) => {
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null);
   console.log("-------------INICIA EL ARBOL----------------");
+  Errores.clear();// limpiamos la lista 
   console.log(" LISTA DE ERRORES ");
   console.log(Errores.geterror());
-
+  console.log(tree); 
   tree.instructions.map((m: any) => {
   
 

@@ -13,10 +13,10 @@ class Declaracion extends Node_1.Node {
      * @param line Linea de la sentencia if
      * @param column Columna de la sentencia if
      */
-    constructor(type, identifier, value, line, column) {
+    constructor(type, identifier, nodo1, line, column) {
         super(type, line, column);
         this.identifier = identifier;
-        this.value = value;
+        // this.value = value;
     }
     execute(table, tree) {
     }

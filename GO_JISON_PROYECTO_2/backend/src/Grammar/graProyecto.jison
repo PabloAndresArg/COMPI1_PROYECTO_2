@@ -43,6 +43,7 @@
     var esta_en_un_ciclo = false;
     var esta_en_un_metodo = false ; 
     var esta_en_una_funcion = false; 
+    var esta_en_un_switch = false;
     var isMain = false; 
 %}
 
@@ -231,18 +232,18 @@ INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 
-INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
+INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;console.log("SENTENCIA IMPRIME");}
             | WHILE                {$$ = $1;}
             | IF                   {$$ = $1;}
             | DOWHILE              {$$ = $1;}
             | SENTENCIA_FOR        {$$ = $1;}
             | SENTENCIA_SWITCH      {$$ = $1;}
             | ASIGNACION_SIMPLE     {$$ = $1;}
-            | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES    {$$ = $1;}
-            | SENTENCIA_CONTINUE {$$ = $1;}
+            | DECLARACION_ADENTRO_DE_METODOS_FUNCIONES {$$ = $1;}
+            | SENTENCIA_CONTINUE {$$ = $1; console.log("continue");}
             | SENTENCIA_RETURN_FUNCION {$$ = $1;}
             | SENTENCIA_RETURN_METODO{$$ = $1;}
-            | SENTENCIA_BREAK {$$ = $1;}
+            | SENTENCIA_BREAK {$$ = $1;console.log("break");}
             ;
 TIPO : 'int' {$$ = new Type(types.INT);}
      | 'String' {$$ = new Type(types.STRING);}
@@ -252,7 +253,7 @@ TIPO : 'int' {$$ = new Type(types.INT);}
      ;
 
 
-SENTENCIA_FOR:'for' '(' DEC_for ';' EXPRESION ';' INCRE_DECRE ')' BLOQUE_INSTRUCCIONES {$$ = new For($3, $5,$7 , $9 , this._$.first_line , this._$.first_column); }
+SENTENCIA_FOR:'for' '(' DEC_for ';' EXPRESION ';' INCRE_DECRE ')' BLOQUE_INSTRUCCIONES {esta_en_un_ciclo = true;console.log("esta en un ciclo for");$$ = new For($3, $5,$7 , $9 , this._$.first_line , this._$.first_column); esta_en_un_ciclo = false; console.log("salio del ciclo for");}
              ;
 
 DEC_for: TIPO 'id' '=' EXPRESION {$$ = new Declaracion($1 , $2 ,$4 , this._$.first_line , this._$.first_column );}
@@ -456,7 +457,7 @@ LISTA_PARAMETROS_CON_TIPO :LISTA_PARAMETROS_CON_TIPO  ','  TIPO 'id'     { $1.pu
 
 /* SENTENCIA BREAK */
 
-SENTENCIA_CONTINUE: 'continue' ';' {$$ = new Continue( $1, this._$.first_line, this._$.first_column) ;}
+SENTENCIA_CONTINUE: 'continue' ';' {$$ = new Continue( $1, this._$.first_line, this._$.first_column);}
                   ;
 SENTENCIA_RETURN_METODO: 'return' ';' {$$ = new Return_metodo($1, this._$.first_line , this._$.first_column);}
                         ;

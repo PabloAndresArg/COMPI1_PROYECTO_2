@@ -13,10 +13,9 @@ class ClaseInstruccion extends Node_1.Node {
      * @param column
      */
     constructor(identifier, value, line, column) {
-        console.log("nodo class");
         super(null, line, column);
         this.identifier = identifier;
-        this.value = null;
+        this.contenido = value;
         ;
     }
     execute(table, tree) {

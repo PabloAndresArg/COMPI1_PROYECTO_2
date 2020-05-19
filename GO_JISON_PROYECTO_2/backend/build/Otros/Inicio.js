@@ -13,14 +13,13 @@ class Inicio extends Node_1.Node {
      */
     constructor(l_imports, l_clases) {
         super(null, 0, 0);
-        console.log("****************");
+        this.Lista_importes_clases = [];
         l_imports.map((m) => {
-            console.log(m);
+            this.Lista_importes_clases.push(m);
         });
         l_clases.map((m) => {
-            console.log(m);
+            this.Lista_importes_clases.push(m);
         });
-        console.log("****************");
     }
     execute(table, tree) {
     }
