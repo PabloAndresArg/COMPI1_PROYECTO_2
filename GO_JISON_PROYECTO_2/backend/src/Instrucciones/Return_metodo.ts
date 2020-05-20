@@ -18,8 +18,6 @@ export class Return_metodo extends Node {
     }
 
     execute(table: Table, tree: Tree){
-       /*
         return this;
-        */
     }
 }

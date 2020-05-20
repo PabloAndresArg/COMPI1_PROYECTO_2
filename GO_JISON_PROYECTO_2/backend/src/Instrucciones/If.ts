@@ -5,7 +5,8 @@ import { Exception } from "../utils/Exception";
 import { types } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
-
+import { Primitive } from "../Expresiones/Primitive";
+import {Type } from "../utils/Type";
 /**
  * @class Ejecuta una serie de instrucciones en caso la condicion sea verdadera sino ejecuta las instrucciones falsas
  */
@@ -30,22 +31,22 @@ export class If extends Node {
     }
 
     execute(table: Table, tree: Tree) {
-        /*
         const newtable = new Table(table);
         let result: Node;
         result = this.condition.execute(newtable, tree);
         if (result instanceof Exception) {
             return result;
         }
+        result = new Primitive(new Type(types.BOOLEAN), true, null, null); // SIEMPRE SE EJECUTA 
 
-        if (this.condition.type.type !== types.BOOLEAN) {
+      /*  if (this.condition.type.type !== types.BOOLEAN) {
             const error = new Exception('Semantico',
                 `Se esperaba una expresion booleana para la condicion`,
                 this.line, this.column);
             tree.excepciones.push(error);
             tree.console.push(error.toString());
             return error;
-        }
+        }*/
 
         if (result) {
             for (let i = 0; i < this.IfList.length; i++) {
@@ -64,6 +65,5 @@ export class If extends Node {
         }
 
         return null;
-        */
     }
 }

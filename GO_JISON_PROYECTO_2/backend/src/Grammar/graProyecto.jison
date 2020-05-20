@@ -217,6 +217,7 @@ OPCION_ID_MAIN: 'main'  {$$ = $1}
 DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new DeclaracionMetodo($1, $2 , $4 ,  this._$.first_line , this._$.first_column);console.log("METODO");}
                         | TIPO id '(' OPCION_METODO_FUNCION { $$ = new DeclaracionFuncion($1, $2 , $4 ,  this._$.first_line , this._$.first_column); console.log("FUNCION"); }
                         | TIPO LISTA_IDS ASIGNACION {$$ = new DeclaracionGlobales($1,$2,$3,this._$.first_line , this._$.first_column ); console.log(" LISTA ids solo globales ");}
+                        | error { console.error('Este es un error sintáctico: se esperaba DECLARACION AMBITO CLASE' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
                         ; 
 
 

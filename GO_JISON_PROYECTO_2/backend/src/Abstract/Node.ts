@@ -25,4 +25,7 @@ export abstract class Node {
         this.line = line;
         this.column = column;
     }
+
+
+    
 }

@@ -4,20 +4,26 @@ import { Break } from './Expresiones/Break';
 import { Continue } from './Expresiones/Continue';
 import { Exception } from './utils/Exception';
 import { Errores } from "./ManejoErrores/Errores";
+import { Importe } from './Otros/Importe';
+import { Node } from './Abstract/Node';
+import { fstat } from 'fs';
+import { json } from 'body-parser';
+var bodyParser = require("body-parser");
 const parser = require('./Grammar/Grammar.js');
 const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON 
 const cors = require('cors');
 const app = express();
 const port = 3000;
-app.use(cors());
 
+app.use(cors());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.set('views', __dirname);
 app.use(express.urlencoded());
 app.use(express.json());
-
+app.use(bodyParser.json());
 
 app.listen(port, err => {
 
@@ -84,7 +90,30 @@ app.post('/analizar', (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.post('/analizarYO', (req, res) => {
+  Errores.clear();
   const { entrada, consola } = req.body;
   if (!entrada) {
     return res.redirect('/');
@@ -93,35 +122,24 @@ app.post('/analizarYO', (req, res) => {
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
   console.log("-------------INICIA EL ARBOL----------------");
-  Errores.clear();// limpiamos la lista 
-  /*console.log(" LISTA DE ERRORES ");
-  console.log(Errores.geterror());
-  console.log(tree); */
-  tree.instructions.map((m: any) => {
-    console.log(m);
-    const res = m.execute(tabla, tree);
-
-    /*
- 
-    if (res instanceof Break) {
-      const error = new Exception('Semantico',
-        `Sentencia break fuera de un ciclo XD`,
-        res.line, res.column);
-      tree.excepciones.push(error);
-      tree.console.push(error.toString());
-    } else if (res instanceof Continue) {
-      const error = new Exception('Semantico',
-        `Sentencia continue fuera de un ciclo`,
-        res.line, res.column);
-      tree.excepciones.push(error); 
-      tree.console.push(error.toString());
-    }*/
-   
-  
-  });
+  //console.log(tree);
+  //console.log(tree);
   console.log("------------------- FIN -------------------");
-  //console.log(tree.instructions[1].contenido[0].value.contenido);
-  // VIENDO LOS OBJETOS 
+ try {
+   console.log(JSON.stringify(tree,null ,2));
+ } catch (error) {
+   console.log("ERROR AL PARSEAR A JISON ");
+ }
+
+
+
+  tree.instructions.map((m: any) => {
+   // console.log(m);
+   // const res = m.execute(tabla, tree);
+
+  });
+ /* console.log(" LISTA DE ERRORES ");
+  console.log(Errores.geterror());*/
 
   res.render('views/index', {
     entrada,
@@ -138,10 +156,9 @@ app.post('/comunicar/', function (req, res) {
   var entrada1=req.body.text1;
   var entrada2 = req.body.text2;
   const tree = MyParser_300445.parse(entrada1); 
-  //console.log(tree);
+  console.log(req.body);
   console.log(" LISTA DE ERRORES ");
   console.log(Errores.geterror());
   res.send(tree);
  // res.send( tree );
- 
 });

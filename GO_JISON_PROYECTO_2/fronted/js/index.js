@@ -223,18 +223,18 @@ function DescargarArchivo(){
 function analisis() {
     var ventana_actual=document.getElementById(get_vent());
     var texto=ventana_actual.value;
-    alert("ENTRADA: "+ texto +" ");
     alert("comunicandome con :" +' http://localhost:3000/comunicar/');
     var url = 'http://localhost:3000/comunicar/';
     $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
         if (status.toString() == "success") {
             console.log(data)
-            alert("El resultado es: " + data.toString());
+           
         } else {
             alert("Error estado de conexion:" + status);
         }
     });
-    console.log("OK LLAMANDO AL METODO");    
+
+
 }
 
 

@@ -7,15 +7,78 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/themes/default/style.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
+
+
+
+
+    
     <script type="text/javascript">
         $(function () {
 
             var jsondata = [
-                           { "id": "ajson1", "parent": "#", "text": "Simple root node" },
-                           { "id": "ajson2", "parent": "#", "text": "Root node 2" },
-                           { "id": "ajson3", "parent": "ajson2", "text": "Child 1" },
-                           { "id": "ajson4", "parent": "ajson2", "text": "Child 2" },
-            ];
+ {
+  "instructions": [
+    {
+      "type": null,
+      "line": 1,
+      "column": 0,
+      "identifier": "c",
+      "value": null
+    },
+    {
+      "type": null,
+      "line": 2,
+      "column": 0,
+      "identifier": "b",
+      "value": null
+    },
+    {
+      "type": null,
+      "line": 5,
+      "column": 0,
+      "identifier": "prueba",
+      "contenido": [
+        {
+          "type": "void",
+          "line": 6,
+          "column": 2,
+          "identifier": "llave",
+          "value": {
+            "type": null,
+            "line": 6,
+            "column": null,
+            "contenido": [
+              {
+                "type": null,
+                "line": 7,
+                "column": 1,
+                "condition": {
+                  "type": {
+                    "type": 2,
+                    "typeString": "boolean"
+                  },
+                  "line": 7,
+                  "column": 4,
+                  "value": true
+                },
+                "IfList": [
+                  {
+                    "type": null,
+                    "line": 8,
+                    "column": 1
+                  }
+                ],
+                "ElseList": []
+              }
+            ],
+            "listaParams": []
+          }
+        }
+      ]
+    }
+  ]
+}
+];
 
             createJSTree(jsondata);
         });

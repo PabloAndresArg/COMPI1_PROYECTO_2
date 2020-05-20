@@ -19,7 +19,9 @@ export class DeclaracionMetodo extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        console.log("EJECUTE UNA DECLARACION METODO ");
+        console.log("EJECUTE UNA DECLARACION METODO " );
+        console.log(this.value);
+        this.value.execute(table,tree);
         return null;
     }
 }

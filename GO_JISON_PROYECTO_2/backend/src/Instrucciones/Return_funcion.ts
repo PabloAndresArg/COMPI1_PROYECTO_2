@@ -20,8 +20,6 @@ export class Return_funcion extends Node {
     }
 
     execute(table: Table, tree: Tree){
-       /*
         return this;
-        */
     }
 }

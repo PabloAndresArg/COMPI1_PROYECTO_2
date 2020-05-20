@@ -22,10 +22,7 @@ export class Sentencia_imprime extends Node{
     }
 
     execute(table: Table, tree: Tree): any {
-        /*
-        const value = this.expression.execute(table, tree);
-        tree.console.push(value);
+        console.log("se ejecuto  imprimir");
         return null;
-        */
     }
 }

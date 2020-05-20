@@ -12,13 +12,11 @@ export class Break extends Node {
      * @param column Columna del break
      */
     constructor(line: Number, column: Number) {
+        console.log("linea break" + line);
         super(null, line, column);
     }
 
     execute(table: Table, tree: Tree){
-        
           return this;
-        
-      
     }
 }
