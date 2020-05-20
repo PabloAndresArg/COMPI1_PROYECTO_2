@@ -123,10 +123,10 @@ app.post('/analizarYO', (req, res) => {
   const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
   console.log("-------------INICIA EL ARBOL----------------");
   //console.log(tree);
-  //console.log(tree);
   console.log("------------------- FIN -------------------");
  try {
-   console.log(JSON.stringify(tree,null ,2));
+  var json = JSON.stringify(tree,null ,2);
+  console.log(json);
  } catch (error) {
    console.log("ERROR AL PARSEAR A JISON ");
  }
@@ -156,9 +156,22 @@ app.post('/comunicar/', function (req, res) {
   var entrada1=req.body.text1;
   var entrada2 = req.body.text2;
   const tree = MyParser_300445.parse(entrada1); 
-  console.log(req.body);
+ // console.log("entra al arbol:"+ entrada);
+  const tabla = new Table(null); 
+
+  //console.log(tree);
+  console.log("-------------INICIA EL ARBOL----------------");
+ try {
+   console.log(JSON.stringify(tree,null ,2));
+   var arbol = JSON.stringify(tree,null ,2);
+   res.send(arbol);
+ } catch (error) {
+   console.log("ERROR AL PARSEAR A JISON ");
+ }
+ console.log("------------------- FIN -------------------");
+/*
   console.log(" LISTA DE ERRORES ");
-  console.log(Errores.geterror());
-  res.send(tree);
+  console.log(Errores.geterror());*/
  // res.send( tree );
+
 });

@@ -1,3 +1,5 @@
+import {Tree} from '../Simbols/Tree';
+import {Table} from '../Simbols/Table';
 export class NodoError {
 
     private tipo:string;
@@ -20,5 +22,9 @@ export class NodoError {
 
     public getlinea():number{
         return this.linea;
+    }
+
+    public execute(tabla:Table , tree:Tree){
+
     }
 }

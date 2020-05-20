@@ -11,8 +11,10 @@ import { Simbol } from "../Simbols/Simbol";
  * @class Reasigna el valor de una variable existente
  */
 export class Importe extends Node {
+    tipoInstruccion:String; 
     identifier: String;
     value: Node;
+ 
 
     /**
      * @constructor 
@@ -25,7 +27,7 @@ export class Importe extends Node {
         super(null, line, column);
         this.identifier = identifier;
         this.value = null;
-        ;
+        this.tipoInstruccion = "IMPORT"; 
     }
 
     execute(table: Table, tree: Tree) :any{

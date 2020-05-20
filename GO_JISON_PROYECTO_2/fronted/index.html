@@ -9,15 +9,14 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    
-    
+    <script type="text/javascript" src="website/app.js"></script>
+    <link rel="stylesheet" href="./website/style.css">
     <script src="./codemirror/lib/codemirror.js"></script>
     <link rel="stylesheet" href="./codemirror//lib//codemirror.css">
     <link rel="stylesheet" href="./codemirror//theme//eclipse.css">
     <script src="./codemirror/mode/clike/clike.js"></script>
 
-    
-   
+ 
 
     <link rel="stylesheet" type="text/css" href="css//pablo.css" />
     
@@ -28,13 +27,7 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <style>
-        .demo {
-            overflow: auto;
-            border: 1px solid silver;
-            min-height: 100px;
-        }
-    </style>
+
 
 
 
@@ -67,6 +60,84 @@
 
 
 <!--                 REPORTE ATS          -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ejemplo - JSTree</title>
+	<style>
+/*	html { margin:0; padding:0; font-size:62.5%; }
+	body { max-width:800px; min-width:300px; margin:0 auto; padding:20px 10px; font-size:14px; font-size:1.4em; }
+	h1 { font-size:1.8em; }*/
+	.demo { overflow:auto; border:1px solid silver; min-height:100px; }
+	</style>
+   
+    <link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
+</head>
+<body>
+
+
+	<h1>Reporte AST</h1>
+	<div id="arbol" class="demo">
+		<ul>
+			<li data-jstree='{ "opened" : true }'>Raiz
+				<ul>
+					<li data-jstree='{ "opened" : true }'>Lista Espresion
+					<ul>
+						<li data-jstree='{ "opened" : true }'>Expresion
+						<ul>
+							<li data-jstree='{ "opened" : true }'>Aritmetica
+								<ul>
+							<li>Primitivo</li>
+							<li>Primitivo</li>
+						</ul>
+							</li>
+						</ul>
+						</li>
+					</ul>
+					</li>
+				</ul>
+				<ul>
+					<li data-jstree='{ "opened" : true }'>Lista Instruccion
+					<ul>
+						<li data-jstree='{ "opened" : true }'>Instruccion
+						<ul>
+							<li data-jstree='{ "opened" : true }'>Imprimir
+								<ul>
+									<li data-jstree='{ "opened" : true }'>Lista Espresion
+									<ul>
+										<li data-jstree='{ "opened" : true }'>Expresion
+										<ul>
+											<li data-jstree='{ "opened" : true }'>Aritmetica
+												<ul>
+											<li>Primitivo</li>
+											<li>Primitivo</li>
+										</ul>
+											</li>
+										</ul>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						</li>
+					</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./jstree/dist/jstree.min.js"></script>
+	<script>
+    $('#arbol').jstree();
+    
+    
+	</script>
+</body>
+</html>
 
 
 <!--            FIN DEL REPORTE    ATS     -->
@@ -80,5 +151,49 @@
     </ul>
 </div>
 
+<script>
+function analisis() {
+    var ventana_actual=document.getElementById(get_vent());
+    var texto=ventana_actual.value;
+    alert("ENTRADA: "+ texto);
+    var url = 'http://localhost:3000/comunicar/';
+
+
+
+    $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
+        if (status.toString() == "success") {
+            console.log(data)
+            
+            createJSTree(data.toString());
+           
+            alert("El resultado es: " + data.toString());
+        } else {
+            alert("Error estado de conexion:" + status);
+        }
+    });
+    console.log("OK LLAMANDO AL METODO");    
+}
+
+
+</script>
+
+
+
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

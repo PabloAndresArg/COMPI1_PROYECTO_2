@@ -12,7 +12,6 @@ export abstract class Node {
      * si fuera instruccion devuelve nulo y si fuera expresion devuelve un valor
      */
     abstract execute(table: Table, tree: Tree): any;
- 
     /**
      * 
      * @constructor Base para cualquier instruccion o expresion, omitir tipo si fuera una instruccion

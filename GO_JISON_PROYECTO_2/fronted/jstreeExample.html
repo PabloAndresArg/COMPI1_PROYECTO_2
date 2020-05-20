@@ -1,98 +1,142 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>Simple jsTree</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/themes/default/style.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
-
-
-
-
-    
-    <script type="text/javascript">
-        $(function () {
-
-            var jsondata = [
- {
-  "instructions": [
-    {
-      "type": null,
-      "line": 1,
-      "column": 0,
-      "identifier": "c",
-      "value": null
-    },
-    {
-      "type": null,
-      "line": 2,
-      "column": 0,
-      "identifier": "b",
-      "value": null
-    },
-    {
-      "type": null,
-      "line": 5,
-      "column": 0,
-      "identifier": "prueba",
-      "contenido": [
-        {
-          "type": "void",
-          "line": 6,
-          "column": 2,
-          "identifier": "llave",
-          "value": {
-            "type": null,
-            "line": 6,
-            "column": null,
-            "contenido": [
-              {
-                "type": null,
-                "line": 7,
-                "column": 1,
-                "condition": {
-                  "type": {
-                    "type": 2,
-                    "typeString": "boolean"
-                  },
-                  "line": 7,
-                  "column": 4,
-                  "value": true
-                },
-                "IfList": [
-                  {
-                    "type": null,
-                    "line": 8,
-                    "column": 1
-                  }
-                ],
-                "ElseList": []
-              }
-            ],
-            "listaParams": []
-          }
-        }
-      ]
-    }
-  ]
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ul, #myUL {
+  list-style-type: none;
 }
-];
 
-            createJSTree(jsondata);
-        });
+#myUL {
+  margin: 0;
+  padding: 0;
+}
 
-        function createJSTree(jsondata) {            
-            $('#SimpleJSTree').jstree({
-                'core': {
-                    'data': jsondata
-                }
-            });
-        }
-    </script>
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */
+  transform: rotate(90deg);  
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+</style>
 </head>
 <body>
-    <div id="SimpleJSTree"></div>
+
+<h2>Tree View</h2>
+<p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
+<p>Click on the arrow(s) to open or close the tree branches.</p>
+
+<ul id="myUL">
+
+  <li><span class="caret">Instrucciones</span>
+    <ul class="nested">
+    //ETIQUETA PRIMER INSTRUCCION
+      <li><span class="caret">Importe</span>
+        <ul class="nested">
+
+		  //Primer elemento instruccion
+          <li><span class="caret">Instruccion A</span>
+            <ul class="nested">
+              <li>Type : null</li>
+              <li>Line = 1</li>
+              <li>Column = 0</li>
+              <li>Identifier = c</li>
+              <li>Value = null</li>
+            </ul>
+          </li>
+          
+          //Segundo elemento instruccion
+          <li><span class="caret">Instruccion B</span>
+            <ul class="nested">
+              <li>Type : null</li>
+              <li>Line = 2</li>
+              <li>Column = 0</li>
+              <li>Identifier = b</li>
+              <li>Value = null</li>
+            </ul>
+          </li>
+          
+        </ul>
+      </li>
+      
+     //ETIQUETA SEGUNDA INSTRUCCION
+     <li><span class="caret">Clase instruccion</span>
+        <ul class="nested">
+
+		  <li>Type : null</li>
+          <li>Line = 5</li>
+          <li>Column = 0</li>
+          <li>Identifier = prueba</li>
+          
+		  //Primer elemento instruccion
+          <li><span class="caret">Contenido</span>
+            <ul class="nested">
+              <li>Declaración de función</li>
+              <li>Declaración de método</li>
+            </ul>
+          </li>
+
+        </ul>
+      </li>     
+      
+    </ul>
+  </li>
+  
+  <li><span class="caret">Excepciones</span>
+  <ul class="nested">
+    <li>Water</li>
+    <li>Coffee</li>
+    <li><span class="caret">Tea</span>
+      <ul class="nested">
+        <li>Black Tea</li>
+        <li>White Tea</li>
+        <li><span class="caret">Green Tea</span>
+          <ul class="nested">
+            <li>Sencha</li>
+            <li>Gyokuro</li>
+            <li>Matcha</li>
+            <li>Pi Lo Chun</li>
+          </ul>
+        </li>
+      </ul>
+    </li>  
+  </ul>
+</li>
+</ul>
+
+<script>
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+</script>
+
 </body>
 </html>

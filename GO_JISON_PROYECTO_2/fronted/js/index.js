@@ -220,22 +220,6 @@ function DescargarArchivo(){
 
 
 
-function analisis() {
-    var ventana_actual=document.getElementById(get_vent());
-    var texto=ventana_actual.value;
-    alert("comunicandome con :" +' http://localhost:3000/comunicar/');
-    var url = 'http://localhost:3000/comunicar/';
-    $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
-        if (status.toString() == "success") {
-            console.log(data)
-           
-        } else {
-            alert("Error estado de conexion:" + status);
-        }
-    });
-
-
-}
 
 
 
