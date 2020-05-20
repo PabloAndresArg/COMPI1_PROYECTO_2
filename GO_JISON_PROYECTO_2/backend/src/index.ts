@@ -118,26 +118,33 @@ app.post('/analizarYO', (req, res) => {
   if (!entrada) {
     return res.redirect('/');
   }
+ 
  const tree = MyParser_300445.parse(entrada); 
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
   console.log("-------------INICIA EL ARBOL----------------");
-  //console.log(tree);
+ // console.log(tree);
   console.log("------------------- FIN -------------------");
  try {
   var json = JSON.stringify(tree,null ,2);
-  console.log(json);
+ // console.log(json);
  } catch (error) {
-   console.log("ERROR AL PARSEAR A JISON ");
+   console.log("ERROR..!!!!!!!!!  AL PARSEAR A JISON ");
+ 
  }
 
 
-
+try{
   tree.instructions.map((m: any) => {
-   // console.log(m);
-   // const res = m.execute(tabla, tree);
+    console.log(m);
+    const res = m.execute(tabla, tree);
 
   });
+}catch(error){
+  console.log("ERRORES EN LA ENTRADA  en ejecucion del ATS");
+  console.log(Errores.geterror());
+}
+
  /* console.log(" LISTA DE ERRORES ");
   console.log(Errores.geterror());*/
 

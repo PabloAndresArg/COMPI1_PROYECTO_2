@@ -6,7 +6,9 @@ import { types, Type } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
-
+import { Return_metodo } from "./Return_metodo";
+let CNodoError=require('../ManejoErrores/NodoError');
+let CErrores=require('../ManejoErrores/Errores');
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
  */
@@ -33,7 +35,15 @@ export class DeclaracionFuncion extends Node {
         
         console.log("EJECUTE UNA FUNCION");
 
-        this.value.execute(table,tree);
+
+        let res: Node;
+        res =this.value.execute(table,tree);
+   
+       if(res instanceof Return_metodo){
+        console.log("ERROR RETURN DE METODO ADENTRO DE UNA FUNCION ");
+        CErrores.Errores.add(new CNodoError.NodoError("Semantico"," RETURN DE METODO ADENTRO DE UNA FUNCION"+" Columna:"+ res.column ,res.line));
+        return res;
+       }
         return null;     
     }
 }

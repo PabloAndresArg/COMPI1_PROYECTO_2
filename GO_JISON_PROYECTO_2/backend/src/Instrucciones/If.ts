@@ -7,6 +7,8 @@ import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Primitive } from "../Expresiones/Primitive";
 import {Type } from "../utils/Type";
+import { Return_funcion } from "./Return_funcion";
+import { Return_metodo } from "./Return_metodo";
 /**
  * @class Ejecuta una serie de instrucciones en caso la condicion sea verdadera sino ejecuta las instrucciones falsas
  */
@@ -51,14 +53,14 @@ export class If extends Node {
         if (result) {
             for (let i = 0; i < this.IfList.length; i++) {
                 const res = this.IfList[i].execute(newtable, tree);
-                if(res instanceof Continue || res instanceof Break){
+                if(res instanceof Continue || res instanceof Break || res instanceof Return_funcion || res instanceof Return_metodo){
                     return res;
                 }
             }
         } else {
             for (let i = 0; i < this.ElseList.length; i++) {
                 const res = this.ElseList[i].execute(newtable, tree);
-                if(res instanceof Continue || res instanceof Break){
+                if(res instanceof Continue || res instanceof Break || res instanceof Return_funcion || res instanceof Return_metodo){
                     return res;
                 }
             }

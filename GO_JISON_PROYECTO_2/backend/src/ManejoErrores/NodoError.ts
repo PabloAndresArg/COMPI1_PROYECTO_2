@@ -24,7 +24,7 @@ export class NodoError {
         return this.linea;
     }
 
-    public execute(tabla:Table , tree:Tree){
-
+    public execute(tabla:Table , tree:Tree):any{
+        return null;
     }
 }

@@ -6,6 +6,8 @@ import { types, Type } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
+import { Return_funcion } from "../Instrucciones/Return_funcion";
+import { Return_metodo } from "../Instrucciones/Return_metodo";
 let CNodoError=require('../ManejoErrores/NodoError');
 let CErrores=require('../ManejoErrores/Errores');
 /**
@@ -34,16 +36,23 @@ export class Opcion_metodo_funcion extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        console.log("se ejecuto opcion metodo");
         /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
         const newtable = new Table(table);
         for (let i = 0; i < this.contenido.length; i++) {
             const res = this.contenido[i].execute(newtable, tree);
-            if(res instanceof Continue || res instanceof Break){
-                console.log(res);
-                console.log("ERROR TIENE UN BREAK ADENTRO :v"); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","El error : "+"break"+" Columna:"+ res.column ,res.line));
-                console.log(res);
+            if(res instanceof Break){
+                console.log("ERROR  BREAK "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
+                CErrores.Errores.add(new CNodoError.NodoError("Semantico","BREAK fuera de un ciclo"+""+" Columna:"+ res.column ,res.line));
+                return res;
+            }else if(res instanceof Continue){
+                console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
+                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
+                return res;
+            }else if(res instanceof Return_metodo){
+                console.log("RETURN METODO op/metFun");
+                return res;
+            }else if(res instanceof Return_funcion){
+                console.log("RETURN FUNCION  op/metFun");
                 return res;
             }
 

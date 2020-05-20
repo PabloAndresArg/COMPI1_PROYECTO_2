@@ -9,6 +9,8 @@ import { Break } from "../Expresiones/Break";
 
 import { Primitive } from "../Expresiones/Primitive";
 import {Type } from "../utils/Type";
+import { Return_funcion } from "./Return_funcion";
+import { Return_metodo } from "./Return_metodo";
 /**
  * @class Ejecuta una serie de instrucciones en caso la condicion sea verdadera sino ejecuta las instrucciones falsas
  */
@@ -45,6 +47,9 @@ export class While extends Node {
                         break;
                     } else if (res instanceof Break) {
                         return;
+                    }
+                    if( res instanceof Return_funcion || res instanceof Return_metodo){
+                        return res;
                     }
                 }
             }

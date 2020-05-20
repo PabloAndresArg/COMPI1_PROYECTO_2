@@ -6,6 +6,10 @@ import { types } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 
+import { Primitive } from "../Expresiones/Primitive";
+import {Type } from "../utils/Type";
+import { Return_funcion } from "./Return_funcion";
+import { Return_metodo } from "./Return_metodo";
 /**
  * @class
  */
@@ -30,5 +34,28 @@ export class For extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+        const newtable = new Table(table);
+        let result: Node;
+    
+            result = new Primitive(new Type(types.BOOLEAN), true, null, null); // SIEMPRE SE EJECUTA 
+            if (result instanceof Exception) {
+                return result;
+            }
+
+            if (result) {
+                for (let i = 0; i < this.List.length; i++) {
+                    const res = this.List[i].execute(newtable, tree);
+                    if (res instanceof Continue) {
+                        break;
+                    } else if (res instanceof Break) {
+                        return;
+                    }
+                    if( res instanceof Return_funcion || res instanceof Return_metodo){
+                        return res;
+                    }
+                }
+            }
+           
+        return null;
     }
 }

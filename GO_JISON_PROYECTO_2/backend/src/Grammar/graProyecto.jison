@@ -197,7 +197,7 @@ SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstr
               | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
                
-
+// tengo que retornar algo en los errores para que mi arbol no truene 
 
 BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR_P '}' {$$ = $2;}              /* este es para que acepte vacios*/
                                | '{' '}' {$$ = [];}
