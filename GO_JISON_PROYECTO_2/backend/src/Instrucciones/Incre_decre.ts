@@ -27,6 +27,7 @@ export class Incre_decre extends Node {
         this.simbolo = simbolo;
     }
 
-    execute(table: Table, tree: Tree) {
+    execute(table: Table, tree: Tree):any {
+        return null; 
     }
 }

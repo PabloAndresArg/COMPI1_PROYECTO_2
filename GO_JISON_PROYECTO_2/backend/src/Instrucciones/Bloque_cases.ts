@@ -35,8 +35,7 @@ export class Bloque_cases extends Node{
                // se acepta 
                console.log("un break se acepta adentro de un case :) ");
             }else if(res instanceof Continue){
-                console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
+                console.log("viene un continue sera que esta adentro de un ciclo ?");
                 return res;
             }else if(res instanceof Return_metodo){
                 console.log("RETURN METODO");

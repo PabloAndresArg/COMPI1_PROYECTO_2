@@ -29,9 +29,7 @@ export class Ins_Default extends Node {
                // se acepta 
                console.log("un break se acepta adentro de un case :) ");
             }else if(res instanceof Continue){
-                console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
-                return res;
+                return res; // nno puedo determinar si ess error ya que el switch podria estar adentro de un ciclo 
             }else if(res instanceof Return_metodo){
                 console.log("RETURN METODO"); // NO PUEDO DETERMINAR AUN SI ES ERROR O NO ASI QUE LO DEVUELVO 
                 return res;

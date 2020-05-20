@@ -27,7 +27,7 @@ export class Parametro extends Node {
         this.identifier = identifier;
     }
 
-    execute(table: Table, tree: Tree) {
- 
+    execute(table: Table, tree: Tree):any {
+        return null; 
     }
 }

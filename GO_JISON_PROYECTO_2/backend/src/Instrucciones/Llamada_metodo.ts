@@ -26,6 +26,7 @@ export class Llamada_metodo extends Node {
         this.id = id; 
     }
 
-    execute(table: Table, tree: Tree) {
+    execute(table: Table, tree: Tree):any {
+        return null; 
     }
 }

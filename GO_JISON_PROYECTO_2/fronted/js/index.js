@@ -243,3 +243,23 @@ capa.innerHTML = data.toString();
   });
   console.log("OK LLAMANDO AL METODO");    
 }
+
+
+function ats() {
+ var ventana_actual=document.getElementById(get_vent());
+  var texto=ventana_actual.value;
+  alert("ENTRADA: "+ texto);
+  var url = 'http://localhost:3000/ats/';
+  var rep = document.getElementById("ats");
+  $.post(url, { text1: texto }, function (data, status) {
+      if (status.toString() == "success") {
+          console.log(data)
+          alert("reporte generado");
+/*                    ACA inyecto el html recibido desde el NodeJs         */     
+        rep.innerHTML = data;
+      } else {
+          alert("Error estado de conexion:" + status);
+      }
+  });
+
+}

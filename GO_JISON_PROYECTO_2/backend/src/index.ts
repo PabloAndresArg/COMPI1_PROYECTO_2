@@ -8,6 +8,11 @@ import { Importe } from './Otros/Importe';
 import { Node } from './Abstract/Node';
 import { fstat } from 'fs';
 import { json } from 'body-parser';
+
+
+import {GraficaArbolAts} from './ManejoErrores/GraficaArbolAts'; 
+
+
 var bodyParser = require("body-parser");
 const parser = require('./Grammar/Grammar.js');
 const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON 
@@ -122,8 +127,8 @@ app.post('/analizarYO', (req, res) => {
  const tree = MyParser_300445.parse(entrada); 
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
-  console.log("-------------INICIA EL ARBOL----------------");
- // console.log(tree);
+  /*console.log("-------------INICIA EL ARBOL----------------");
+  console.log(tree);
   console.log("------------------- FIN -------------------");
  try {
   var json = JSON.stringify(tree,null ,2);
@@ -132,11 +137,12 @@ app.post('/analizarYO', (req, res) => {
    console.log("ERROR..!!!!!!!!!  AL PARSEAR A JISON ");
  
  }
+ */
 
 
 try{
   tree.instructions.map((m: any) => {
-    console.log(m);
+  //  console.log(m);
     const res = m.execute(tabla, tree);
 
   });
@@ -145,9 +151,14 @@ try{
   console.log(Errores.geterror());
 }
 
- /* console.log(" LISTA DE ERRORES ");
-  console.log(Errores.geterror());*/
+GraficaArbolAts.add( "HOLA"); 
 
+console.log(GraficaArbolAts.cadena); 
+
+
+
+
+ 
   res.render('views/index', {
     entrada,
     consola: tree.console,
@@ -181,4 +192,19 @@ app.post('/comunicar/', function (req, res) {
   console.log(Errores.geterror());*/
  // res.send( tree );
 
+});
+
+
+app.post('/ats/', function (req, res) {
+  GraficaArbolAts.clear();
+  Errores.clear();
+  var entrada1=req.body.text1;
+ /* var entrada2 = req.body.text2;
+  const tree = MyParser_300445.parse(entrada1); 
+  const tabla = new Table(null); */
+  GraficaArbolAts.initHtml(); 
+  GraficaArbolAts.endHTML(); 
+  console.log(GraficaArbolAts.cadena); 
+  res.send(GraficaArbolAts.cadena);
+  //res.send("HOLA MUNDO"); 
 });

@@ -31,8 +31,6 @@ export class Ins_case extends Node {
                // se acepta 
                console.log("un break se acepta adentro de un case :) ");
             }else if(res instanceof Continue){
-                console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
                 return res;
             }else if(res instanceof Return_metodo){
                 console.log("RETURN METODO"); // NO PUEDO DETERMINAR AUN SI ES ERROR O NO ASI QUE LO DEVUELVO 

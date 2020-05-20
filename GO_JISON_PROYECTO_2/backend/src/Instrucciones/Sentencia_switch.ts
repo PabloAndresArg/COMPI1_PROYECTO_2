@@ -27,14 +27,13 @@ export class Sentencia_switch extends Node {
         if(res instanceof Break){
             // se acepta 
          }else if(res instanceof Continue){
-             console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-             CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
+         //    console.log("sacando el continue al exterior :o ");
              return res;
          }else if(res instanceof Return_metodo){
-             console.log("RETURN METODO sw");
+         //    console.log("RETURN METODO sw");
              return res;
          }else if(res instanceof Return_funcion){
-             console.log("RETURN FUNCION");
+         //    console.log("RETURN FUNCION");
              return res;
          }
 

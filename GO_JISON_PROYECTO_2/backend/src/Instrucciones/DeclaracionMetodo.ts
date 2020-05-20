@@ -7,8 +7,17 @@ import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import { Return_funcion } from "./Return_funcion";
+import { Console } from "console";
 let CNodoError=require('../ManejoErrores/NodoError');
 let CErrores=require('../ManejoErrores/Errores');
+
+
+
+
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+
+
 export class DeclaracionMetodo extends Node {
     type: Type;
     identifier: String;
@@ -21,6 +30,8 @@ export class DeclaracionMetodo extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
+
+
         console.log("EJECUTE UNA DECLARACION METODO " );
         let res: Node;
         res =this.value.execute(table,tree);

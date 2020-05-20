@@ -41,6 +41,7 @@
         <button onclick="agregar();" title="AgregarPestana" id="btn4" class="btn btn-success text-black"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Pestana</button>
         <button onclick="quitar();" title="QuitarPestana" id="btn5" class="btn btn-danger text-black">Quitar Pestana <i class="fa fa-window-close" aria-hidden="true"></i></button>
         <button onclick="analisis();" id="analizarJAVA" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
+		<button onclick="ats();" class="btn btn-success text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
          
         
         <div id="pestanas">
@@ -59,88 +60,7 @@
     <br>
 
 
-<!--                 REPORTE ATS          -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Ejemplo - JSTree</title>
-	<style>
-/*	html { margin:0; padding:0; font-size:62.5%; }
-	body { max-width:800px; min-width:300px; margin:0 auto; padding:20px 10px; font-size:14px; font-size:1.4em; }
-	h1 { font-size:1.8em; }*/
-	.demo { overflow:auto; border:1px solid silver; min-height:100px; }
-	</style>
-   
-    <link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
-</head>
-<body>
 
-
-	<h1>Reporte AST</h1>
-	<div id="arbol" class="demo">
-		<ul>
-			<li data-jstree='{ "opened" : true }'>Raiz
-				<ul>
-					<li data-jstree='{ "opened" : true }'>Lista Espresion
-					<ul>
-						<li data-jstree='{ "opened" : true }'>Expresion
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Aritmetica
-								<ul>
-							<li>Primitivo</li>
-							<li>Primitivo</li>
-						</ul>
-							</li>
-						</ul>
-						</li>
-					</ul>
-					</li>
-				</ul>
-				<ul>
-					<li data-jstree='{ "opened" : true }'>Lista Instruccion
-					<ul>
-						<li data-jstree='{ "opened" : true }'>Instruccion
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Imprimir
-								<ul>
-									<li data-jstree='{ "opened" : true }'>Lista Espresion
-									<ul>
-										<li data-jstree='{ "opened" : true }'>Expresion
-										<ul>
-											<li data-jstree='{ "opened" : true }'>Aritmetica
-												<ul>
-											<li>Primitivo</li>
-											<li>Primitivo</li>
-										</ul>
-											</li>
-										</ul>
-										</li>
-									</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						</li>
-					</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./jstree/dist/jstree.min.js"></script>
-	<script>
-    $('#arbol').jstree();
-    
-    
-	</script>
-</body>
-</html>
-
-
-<!--            FIN DEL REPORTE    ATS     -->
 </body>
 
 <div class="col-3">
@@ -177,11 +97,102 @@ function analisis() {
 
 </script>
 
+<!--                 REPORTE ATS          -->
 
+	
+	<html lang="en" id = "ats">
+
+		<head>
+			<meta charset="UTF-8">
+			<title>Ejemplo - JSTree</title>
+			<style>
+			.demo { overflow:auto; border:1px solid silver; min-height:100px; }
+			</style>
+		   
+			<link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
+		</head>
+		<body>
+			<div id= "ats">		
+			</div>
+
+
+		
+		
+			<h1 style="color: azure;">Reporte AST</h1>
+			<div id="arbol" class="demo"  style="background-color: azure;">
+		
+				
+				<ul>
+					<li data-jstree='{ "opened" : true }'>Raiz
+						<ul>
+							<li data-jstree='{ "opened" : true }'>Lista Espresion
+							<ul>
+								<li data-jstree='{ "opened" : true }'>Expresion
+								<ul>
+									<li data-jstree='{ "opened" : true }'>Aritmetica
+										<ul>
+									<li>Primitivo</li>
+									<li>Primitivo</li>
+								</ul>
+									</li>
+								</ul>
+								</li>
+							</ul>
+							</li>
+						</ul>
+						<ul>
+							<li data-jstree='{ "opened" : true }'>Lista Instruccion
+							<ul>
+								<li data-jstree='{ "opened" : true }'>Instruccion
+								<ul>
+									<li data-jstree='{ "opened" : true }'>Imprimir
+										<ul>
+											<li data-jstree='{ "opened" : true }'>Lista Espresion
+											<ul>
+												<li data-jstree='{ "opened" : true }'>Expresion
+												<ul>
+													<li data-jstree='{ "opened" : true }'>Aritmetica
+														<ul>
+													<li>Primitivo</li>
+													<li>Primitivo</li>
+												</ul>
+													</li>
+												</ul>
+												</li>
+											</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								</li>
+							</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+		
+		
+		
+			</div>
+
+		
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="./jstree/dist/jstree.min.js"></script>
+		<script>
+		$('#arbol').jstree();
+		
+		
+		</script>
+	</body>
+	</html>
+	
+
+<!--            FIN DEL REPORTE    ATS     -->
 
 
 </html>
-
 
 
 
