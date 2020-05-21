@@ -199,12 +199,34 @@ app.post('/ats/', function (req, res) {
   GraficaArbolAts.clear();
   Errores.clear();
   var entrada1=req.body.text1;
- /* var entrada2 = req.body.text2;
+  //var entrada2 = req.body.text2;
   const tree = MyParser_300445.parse(entrada1); 
-  const tabla = new Table(null); */
-  GraficaArbolAts.initHtml(); 
-  GraficaArbolAts.endHTML(); 
-  console.log(GraficaArbolAts.cadena); 
-  res.send(GraficaArbolAts.cadena);
-  //res.send("HOLA MUNDO"); 
+  const tabla = new Table(null); 
+  //GraficaArbolAts.initHtml(); 
+  if(Errores.hay_errores()){
+  // SI HAY ERRORES DEBERIA DE DEVOLVERLOS 
+    res.send("LA ENTRADA POSEEE ERRORES");
+  }else{
+    GraficaArbolAts.add("<ul>\n");
+   GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Raiz\n");
+    try{
+      tree.instructions.map((m: any) => {
+        console.log(m);
+        const res = m.execute(tabla, tree);
+    
+      });
+    }catch(error){
+      console.log("ERRORES EN LA ENTRADA  en ejecucion del ATS");
+    }
+  
+    /*     COMIENZO A RECORRER EL ARBOL PARA ELLO SE VALIDO QUE NO VINIERA CON ERRORES */
+     
+    GraficaArbolAts.add("</li>\n");
+    GraficaArbolAts.add("</ul>\n"); 
+    console.log(GraficaArbolAts.cadena);
+    //GraficaArbolAts.initHtml();  
+    res.send(GraficaArbolAts.cadena);
+
+  }
+
 });

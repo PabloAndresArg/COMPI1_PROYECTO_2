@@ -16,6 +16,13 @@ class Errores extends Array<NodoError>{
         }
         return "Compilacion Sin Errores";
     }
+    
+    public static hay_errores():boolean{
+        if(this.prototype.length>0){
+            return true ; 
+        }
+        return false;
+    }
 
     public static geterror():string{
         var cad:string="";

@@ -7,6 +7,7 @@ import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
 /**
  * @class Reasigna el valor de una variable existente
  */
@@ -31,6 +32,7 @@ export class Importe extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
+        GraficaArbolAts.add("");
         return null;     
     }
 }

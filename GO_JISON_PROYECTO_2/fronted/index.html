@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+   <!-- <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>-->
     <script type="text/javascript" src="website/app.js"></script>
     <link rel="stylesheet" href="./website/style.css">
     <script src="./codemirror/lib/codemirror.js"></script>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./codemirror//theme//eclipse.css">
     <script src="./codemirror/mode/clike/clike.js"></script>
 
- 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css//pablo.css" />
     
@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+	<link rel="stylesheet" href="../jstree/dist//themes//default/style.min.css" />
 
 
 
@@ -43,7 +44,9 @@
         <button onclick="analisis();" id="analizarJAVA" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
 		<button onclick="ats();" class="btn btn-success text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
          
-        
+		
+		   <!--         <button onclick="abrirUrl('arbol.html','arbol');" class="btn btn-success text-black">arbol <i class="fa fa-code" aria-hidden="true"></i></button>   -->
+
         <div id="pestanas">
             <ul id=lista>
             </ul>
@@ -100,7 +103,7 @@ function analisis() {
 <!--                 REPORTE ATS          -->
 
 	
-	<html lang="en" id = "ats">
+	<html lang="en">
 
 		<head>
 			<meta charset="UTF-8">
@@ -108,91 +111,43 @@ function analisis() {
 			<style>
 			.demo { overflow:auto; border:1px solid silver; min-height:100px; }
 			</style>
-		   
-			<link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
 		</head>
 		<body>
-			<div id= "ats">		
-			</div>
-
-
-		
-		
 			<h1 style="color: azure;">Reporte AST</h1>
-			<div id="arbol" class="demo"  style="background-color: azure;">
-		
-				
-				<ul>
-					<li data-jstree='{ "opened" : true }'>Raiz
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Lista Espresion
-							<ul>
-								<li data-jstree='{ "opened" : true }'>Expresion
-								<ul>
-									<li data-jstree='{ "opened" : true }'>Aritmetica
-										<ul>
-									<li>Primitivo</li>
-									<li>Primitivo</li>
-								</ul>
-									</li>
-								</ul>
-								</li>
-							</ul>
-							</li>
-						</ul>
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Lista Instruccion
-							<ul>
-								<li data-jstree='{ "opened" : true }'>Instruccion
-								<ul>
-									<li data-jstree='{ "opened" : true }'>Imprimir
-										<ul>
-											<li data-jstree='{ "opened" : true }'>Lista Espresion
-											<ul>
-												<li data-jstree='{ "opened" : true }'>Expresion
-												<ul>
-													<li data-jstree='{ "opened" : true }'>Aritmetica
-														<ul>
-													<li>Primitivo</li>
-													<li>Primitivo</li>
-												</ul>
-													</li>
-												</ul>
-												</li>
-											</ul>
-											</li>
-										</ul>
-									</li>
-								</ul>
-								</li>
-							</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-		
-		
-		
+			<!-- En el div que sigue meto el ast metido desde el backend  -->
+
+
+			<div id= "ats" class="demo"  style="background-color: azure;">		
 			</div>
-
-		
-
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+	
 		<script src="./jstree/dist/jstree.min.js"></script>
-		<script>
-		$('#arbol').jstree();
-		
-		
-		</script>
+	
+	
+	
 	</body>
 	</html>
 	
 
-<!--            FIN DEL REPORTE    ATS     -->
+<!--     	      FIN DEL REPORTE    ATS     -->
 
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

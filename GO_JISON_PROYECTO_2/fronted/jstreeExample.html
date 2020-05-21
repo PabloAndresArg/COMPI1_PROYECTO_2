@@ -1,157 +1,113 @@
+<!--
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-ul, #myUL {
-  list-style-type: none;
-}
-
-#myUL {
-  margin: 0;
-  padding: 0;
-}
-
-.caret {
-  cursor: pointer;
-  -webkit-user-select: none; /* Safari 3.1+ */
-  -moz-user-select: none; /* Firefox 2+ */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none;
-}
-
-.caret::before {
-  content: "\25B6";
-  color: black;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-.caret-down::before {
-  -ms-transform: rotate(90deg); /* IE 9 */
-  -webkit-transform: rotate(90deg); /* Safari */
-  transform: rotate(90deg);  
-}
-
-.nested {
-  display: none;
-}
-
-.active {
-  display: block;
-}
-</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    ul, #myUL {  list-style-type: none;}  #myUL { margin: 0; padding: 0;}  .caret { color:red; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;  user-select: none;} .caret::before {content: "\25B6";color: black; display: inline-block; margin-right: 6px;} .caret-down::before {-ms-transform: rotate(90deg); -webkit-transform: rotate(90deg);transform: rotate(90deg);}  .nested { display: none;} .active {  display: block;}
+  </style>
 </head>
-<body>
 
-<h2>Tree View</h2>
-<p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
-<p>Click on the arrow(s) to open or close the tree branches.</p>
+<body>x|
 
-<ul id="myUL">
+  <h2>Tree View</h2>
+  <p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
+  <p>Click on the arrow(s) to open or close the tree branches.</p>
 
-  <li><span class="caret">Instrucciones</span>
-    <ul class="nested">
-    //ETIQUETA PRIMER INSTRUCCION
-      <li><span class="caret">Importe</span>
-        <ul class="nested">
+  <ul id="myUL">
 
-		  //Primer elemento instruccion
-          <li><span class="caret">Instruccion A</span>
-            <ul class="nested">
-              <li>Type : null</li>
-              <li>Line = 1</li>
-              <li>Column = 0</li>
-              <li>Identifier = c</li>
-              <li>Value = null</li>
-            </ul>
-          </li>
-          
-          //Segundo elemento instruccion
-          <li><span class="caret">Instruccion B</span>
-            <ul class="nested">
-              <li>Type : null</li>
-              <li>Line = 2</li>
-              <li>Column = 0</li>
-              <li>Identifier = b</li>
-              <li>Value = null</li>
-            </ul>
-          </li>
-          
-        </ul>
-      </li>
-      
-     //ETIQUETA SEGUNDA INSTRUCCION
-     <li><span class="caret">Clase instruccion</span>
-        <ul class="nested">
-
-		  <li>Type : null</li>
-          <li>Line = 5</li>
-          <li>Column = 0</li>
-          <li>Identifier = prueba</li>
-          
-		  //Primer elemento instruccion
-          <li><span class="caret">Contenido</span>
-            <ul class="nested">
-              <li>Declaración de función</li>
-              <li>Declaración de método</li>
-            </ul>
-          </li>
-
-        </ul>
-      </li>     
-      
-    </ul>
-  </li>
-  
-  <li><span class="caret">Excepciones</span>
-  <ul class="nested">
-    <li>Water</li>
-    <li>Coffee</li>
-    <li><span class="caret">Tea</span>
+    <li><span class="caret" >Instrucciones</span>
       <ul class="nested">
-        <li>Black Tea</li>
-        <li>White Tea</li>
-        <li><span class="caret">Green Tea</span>
+        <li><span class="caret">Importe</span>
           <ul class="nested">
-            <li>Sencha</li>
-            <li>Gyokuro</li>
-            <li>Matcha</li>
-            <li>Pi Lo Chun</li>
+
+            <li><span class="caret">Instruccion A</span>
+              <ul class="nested">
+                <li>Type : null</li>
+              </ul>
+            </li>
+
+            <li><span class="caret">Instruccion B</span>
+              <ul class="nested">
+                <li>Type : null</li>
+              </ul>
+            </li>
+
           </ul>
         </li>
+
+        //ETIQUETA SEGUNDA INSTRUCCION
+        <li><span class="caret">Clase instruccion</span>
+          <ul class="nested">
+
+            <li>Type : null</li>
+            <li>Line = 5</li>
+            <li>Column = 0</li>
+            <li>Identifier = prueba</li>
+
+            //Primer elemento instruccion
+            <li><span class="caret">Contenido</span>
+              <ul class="nested">
+                <li>Declaración de función</li>
+                <li>Declaración de método</li>
+              </ul>
+            </li>
+
+          </ul>
+        </li>
+
       </ul>
-    </li>  
+    </li>
+
   </ul>
-</li>
-</ul>
 
-<script>
-var toggler = document.getElementsByClassName("caret");
-var i;
+  <button onclick="cambia();"> </button>
 
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  });
-}
-</script>
+  <script>
+    var toggler = document.getElementsByClassName("caret");
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+      toggler[i].addEventListener("click", function () {
+        this.parentElement.querySelector(".nested").classList.toggle("active");
+        this.classList.toggle("caret-down");
+      });
+    }
+
+    function cambia() {
+      var cadena = ""; 
+      cadena += "<li><span class=\"caret\"  style = \"color:green; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;  user-select: none;\"   >Instrucciones</span>" + "\n";
+      cadena += "<ul class=\"nested\"   style = \"display: none;\"  >" + "\n";
+      cadena += "<li><span class=\"caret\" style = \"color:green; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;  user-select: none;\">Importe</span>" + "\n";
+      cadena += "<ul class=\"nested\" style = \"display: none;\">" + "\n";
+      cadena += "<li><span class=\"caret\">Instruccion A</span>" + "\n";
+      cadena += "<ul class=\"nested\"   style = \"display: none;\">" + "\n";
+      cadena += "<li>Identifier = c</li> " + "\n";
+      cadena += "<li>Type : null</li> " + "\n";
+      cadena += "<li>Value = null</li> " + "\n";
+      cadena += "</ul>" + "\n";
+      cadena += "</li>" + "\n";
+      cadena += "</li>" + "\n";
+      cadena += "<script>var toggler = document.getElementsByClassName('caret');var i;	for (i = 0; i < toggler.length; i++) {toggler[i].addEventListener('click', function() {	this.parentElement.querySelector('.nested').classList.toggle('active');	this.classList.toggle('caret-down'); });	}	" + "<//script>  \n";
+        
+
+      var my = document.getElementById("myUL");
+      my.innerHTML = cadena;
+     console.log(cadena);
+     var elemento = document.createElement('ul');
+      var text = document.createTextNode("elemento  NUEVO");
+      elemento.appendChild(text);
+      my.appendChild(elemento);
+    }
+  </script>
 
 </body>
+
 </html>
 
 
-
-
-
-
-
-
-
-
-
-
+-->
 
 
 
@@ -202,82 +158,92 @@ for (i = 0; i < toggler.length; i++) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Ejemplo - JSTree</title>
-	<style>
-	.demo { overflow:auto; border:1px solid silver; min-height:100px; }
-	</style>
-   
-    <link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
+  <meta charset="UTF-8">
+  <title>Ejemplo - JSTree</title>
+  <style>
+    .demo {
+      overflow: auto;
+      border: 1px solid silver;
+      min-height: 100px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="./jstree/dist//themes//default/style.min.css" />
 </head>
+
 <body>
-	
-
-	<h1 style="color: azure;">Reporte AST</h1>
-	<div id="arbol" class="demo"  style="background-color: azure;">
-
-		
-		<ul>
-			<li data-jstree='{ "opened" : true }'>Raiz
-				<ul>
-					<li data-jstree='{ "opened" : true }'>Lista Espresion
-					<ul>
-						<li data-jstree='{ "opened" : true }'>Expresion
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Aritmetica
-								<ul>
-							<li>Primitivo</li>
-							<li>Primitivo</li>
-						</ul>
-							</li>
-						</ul>
-						</li>
-					</ul>
-					</li>
-				</ul>
-				<ul>
-					<li data-jstree='{ "opened" : true }'>Lista Instruccion
-					<ul>
-						<li data-jstree='{ "opened" : true }'>Instruccion
-						<ul>
-							<li data-jstree='{ "opened" : true }'>Imprimir
-								<ul>
-									<li data-jstree='{ "opened" : true }'>Lista Espresion
-									<ul>
-										<li data-jstree='{ "opened" : true }'>Expresion
-										<ul>
-											<li data-jstree='{ "opened" : true }'>Aritmetica
-												<ul>
-											<li>Primitivo</li>
-											<li>Primitivo</li>
-										</ul>
-											</li>
-										</ul>
-										</li>
-									</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						</li>
-					</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
 
 
+  <h1 style="color: azure;">Reporte AST</h1>
+  <div id="arbol" class="demo" style="background-color: azure;" onchange="REFRESCA();">
 
-	</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./jstree/dist/jstree.min.js"></script>
-	<script>
-    $('#arbol').jstree();
-    
-    
-	</script>
+    <ul>
+      <li data-jstree='{ "opened" : true }'>Raiz
+        <ul>
+          <li data-jstree='{ "opened" : true }'>Lista Espresion
+            <ul>
+              <li data-jstree='{ "opened" : true }'>Expresion
+                <ul>
+                  <li data-jstree='{ "opened" : true }'>Aritmetica
+                    <ul>
+                      <li>Primitivo</li>
+                      <li>Primitivo</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li data-jstree='{ "opened" : true }'>Lista Instruccion
+            <ul>
+              <li data-jstree='{ "opened" : true }'>Instruccion
+                <ul>
+                  <li data-jstree='{ "opened" : true }'>Imprimir
+                    <ul>
+                      <li data-jstree='{ "opened" : true }'>Lista Espresion
+                        <ul>
+                          <li data-jstree='{ "opened" : true }'>Expresion
+                            <ul>
+                              <li data-jstree='{ "opened" : true }'>Aritmetica
+                                <ul>
+                                  <li>Primitivo</li>
+                                  <li>Primitivo</li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./jstree/dist/jstree.min.js"></script>
+  <script>
+    function REFRESCA() {
+      console.log("refrescando");
+      $('#arbol').jstree();
+    }
+
+
+
+  </script>
 </body>
-</html>
 
+</html>

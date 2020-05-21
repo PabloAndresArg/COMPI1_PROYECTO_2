@@ -15,6 +15,21 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var contador=0;
 function get_cont(){
     return contador++;
@@ -245,6 +260,10 @@ capa.innerHTML = data.toString();
 }
 
 
+
+
+
+
 function ats() {
  var ventana_actual=document.getElementById(get_vent());
   var texto=ventana_actual.value;
@@ -255,11 +274,35 @@ function ats() {
       if (status.toString() == "success") {
           console.log(data)
           alert("reporte generado");
-/*                    ACA inyecto el html recibido desde el NodeJs         */     
+/*                   ACA inyecto el html recibido desde el NodeJs         */     
         rep.innerHTML = data;
+
+
+ /*      en siguiente codigo es como mandarlo a graficar         */    
+         $('#ats').jstree(); 
+
       } else {
           alert("Error estado de conexion:" + status);
       }
   });
 
+}
+
+
+
+
+
+//var int=self.setInterval('refresh()',8000);
+function refresh(){
+ location.reload(true);
+}
+
+
+
+
+function abrirUrl(url, contenedor){
+    $.get(url,{},function(data){
+        $("#"+contenedor).html(data);
+
+    });
 }
