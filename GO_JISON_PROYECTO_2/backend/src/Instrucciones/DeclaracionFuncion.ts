@@ -12,6 +12,8 @@ let CErrores=require('../ManejoErrores/Errores');
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
  */
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
 export class DeclaracionFuncion extends Node {
     type: Type;
     identifier: String;
@@ -32,18 +34,22 @@ export class DeclaracionFuncion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
-        
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones\n"); 
         console.log("EJECUTE UNA FUNCION");
 
-
+        /*ACA HAY UN AMBITO NUEVO */ 
         let res: Node;
+        GraficaArbolAts.add("<ul>\n");
         res =this.value.execute(table,tree);
-   
+        GraficaArbolAts.add("</ul>\n");
        if(res instanceof Return_metodo){
         console.log("ERROR RETURN DE METODO ADENTRO DE UNA FUNCION ");
         CErrores.Errores.add(new CNodoError.NodoError("Semantico"," RETURN DE METODO ADENTRO DE UNA FUNCION"+" Columna:"+ res.column ,res.line));
+        GraficaArbolAts.add("</li>\n");
         return res;
        }
+
+       GraficaArbolAts.add("</li>\n");
         return null;     
     }
 }

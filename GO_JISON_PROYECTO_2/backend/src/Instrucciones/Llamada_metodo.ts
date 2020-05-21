@@ -9,6 +9,9 @@ import { Break } from "../Expresiones/Break";
 /**
  * @class
  */
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+
 export class Llamada_metodo extends Node {
     id:string; 
     Parametros: Node;
@@ -27,6 +30,7 @@ export class Llamada_metodo extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>LLamada_metodo</li>\n");
         return null; 
     }
 }

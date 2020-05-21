@@ -1,6 +1,7 @@
 import { Node } from "../Abstract/Node";
 import { Table } from "../Simbols/Table";
 import { Tree } from "../Simbols/Tree";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class RETURN PARA LAS METODOS   
@@ -18,6 +19,7 @@ export class Return_metodo extends Node {
     }
 
     execute(table: Table, tree: Tree){
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Return_Metodo</li>\n");
         return this;
     }
 }

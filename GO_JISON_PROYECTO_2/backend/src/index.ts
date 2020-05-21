@@ -143,7 +143,7 @@ app.post('/analizarYO', (req, res) => {
 
 try{
   tree.instructions.map((m: any) => {
-    console.log(m);
+    //console.log(m);
     const res = m.execute(tabla, tree);
 
   });
@@ -173,20 +173,19 @@ app.post('/comunicar/', function (req, res) {
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null); 
 
-  //console.log(tree);
-  console.log("-------------INICIA EL ARBOL----------------");
- try {
-   console.log(JSON.stringify(tree,null ,2));
-   var arbol = JSON.stringify(tree,null ,2);
-   res.send(arbol);
- } catch (error) {
-   console.log("ERROR AL PARSEAR A JISON ");
- }
- console.log("------------------- FIN -------------------");
-/*
-  console.log(" LISTA DE ERRORES ");
-  console.log(Errores.geterror());*/
- // res.send( tree );
+  try{
+    tree.instructions.map((m: any) => {
+      //console.log(m);
+      const res = m.execute(tabla, tree);
+  
+    });
+  }catch(error){
+    console.log("ERRORES EN LA ENTRADA  en ejecucion del ATS");
+    console.log(Errores.geterror());
+     res.send(Errores.geterror());
+  }
+  
+
 
 });
 

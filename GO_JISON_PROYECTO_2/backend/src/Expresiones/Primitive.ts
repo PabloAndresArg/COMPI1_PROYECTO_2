@@ -8,6 +8,11 @@ import {types} from "../utils/Type";
  * Crea un nuevo objeto Nodo expresion en base a un valor primitivo,
  * por ejemplo numeros, booleanos o cadenas(suponiendo que la cadena es primitivo)
  */
+
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+
+
 export class Primitive extends Node{
     value: Object;
 
@@ -28,9 +33,8 @@ export class Primitive extends Node{
      * @param table Tabla de simbolos
      * @param tree Arbol de instrucciones y excepciones
      */
-    execute(table: Table, tree: Tree) {
-    /*
-        return this.value;
-        */
+    execute(table: Table, tree: Tree):any {
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Primitivo ("+this.value+")</li>\n");
+        return null ; 
     }
 }

@@ -7,6 +7,8 @@ import { Exception } from "../utils/Exception";
 /**
  * @class Nodo expresion identificador que obtendra el valor de una variable
  */
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
 export class Identificador extends Node {
     identifier: String;
     /**
@@ -21,7 +23,7 @@ export class Identificador extends Node {
         this.identifier = identifier;
     }
 
-    execute(table: Table, tree: Tree) {
+    execute(table: Table, tree: Tree):any {
         /*
         let variable: Simbol;
         variable = table.getVariable(this.identifier);
@@ -36,6 +38,8 @@ export class Identificador extends Node {
         this.type = variable.type;
         return variable.value;
         */
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID ("+this.identifier+")</li>\n");
+        return null ; 
     }
     
 }

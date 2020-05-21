@@ -6,6 +6,8 @@ import {types} from "../utils/Type";
 /**
  * Permite imprimir expresiones en la consola
  */
+
+import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
 export class Sentencia_imprime extends Node{
     expression : Node;
     estilo:string; 
@@ -23,6 +25,16 @@ export class Sentencia_imprime extends Node{
 
     execute(table: Table, tree: Tree): any {
         console.log("se ejecuto  imprimir");
+        console.log(this.expression);
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>SENTENCIA_IMPRIME\n"); 
+        GraficaArbolAts.add("<ul>\n");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>EXPRESION\n");
+        GraficaArbolAts.add("<ul>\n");
+        this.expression.execute(table , tree);
+        GraficaArbolAts.add("</ul>\n")
+        GraficaArbolAts.add("</li>\n");     
+        GraficaArbolAts.add("</ul>\n"); 
+        GraficaArbolAts.add("</li>\n"); 
         return null;
     }
 }

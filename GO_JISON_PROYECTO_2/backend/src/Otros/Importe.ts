@@ -32,7 +32,7 @@ export class Importe extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>IMPORT\n");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>IMPORT ("+this.identifier+")\n");
       
       
         GraficaArbolAts.add("</li>");// CIERRA DE UNA VEZ PORQUE NO AVANZA RECURSIVAMENTE 

@@ -9,7 +9,7 @@ import { Importe } from "./Importe";
  */
 export class Inicio extends Node{
     Lista_importes_clases:any = [];
-  
+   // YA NO LA USE 
     /**
      * @constructor Retorna el objeto Print
      * @param expression Expresion que se va a mostrar en consola
@@ -27,7 +27,7 @@ export class Inicio extends Node{
             this.Lista_importes_clases.push(m);
         });        
     }
-
+ 
     execute(table: Table, tree: Tree): any {
 
     }

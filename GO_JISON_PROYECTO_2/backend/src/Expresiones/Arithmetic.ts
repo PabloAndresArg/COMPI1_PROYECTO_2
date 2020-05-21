@@ -3,6 +3,7 @@ import { Table } from "../Simbols/Table";
 import { Tree } from "../Simbols/Tree";
 import { Exception } from "../utils/Exception";
 import { types, Type } from "../utils/Type";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class Genera un nuevo nodo expresion para realizar operaciones aritmeticas
@@ -29,6 +30,22 @@ export class Arithmetic extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+
+    GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Aritmetica\n");
+       GraficaArbolAts.add("<ul>\n");
+       this.leftOperator.execute(table, tree);
+      
+       if(this.Operator != null){
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Operador ("+this.Operator+")</li>\n");
+       }
+
+       if(this.rightOperator != null ){
+        this.rightOperator.execute(table, tree);
+       }
+       GraficaArbolAts.add("</ul>\n");
+    GraficaArbolAts.add("</li>\n");
+
+
 /*
         if (this.rightOperator !== null) {
             const LeftResult = this.leftOperator.execute(table, tree);

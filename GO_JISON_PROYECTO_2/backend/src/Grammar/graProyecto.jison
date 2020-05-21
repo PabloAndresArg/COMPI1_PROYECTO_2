@@ -304,6 +304,8 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', 
           | EXPRESION '-' EXPRESION           { $$ = new Arithmetic($1, $3, '-', this._$.first_line, this._$.first_column); }
           | EXPRESION '*' EXPRESION           { $$ = new Arithmetic($1, $3, '*', this._$.first_line, this._$.first_column); }
           | EXPRESION '/' EXPRESION	    { $$ = new Arithmetic($1, $3, '/', this._$.first_line, this._$.first_column); }
+          | EXPRESION '%' EXPRESION	    { $$ = new Arithmetic($1, $3, '%', this._$.first_line, this._$.first_column); }
+          | EXPRESION '^' EXPRESION	    { $$ = new Arithmetic($1, $3, '^', this._$.first_line, this._$.first_column); }
           | EXPRESION '<' EXPRESION	    { $$ = new Relational($1, $3, '<', this._$.first_line, this._$.first_column); }
           | EXPRESION '>' EXPRESION           { $$ = new Relational($1, $3, '>', this._$.first_line, this._$.first_column); }
           | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', this._$.first_line, this._$.first_column); }

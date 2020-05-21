@@ -23,9 +23,7 @@ export class DeclaracionGlobales extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        console.log("DECLARACION GLOBAL ");
-        console.log(this.identificadores);
-  
+
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionGlobal"); 
         // PRIMITIVOS Y ESAS ONDAS 
         if(this.identificadores.length == 1){
