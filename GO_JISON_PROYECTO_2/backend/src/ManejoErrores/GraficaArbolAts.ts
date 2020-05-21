@@ -10,10 +10,13 @@ class GraficaArbolAts{
 
     public static initHtml(){
     
-        GraficaArbolAts.cadena += "<ul>"+
-       " <li data-jstree='{ \"opened\" : true }'>Raiz"+
-           "<ul>" +
-             "<li data-jstree='{ \"opened\" : true }'>F Espresion"+
+        GraficaArbolAts.cadena +=""+
+        "<ul>"+
+        "<li data-jstree='{ \"opened\" : true }'>Raiz"+
+
+
+        "<ul>" +
+             "<li data-jstree='{ \"opened\" : true }'>LISTA Espresion"+
                 "<ul>"+
                    "<li data-jstree='{ \"opened\" : true }'>Expresion"+
                     "<ul>"+
@@ -56,7 +59,10 @@ class GraficaArbolAts{
                 "</ul>"+
                 "</li>"+
             "</ul>"+
-        "</li>"+
+
+
+
+    "</li>"+
     "</ul>"+"\n";
         
     

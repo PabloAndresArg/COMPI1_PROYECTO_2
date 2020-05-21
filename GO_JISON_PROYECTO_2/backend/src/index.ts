@@ -127,10 +127,11 @@ app.post('/analizarYO', (req, res) => {
  const tree = MyParser_300445.parse(entrada); 
  // console.log("entra al arbol:"+ entrada);
   const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
-  /*console.log("-------------INICIA EL ARBOL----------------");
+  console.log("-------------INICIA EL ARBOL----------------");
   console.log(tree);
   console.log("------------------- FIN -------------------");
- try {
+ /*
+  try {
   var json = JSON.stringify(tree,null ,2);
  // console.log(json);
  } catch (error) {
@@ -142,7 +143,7 @@ app.post('/analizarYO', (req, res) => {
 
 try{
   tree.instructions.map((m: any) => {
-  //  console.log(m);
+    console.log(m);
     const res = m.execute(tabla, tree);
 
   });
@@ -150,11 +151,6 @@ try{
   console.log("ERRORES EN LA ENTRADA  en ejecucion del ATS");
   console.log(Errores.geterror());
 }
-
-GraficaArbolAts.add( "HOLA"); 
-
-console.log(GraficaArbolAts.cadena); 
-
 
 
 
@@ -207,8 +203,9 @@ app.post('/ats/', function (req, res) {
   // SI HAY ERRORES DEBERIA DE DEVOLVERLOS 
     res.send("LA ENTRADA POSEEE ERRORES");
   }else{
-    GraficaArbolAts.add("<ul>\n");
+  GraficaArbolAts.add("<ul>\n");
    GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Raiz\n");
+   GraficaArbolAts.add("<ul>\n");
     try{
       tree.instructions.map((m: any) => {
         console.log(m);
@@ -220,7 +217,7 @@ app.post('/ats/', function (req, res) {
     }
   
     /*     COMIENZO A RECORRER EL ARBOL PARA ELLO SE VALIDO QUE NO VINIERA CON ERRORES */
-     
+    GraficaArbolAts.add("</ul>\n"); 
     GraficaArbolAts.add("</li>\n");
     GraficaArbolAts.add("</ul>\n"); 
     console.log(GraficaArbolAts.cadena);

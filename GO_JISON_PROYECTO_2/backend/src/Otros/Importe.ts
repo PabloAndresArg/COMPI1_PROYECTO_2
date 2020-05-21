@@ -31,8 +31,11 @@ export class Importe extends Node {
         this.tipoInstruccion = "IMPORT"; 
     }
 
-    execute(table: Table, tree: Tree) :any{
-        GraficaArbolAts.add("");
+    execute(table: Table, tree: Tree):any {
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>IMPORT\n");
+      
+      
+        GraficaArbolAts.add("</li>");// CIERRA DE UNA VEZ PORQUE NO AVANZA RECURSIVAMENTE 
         return null;     
     }
 }
