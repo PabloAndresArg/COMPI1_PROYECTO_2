@@ -6,6 +6,7 @@ import { types, Type } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
@@ -28,6 +29,7 @@ export class Parametro extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Parametro ("+this.identifier+")</li>\n");
         return null; 
     }
 }

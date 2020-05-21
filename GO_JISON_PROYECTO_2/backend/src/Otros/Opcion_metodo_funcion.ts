@@ -8,6 +8,7 @@ import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import { Return_funcion } from "../Instrucciones/Return_funcion";
 import { Return_metodo } from "../Instrucciones/Return_metodo";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 let CNodoError=require('../ManejoErrores/NodoError');
 let CErrores=require('../ManejoErrores/Errores');
 /**
@@ -37,6 +38,20 @@ export class Opcion_metodo_funcion extends Node {
 
     execute(table: Table, tree: Tree):any {
         /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
+        console.log("PARAMETROS........................."); 
+     
+        console.log(this.listaParams); 
+        if(this.listaParams.length != 0){
+            GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>LISTA DE PARAMETROS\n"); 
+            GraficaArbolAts.add("<ul>");
+            for(let i = 0 ; i < this.listaParams.length ; i++){
+                this.listaParams[i].execute(table , tree);
+            }
+            GraficaArbolAts.add("</ul>"); 
+            GraficaArbolAts.add("</li>"); 
+        }
+        console.log("PARAMETROS........................."); 
+
         const newtable = new Table(table);
         for (let i = 0; i < this.contenido.length; i++) {
             const res = this.contenido[i].execute(newtable, tree);

@@ -27,18 +27,19 @@ export class DeclaracionFuncion extends Node {
      * @param line Linea de la sentencia if
      * @param column Columna de la sentencia if
      */
-    constructor(type: Type, identifier: String, parametros: Node, line: Number, column: Number) {
+    constructor(type: Type, identifier: String, OpcionMetodoFUncion: Node, line: Number, column: Number) {
         super(type, line, column);
         this.identifier = identifier;
-        this.value = parametros;
+        this.value = OpcionMetodoFUncion;
     }
 
     execute(table: Table, tree: Tree) :any{
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones ("+this.identifier+")\n"); 
 
+
         /*ACA HAY UN AMBITO NUEVO */ 
         let res: Node;
-        GraficaArbolAts.add("<ul>\n");
+        GraficaArbolAts.add("<ul>\n"); 
         res =this.value.execute(table,tree);
         GraficaArbolAts.add("</ul>\n");
        if(res instanceof Return_metodo){
