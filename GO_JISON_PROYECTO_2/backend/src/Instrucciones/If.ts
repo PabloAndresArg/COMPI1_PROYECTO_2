@@ -60,6 +60,8 @@ export class If extends Node {
                     if (res instanceof Continue || res instanceof Break || res instanceof Return_funcion || res instanceof Return_metodo) {
                         GraficaArbolAts.add("</ul>\n");
                         GraficaArbolAts.add("</li>\n");
+                        GraficaArbolAts.add("</ul>\n");
+                        GraficaArbolAts.add("</li>\n");
                         return res;
                     }
                 }
@@ -79,6 +81,8 @@ export class If extends Node {
                 const res = this.ElseList[i].execute(newtable, tree);
                 if (res instanceof Continue || res instanceof Break || res instanceof Return_funcion || res instanceof Return_metodo) {
 
+                    GraficaArbolAts.add("</ul>\n");
+                    GraficaArbolAts.add("</li>\n");
                     GraficaArbolAts.add("</ul>\n");
                     GraficaArbolAts.add("</li>\n");
                     return res;

@@ -34,8 +34,7 @@ export class DeclaracionFuncion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
-        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones\n"); 
-        console.log("EJECUTE UNA FUNCION");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones ("+this.identifier+")\n"); 
 
         /*ACA HAY UN AMBITO NUEVO */ 
         let res: Node;

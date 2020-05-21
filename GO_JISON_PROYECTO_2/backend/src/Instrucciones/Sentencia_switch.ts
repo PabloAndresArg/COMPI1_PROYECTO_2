@@ -8,6 +8,7 @@ import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import { Return_metodo } from "./Return_metodo";
 import { Return_funcion } from "./Return_funcion";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 let CNodoError=require('../ManejoErrores/NodoError');
 let CErrores=require('../ManejoErrores/Errores');
 export class Sentencia_switch extends Node {
@@ -18,26 +19,49 @@ export class Sentencia_switch extends Node {
         this.EXPRESION = exp;
         this.cases = cases;
     }
-      /*UL */
+  
     execute(table: Table, tree: Tree):any {
-        console.log("<ul>se ejecuto UN SWITCH");
         const newtable = new Table(table);
+  
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>SENTENCIA_SWITCH \n");
+        GraficaArbolAts.add("<ul>\n");
+
+        // AHORA LA CARPETA EXPRESSION 
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Expresion\n");
+        GraficaArbolAts.add("<ul>");
+        this.EXPRESION.execute(table, tree);
+        GraficaArbolAts.add("</ul>");
+        GraficaArbolAts.add("</li>");
+
+
+
         let res:Node; 
-        res = this.cases.execute(newtable,tree); 
-        if(res instanceof Break){
-            // se acepta 
-         }else if(res instanceof Continue){
-         //    console.log("sacando el continue al exterior :o ");
-             return res;
-         }else if(res instanceof Return_metodo){
-         //    console.log("RETURN METODO sw");
-             return res;
-         }else if(res instanceof Return_funcion){
-         //    console.log("RETURN FUNCION");
-             return res;
+         if(this.cases.line != undefined ){
+
+
+            res = this.cases.execute(newtable,tree); 
+            if(res instanceof Break){
+             // no hay clavo sale y cierra hasta abajo 
+             }else if(res instanceof Continue){
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                 return res;
+             }else if(res instanceof Return_metodo){
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                 return res;
+             }else if(res instanceof Return_funcion){
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                 return res;
+             }
+
+
          }
 
-        console.log("</ul>");
-        return null; 
+
+         GraficaArbolAts.add("</ul>\n");
+         GraficaArbolAts.add("</li>\n");
+         return null;
     }
 }

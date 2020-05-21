@@ -8,6 +8,7 @@ import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import { Return_metodo } from "./Return_metodo";
 import { Return_funcion } from "./Return_funcion";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 let CNodoError=require('../ManejoErrores/NodoError');
 let CErrores=require('../ManejoErrores/Errores');
 export class Ins_Default extends Node {
@@ -21,8 +22,11 @@ export class Ins_Default extends Node {
 
     execute(table: Table, tree: Tree) {
         console.log(" ejecutando un caso , el cual tiene instrucciones adentro  ");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Default\n");
+        GraficaArbolAts.add("<ul>\n");
         const newtable = new Table(table);
-
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Instrucciones\n");
+        GraficaArbolAts.add("<ul>\n");
         for (let i = 0; i < this.INSTRUCCIONES.length; i++) {
             const res = this.INSTRUCCIONES[i].execute(newtable, tree);
             if(res instanceof Break){
@@ -38,6 +42,21 @@ export class Ins_Default extends Node {
                 return res;
             }
         }
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
+
+
+
+
+
+
+
+
+
+
+        
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
         return null; 
 
 

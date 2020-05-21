@@ -35,12 +35,12 @@ export class While extends Node {
     execute(table: Table, tree: Tree) {
 
         const newtable = new Table(table);
-        let result: Node;
+  
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>SENTENCIA_WHILE \n");
         GraficaArbolAts.add("<ul>\n");
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>CONDICION\n");
         GraficaArbolAts.add("<ul>\n");
-        result = this.condition.execute(newtable, tree);
+        this.condition.execute(newtable, tree);
         GraficaArbolAts.add("</ul>\n");
         GraficaArbolAts.add("</li>\n");
 
@@ -60,10 +60,14 @@ export class While extends Node {
 
                 GraficaArbolAts.add("</ul>\n");
                 GraficaArbolAts.add("</li>\n");
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
                 return;
             }
             if (res instanceof Return_funcion || res instanceof Return_metodo) {
 
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
                 GraficaArbolAts.add("</ul>\n");
                 GraficaArbolAts.add("</li>\n");
                 return res;

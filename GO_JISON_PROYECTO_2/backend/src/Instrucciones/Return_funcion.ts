@@ -1,6 +1,7 @@
 import { Node } from "../Abstract/Node";
 import { Table } from "../Simbols/Table";
 import { Tree } from "../Simbols/Tree";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class RETURN PARA LAS FUNCIONES 
@@ -20,6 +21,15 @@ export class Return_funcion extends Node {
     }
 
     execute(table: Table, tree: Tree){
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Return_Metodo\n");
+        GraficaArbolAts.add("<ul>\n"); 
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>EXPRESION\n");
+        GraficaArbolAts.add("<ul>\n"); 
+        this.expresion.execute(table , tree);
+        GraficaArbolAts.add("</ul>\n"); 
+        GraficaArbolAts.add("</li>\n");
+        GraficaArbolAts.add("</ul>\n"); 
+        GraficaArbolAts.add("</li>\n"); 
         return this;
     }
 }

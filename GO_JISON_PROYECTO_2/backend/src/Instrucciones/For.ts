@@ -10,6 +10,7 @@ import { Primitive } from "../Expresiones/Primitive";
 import {Type } from "../utils/Type";
 import { Return_funcion } from "./Return_funcion";
 import { Return_metodo } from "./Return_metodo";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 /**
  * @class
  */
@@ -34,27 +35,66 @@ export class For extends Node {
     }
 
     execute(table: Table, tree: Tree) {
+   
         const newtable = new Table(table);
-        let result: Node;
-    
-            result = new Primitive(new Type(types.BOOLEAN), true, null, null); // SIEMPRE SE EJECUTA 
-            if (result instanceof Exception) {
-                return result;
-            }
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>SENTENCIA_FOR \n");
+        GraficaArbolAts.add("<ul>\n");
 
-            if (result) {
-                for (let i = 0; i < this.List.length; i++) {
-                    const res = this.List[i].execute(newtable, tree);
-                    if (res instanceof Continue) {
-                        break;
-                    } else if (res instanceof Break) {
-                        return;
-                    }
-                    if( res instanceof Return_funcion || res instanceof Return_metodo){
-                        return res;
-                    }
-                }
+
+        this.Dec_for.execute(table, tree);
+   
+
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>CONDICION\n");
+        GraficaArbolAts.add("<ul>\n");
+        this.condition.execute(newtable, tree);
+        GraficaArbolAts.add("</ul>\n");
+        
+        this.Incre_decre.execute(table, tree);
+
+        GraficaArbolAts.add("</li>\n");
+
+
+
+        /* ABRO EL AMBITO DE INSTRUCCIONES */ 
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>BLOQUE_INSTRUCCIONES\n");
+        GraficaArbolAts.add("<ul>\n");
+            for (let i = 0; i < this.List.length; i++) {
+            
+            const res = this.List[i].execute(newtable, tree);
+            
+            
+            if (res instanceof Continue) {
+                break;// frena el for y pues sale y abajo se cierra su etiqueta 
+            } else if (res instanceof Break) {
+
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                return;
             }
+            if (res instanceof Return_funcion || res instanceof Return_metodo) {
+
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+                return res;
+            }
+        }
+
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
+        /* CIERRO EL AMBITO DE INSTRUCCIONES */ 
+
+
+
+
+
+
+
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
            
         return null;
     }

@@ -6,6 +6,7 @@ import { types, Type } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
@@ -24,7 +25,62 @@ export class Declaracion_adentro_de_metodos_funciones extends Node {
         this.value = value;
     }
 
-    execute(table: Table, tree: Tree) {
- 
+    execute(table: Table, tree: Tree): any {
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Declaracion_adentro_de_Metodo/Funcion");
+       
+        if (this.Lista_ids.length == 1) {
+            GraficaArbolAts.add("<ul>\n");
+            GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID (" + this.Lista_ids[0] + ")</li>\n");
+            /*EMPAQUETANDO EL VALOR DE LA EXPRESION */
+
+            if(this.value.line != undefined){
+                GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>VALOR EXPRESION\n");
+                GraficaArbolAts.add("<ul>\n");
+                this.value.execute(table ,tree); 
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+            }
+
+            this.type.toAts();
+
+
+
+
+            GraficaArbolAts.add("</ul>\n");
+        } else {
+            GraficaArbolAts.add("<ul>\n");
+            GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>LISTA IDS");
+            GraficaArbolAts.add("<ul>\n");
+            for (let x = 0; x < this.Lista_ids.length; x++) {
+                GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID (" + this.Lista_ids[x] + ")</li>\n");
+            }
+
+
+
+            /*EMPAQUETANDO EL VALOR DE LA EXPRESION */
+           if(this.value.line != undefined){
+                GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>VALOR EXPRESION\n");
+                GraficaArbolAts.add("<ul>\n");
+                this.value.execute(table ,tree); 
+                GraficaArbolAts.add("</ul>\n");
+                GraficaArbolAts.add("</li>\n");
+            }
+
+            this.type.toAts();
+
+
+
+
+            GraficaArbolAts.add("\n</ul></li>\n</ul>\n");
+
+        }
+
+
+
+
+
+        GraficaArbolAts.add("</li>\n");
+        return null; 
+
     }
 }

@@ -6,6 +6,7 @@ import { types, Type } from "../utils/Type";
 import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
+import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 
 /**
  * @class Reasigna el valor de una variable existente
@@ -27,7 +28,20 @@ export class Asignacion extends Node {
         this.value = value;
     }
 
-    execute(table: Table, tree: Tree) {
+    execute(table: Table, tree: Tree):any {
+
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ASIGNACION\n");
+        GraficaArbolAts.add("<ul>\n");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID ("+this.identifier+")</li>\n");
+        
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>VALOR_Expresion\n");
+        GraficaArbolAts.add("<ul>\n");
+        this.value.execute(table , tree);
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>");
+        
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>");
         /*
         const result = this.value.execute(table, tree);
         if (result instanceof Exception) {
@@ -58,5 +72,7 @@ export class Asignacion extends Node {
         variable.value = result;
         return null;
         */
+
+        return null ; 
     }
 }

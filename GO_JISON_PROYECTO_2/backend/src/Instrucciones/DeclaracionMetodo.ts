@@ -30,9 +30,8 @@ export class DeclaracionMetodo extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos\n"); 
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos ("+this.identifier+")\n"); 
 
-        console.log("EJECUTE UNA DECLARACION METODO " );
         let res: Node;
         GraficaArbolAts.add("<ul>\n");
         res =this.value.execute(table,tree);

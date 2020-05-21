@@ -198,7 +198,7 @@ case 58:
 this.$ = new If($$[$0-3], $$[$0-2], [$$[$0]], this._$.first_line, this._$.first_column);
 break;
 case 62:
- this.$ = new Arithmetic($$[$0-1], null, '-', this._$.first_line, this._$.first_column); 
+ this.$ = new Arithmetic($$[$0], null, '-', this._$.first_line, this._$.first_column); 
 break;
 case 63:
  this.$ = new Arithmetic($$[$0-1], null, '!', this._$.first_line, this._$.first_column); 

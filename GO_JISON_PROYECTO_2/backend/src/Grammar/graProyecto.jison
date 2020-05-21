@@ -298,7 +298,7 @@ BLOQUE_INSTRUCCIONES : '{' INSTRUCCIONES '}' {$$ = $2;}              /* este es 
                      | '{' '}'    {$$ = [];}
                      ;
       
-EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($1, null, '-', this._$.first_line, this._$.first_column); }
+EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($2, null, '-', this._$.first_line, this._$.first_column); }
           | '!' EXPRESION	                  { $$ = new Arithmetic($1, null, '!', this._$.first_line, this._$.first_column); }
           | EXPRESION '+' EXPRESION           { $$ = new Arithmetic($1, $3, '+', this._$.first_line, this._$.first_column); }
           | EXPRESION '-' EXPRESION           { $$ = new Arithmetic($1, $3, '-', this._$.first_line, this._$.first_column); }
