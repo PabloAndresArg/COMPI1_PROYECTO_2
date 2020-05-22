@@ -30,11 +30,27 @@ export class DeclaracionMetodo extends Node {
     }
 
     execute(table: Table, tree: Tree):any {
-        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos ("+this.identifier+")\n"); 
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos\n"); 
+
+
+
+
 
         let res: Node;
         GraficaArbolAts.add("<ul>\n");
+
+
+        
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID("+this.identifier+")</li>\n");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>TIPO("+this.type.toString()+")</li>\n");
+
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>INSTRUCCIONES\n");
+        GraficaArbolAts.add("<ul>\n");
         res =this.value.execute(table,tree);
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
+        
+        
         GraficaArbolAts.add("</ul>\n");
    
        if(res instanceof Return_funcion){

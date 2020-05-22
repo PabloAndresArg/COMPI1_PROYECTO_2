@@ -32,10 +32,11 @@ export class ClaseInstruccion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
-        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>CLASE ("+this.identifier+")\n");
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>CLASE\n");
        // CIERRA DE UNA VEZ PORQUE NO AVANZA RECURSIVAMENTE 
         GraficaArbolAts.add("<ul>");
         /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
+        GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>ID("+this.identifier+")</li>\n");
         const newtable = new Table(table);
 
         for (let i = 0; i < this.contenido.length; i++) { // RECORRO CADA COSA DE MI CLASE 
