@@ -55,7 +55,7 @@ export class DeclaracionMetodo extends Node {
    
        if(res instanceof Return_funcion){
         console.log("ERROR RETURN DE FUNCION ADENTRO DE UN METODO ");
-        CErrores.Errores.add(new CNodoError.NodoError("Semantico"," RETURN DE FUNCION ADENTRO DE UN METODO"+" Columna:"+ res.column ,res.line));
+        CErrores.Errores.add(new CNodoError.NodoError("Semantico"," RETURN DE FUNCION ADENTRO DE UN METODO    "+" Columna:"+ res.column ,res.line));
         GraficaArbolAts.add("</li>\n");
         return res;
        }

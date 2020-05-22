@@ -183,8 +183,26 @@ app.post('/errores/', function (req, res) { // SOLO ES NECESARIO UNA ENTRADA DE 
     console.log(Errores.geterror());
     res.send(Errores.geterror());
   }else{
-    console.log("ENTRADA OK ");
-    res.send("ENTRADA LIBRE DE ERRORES");
+    // toca recorrerlo para ver si no hay errores semanticos 
+    try {
+      tree.instructions.map((m: any) => {
+      const res = m.execute(tabla, tree);
+  
+    });
+    } catch (error) {
+      console.log("ERRORES EN LA ENTRADA  en ejecucion del ATS");
+    }
+    if(Errores.hay_errores()){
+      console.log(Errores.geterror());
+      res.send(Errores.geterror());
+
+    }else{
+
+      console.log("ENTRADA OK ");
+      res.send("ENTRADA LIBRE DE ERRORES");
+    }
+    
+
   }
 
 });

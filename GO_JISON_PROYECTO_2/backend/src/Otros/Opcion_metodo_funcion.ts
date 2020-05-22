@@ -57,11 +57,11 @@ export class Opcion_metodo_funcion extends Node {
             const res = this.contenido[i].execute(newtable, tree);
             if(res instanceof Break){
                 console.log("ERROR  BREAK "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","BREAK fuera de un ciclo"+""+" Columna:"+ res.column ,res.line));
+                CErrores.Errores.add(new CNodoError.NodoError("Semantico","BREAK fuera de un ciclo   "+""+" Columna:"+ res.column ,res.line));
                 return res;
             }else if(res instanceof Continue){
                 console.log("ERROR  CONTINUE "); // ACA EN ESTE CASO PUEDE VENIR UN BREAK Y SE TOMA EN CUENTA QUE PUEDE SER ERROR 
-                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo"+" Columna:"+ res.column ,res.line));
+                CErrores.Errores.add(new CNodoError.NodoError("Semantico","CONTINUE fuera de un ciclo   "+" Columna:"+ res.column ,res.line));
                 return res;
             }else if(res instanceof Return_metodo){
                 console.log("RETURN METODO op/metFun");

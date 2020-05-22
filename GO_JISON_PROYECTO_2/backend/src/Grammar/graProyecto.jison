@@ -354,7 +354,7 @@ BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONESWITCH {$$=$1;}
 
 INSTRUCCIONESWITCH : INSTRUCCIONESWITCH INSTRUCCIONSWITCH { $1.push($2); $$ = $1; }
               | INSTRUCCIONSWITCH               { $$ = [$1]; }
-              | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); }  
+              | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 // LO MISMO PERO NO TIENE EL BREAK para que no se encicle 
 INSTRUCCIONSWITCH : SENTENCIAIMPRIME     {$$ = $1;}
