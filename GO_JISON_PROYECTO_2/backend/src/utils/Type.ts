@@ -30,17 +30,17 @@ export class Type{
 
     toString(){
         if(this.type === types.BOOLEAN){
-            return 'boolean';
+            return "boolean";
         }else if(this.type === types.INT){
-            return 'int';
+            return "int";
         }else if(this.type === types.STRING){
-            return 'string';
+            return "string";
         }else if(this.type === types.DOUBLE){
-            return 'double';
+            return "double";
         }else if(this.type == types.VOID){
-            return 'void';
+            return "void";
         }else if(this.type == types.CHAR){
-            return 'char';
+            return "char";
         }
     }
 

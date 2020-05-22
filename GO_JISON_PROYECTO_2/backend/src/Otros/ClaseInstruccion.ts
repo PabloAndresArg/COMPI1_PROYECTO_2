@@ -35,9 +35,13 @@ export class ClaseInstruccion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
-            Rep.claseActual = this.identifier; 
+          
+        if(Rep.t1 == true || Rep.t2 == true){
             Rep.addClase(new Clase(this.identifier));
-        console.log("static " +Rep.claseActual);
+            Rep.claseActual = Rep.getCLASE(this.identifier); 
+            console.log("static ACTUAL: " +Rep.claseActual);
+        }
+
 
 
 

@@ -26,13 +26,18 @@ export class DeclaracionMetodo extends Node {
     value: Node;
 
     constructor(type: Type, identifier: string, value: Node , line: Number, column: Number) {
-        super(type, line, column);
+        super( new Type(types.VOID), line, column);
         this.identifier = identifier;
         this.value = value;
     }
 
     execute(table: Table, tree: Tree):any {
-        Rep.addMetodo( Rep.claseActual , new Metodo( this.identifier , this.type.toString() ));
+        if(Rep.t1 == true || Rep.t2 == true){
+            Rep.nombreMetodoActual = this.identifier; 
+            Rep.addMetodo( Rep.claseActual.id , new Metodo( this.identifier , this.type.toString()));
+        }
+        console.log(this.type.toString());
+
 
 
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos\n"); 

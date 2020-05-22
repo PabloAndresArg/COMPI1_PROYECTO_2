@@ -32,6 +32,16 @@ export class Clase {
         return this.metodos; 
     }
 
+    public getMETODO(id:string):any{
+        for(let i = 0 ; i < this.metodos.length ; i++){
+            if(this.metodos[i].id != undefined){
+               if(this.metodos[i].id == id){
+                return this.metodos[i];
+               }
+            }
+        }
+    }
+
 
 
     

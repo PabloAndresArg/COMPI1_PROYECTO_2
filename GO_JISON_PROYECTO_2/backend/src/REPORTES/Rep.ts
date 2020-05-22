@@ -3,17 +3,27 @@ import { Clase } from './Clase';
 import { Metodo } from "./Metodo";
 import { ClaseCopia } from "./ClaseCopia";
 
-
+import {FuncionCopia } from './FuncionCopia'
 class Rep {
   public static ListaClases1: Array<Clase> = [];
   public static ListaClases2: Array<Clase> = [];
-  public static claseActual: string = "";
+  public static claseActual: any;
+  public static nombreMetodoActual: string; 
   public static t1 = false;
   public static t2 = false;
   public static ListaClasesCopia: Array<ClaseCopia> = [];
-  public static ListaFuncionesCopia:Array<Metodo> = [];
+  public static ListaFuncionesCopia:Array<FuncionCopia> = [];
   constructor() {
 
+  }
+
+  public static getHTML():string{
+    let definitiva:string = ""; 
+    definitiva += this.getCopiasClases(); 
+    definitiva += "\n\n\n\n\n";
+    definitiva += this.getCopiasFunciones(); 
+    definitiva += "\n\n\n\n\n";
+    return definitiva; 
   }
 
   public static addClase(c: Clase): any {
@@ -45,10 +55,56 @@ class Rep {
 
     }
 
-
-
-
   }
+
+  public static getCLASE(id:string):any{
+    if (Rep.t1 == true) {
+      for (let i = 0; i < Rep.ListaClases1.length; i++) {
+        if (id == Rep.ListaClases1[i].id) {
+         return Rep.ListaClases1[i];
+        }
+      }
+    }
+
+    if (Rep.t2 == true) {
+      for (let i = 0; i < Rep.ListaClases2.length; i++) {
+        if (id == Rep.ListaClases2[i].id) {
+          return Rep.ListaClases2[i];
+        }
+      }
+    }
+
+
+  }// fin metodo 
+  public static addPARAMETROS(nombreMetodo:string , listaParametros:any):any{
+    if (Rep.t1 == true) {
+       let metodo = Rep.claseActual.getMETODO(nombreMetodo); 
+        metodo.listaParametros = listaParametros; 
+    }
+
+    if (Rep.t2 == true) {
+      let metodo = Rep.claseActual.getMETODO(nombreMetodo); 
+      metodo.listaParametros = listaParametros; 
+    }
+
+
+  }// fin metodo 
+
+  public static addTIPO_RETORNO(nombreMetodo:string , tipo:any):any{
+    if (Rep.t1 == true) {
+       let metodo = Rep.claseActual.getMETODO(nombreMetodo); 
+        metodo.tipoDeRetorno = tipo; 
+    }
+
+    if (Rep.t2 == true) {
+      let metodo = Rep.claseActual.getMETODO(nombreMetodo); 
+      metodo.tipoDeRetorno = tipo; 
+    }
+
+
+  }// fin metodo
+
+
 
 
 
@@ -94,7 +150,6 @@ class Rep {
 
 
   public static DeterminarCopiaClases() {
-    console.log("BUSCANDO CALSES COPIA......");
 
     if (this.ListaClases1.length != 0 && this.ListaClases2.length != 0) {
       for (let i = 0; i < this.ListaClases1.length; i++) {
@@ -105,7 +160,7 @@ class Rep {
             /* COINCIDE EL NOMBRE SOSPECHOSO ENTONCES MIRAMOS EL NOMBRE DE LOS METODOS SI COINCIDEN */
             console.log("sospechoso el nombre es igual : "+this.ListaClases1[i].id);
             // ESTOY EN LA MISMA CLASE ENTONCES DEBO DE BUSCAR SI HAY UNA MISMA FUNCION 
-            this.buscarFucionesMetodosCopia(this.ListaClases1[i].getMetodos(), this.ListaClases2[j].getMetodos());
+            this.buscarFucionesMetodosCopia(this.ListaClases1[i].getMetodos(), this.ListaClases2[j].getMetodos()  , this.ListaClases1[i].id);
 
             let res: any = this.comparaMetodos(this.ListaClases1[i].getMetodos(), this.ListaClases2[j].getMetodos());// para clases copia
 
@@ -183,6 +238,7 @@ class Rep {
   }
 
 
+
   public static getCopiasClases(): string {
     var cad: string = "";
     if (this.ListaClasesCopia.length != 0) {
@@ -206,7 +262,7 @@ class Rep {
       cad += "</table>\n";
       cad += "</div>\n";
       cad += "</body>\n";
-
+      cad+= "<br><br><br><br><br>";
 
     } else {
       console.log("no hay clases copia");
@@ -215,20 +271,72 @@ class Rep {
   }
 
 
+  public static getCopiasFunciones(): string {
+    /*
+    mostrará el tipo de retorno del método y/o función, nombre del mismo, listado de sus
+   parámetros con tipo y nombre, nombre de la clase al que pertenece.
+    
+    */ 
 
-  public static buscarFucionesMetodosCopia(metodos1: Array<Metodo>, metodos2: Array<Metodo>){
+
+
+    var cad: string = "";
+    if (this.ListaFuncionesCopia.length != 0) {
+
+
+      cad += "<body class=\"MIfondo\">\n";
+      cad += "<div align=\"center\"  class=\"MIfondo\"> \n";
+      cad += "<h1 class = \"tituloTb\">REPORTE DE FUNCIONES  COPIA </h1>\n";
+      cad += "<table border=\"2\" align=\"center\" class=\"tabl\">\n";
+      cad += "<tr>\n";
+      cad += "<th>#</th><th>Nombre de la clase</th><th>Nombre Metodo/funcion </th><th>TIPO</th><th> Lista de Parametros </th><th>Tipo de retorno</th>\n";
+      cad += "</tr>\n";
+      
+      for (var i = 0; i < this.ListaFuncionesCopia.length; i++) {
+        cad += "<tr>\n";// abre fila 
+
+
+        cad += "<td>" + (i + 1) + "</td><td>" + "  " + this.ListaFuncionesCopia[i].nombreClase + "  </td><td>" + this.ListaFuncionesCopia[i].nombreFuncion + "</td><td>"+this.ListaFuncionesCopia[i].tipo+"</td><td>" + this.ListaFuncionesCopia[i].listaDeParametros + "</td>"+"<td>" + this.ListaFuncionesCopia[i].tipoDeRetorno + "</td>";
+        
+        
+        cad += "</tr>\n";// cierra fila 
+      }
+
+      cad += "</table>\n";
+      cad += "</div>\n";
+      cad += "</body>\n";
+      cad += "<br><br><br><br><br>"; 
+
+    } else {
+      console.log("no hay clases copia");
+    }
+    return cad;
+  }
+
+
+  public static buscarFucionesMetodosCopia(metodos1: Array<Metodo>, metodos2: Array<Metodo> , nombreclase:string):any{
 
     if(metodos1.length == 0 || metodos2.length == 0){
-      console.log("NO TIENE METODOS una de esas clases entonces no puedo comparar metodos asi ");
+      console.log("NO TIENE METODOS una de esas clases entonces no puedo comparar los metodos/funciones asi  ");
+      return;
     }else{
 
       for (let i = 0; i < metodos1.length; i++) {
         for (let j = 0; j < metodos2.length; j++) {
           // tengo que ver que los nombres sean los mismos 
           if (metodos1[i].id == metodos2[j].id) {
-          
+            console.log("mismo nombre de metodo mas sospechoso");
+            // el nombre cumple  , en clase y nombre del metodo 
+            if(metodos1[i].tipo == metodos2[j].tipo){
+              // veamos el tipo ya verficado 
+              console.log("mismo Tipo en la funcion bai bai :)");
+             if(metodos1[i].ParametrostoStringVERIFICACION() == metodos2[j].ParametrostoStringVERIFICACION()){
+              console.log("BAI BAI HAY UNA COPIA DE METODO");
+              // creo mi objeto copia de funcion 
+              Rep.ListaFuncionesCopia.push(new FuncionCopia(metodos1[i].id, metodos1[i].tipo , metodos1[i].tipoDeRetorno  , nombreclase , metodos1[i].toReportCopiaFuncion()));
+             }  
+            }
           }
-          
         }
       }
 

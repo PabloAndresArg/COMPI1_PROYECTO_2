@@ -36,7 +36,11 @@ export class DeclaracionFuncion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
-        Rep.addMetodo( Rep.claseActual , new Metodo( this.identifier , this.type.toString() ));
+        if(Rep.t1 == true || Rep.t2 == true){
+            Rep.nombreMetodoActual = this.identifier; 
+            Rep.addMetodo( Rep.claseActual.id , new Metodo( this.identifier , this.type.toString() ));
+        }
+      
 
 
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones\n"); 

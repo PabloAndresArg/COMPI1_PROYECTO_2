@@ -176,7 +176,9 @@ app.post('/analizarYO', (req, res) => {
 
 
 app.post('/errores/', function (req, res) { // SOLO ES NECESARIO UNA ENTRADA DE TEXTO 
-  Errores.clear();// limpiamos la lista 
+  GraficaArbolAts.clear();
+  Errores.clear();
+  Rep.clear();
   var entrada1 = req.body.text1;
   const tree = MyParser_300445.parse(entrada1);
   const tabla = new Table(null);
@@ -213,6 +215,7 @@ app.post('/errores/', function (req, res) { // SOLO ES NECESARIO UNA ENTRADA DE 
 app.post('/ats/', function (req, res) { // PARA ESTA FUNCION SOLO ES NECESARIA UNA ENTRADA DE TEXTO 
   GraficaArbolAts.clear();
   Errores.clear();
+  Rep.clear();
   var entrada1 = req.body.text1;
   const tree = MyParser_300445.parse(entrada1);
   const tabla = new Table(null);
@@ -304,5 +307,7 @@ Rep.t2 = false; // corto el flujo ya no agarra mas clases
 Rep.printClases1(); 
 Rep.printClases2();  */
 Rep.DeterminarCopiaClases();
-res.send(Rep.getCopiasClases());
+Rep.printClases1(); 
+Rep.printClases2();
+res.send(Rep.getHTML());
 });
