@@ -4,13 +4,14 @@ import {Tree} from "../Simbols/Tree";
 import {Type} from "../utils/Type";
 import {types} from "../utils/Type";
 import { isRegExp } from "util";
+import { Variable } from "./Variable";
 
 export class Metodo {
     tipo:string;
     id:string; 
     listaParametros:Array<Node> = []; // mismo tipo y el mismo orden los parametros 
     tipoDeRetorno:any;
-    variables:any[] = [];
+    listVariables:Array<Variable> = [];
 /*
 mostrará el tipo de retorno del método y/o función, nombre del mismo, listado de sus
 parámetros con tipo y nombre, nombre de la clase al que pertenece.

@@ -307,7 +307,7 @@ Rep.t2 = false; // corto el flujo ya no agarra mas clases
 Rep.printClases1(); 
 Rep.printClases2();  */
 Rep.DeterminarCopiaClases();
-Rep.printClases1(); 
-Rep.printClases2();
+console.log(Rep.ListaVariablesCopia);
+
 res.send(Rep.getHTML());
 });

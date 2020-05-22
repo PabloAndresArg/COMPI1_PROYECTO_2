@@ -4,6 +4,8 @@ import { Metodo } from "./Metodo";
 import { ClaseCopia } from "./ClaseCopia";
 
 import {FuncionCopia } from './FuncionCopia'
+import { Variable } from "./Variable";
+import { VariableCopia } from "./VariableCopia";
 class Rep {
   public static ListaClases1: Array<Clase> = [];
   public static ListaClases2: Array<Clase> = [];
@@ -13,6 +15,7 @@ class Rep {
   public static t2 = false;
   public static ListaClasesCopia: Array<ClaseCopia> = [];
   public static ListaFuncionesCopia:Array<FuncionCopia> = [];
+  public static ListaVariablesCopia: Array<VariableCopia> = [];
   constructor() {
 
   }
@@ -22,6 +25,8 @@ class Rep {
     definitiva += this.getCopiasClases(); 
     definitiva += "\n\n\n\n\n";
     definitiva += this.getCopiasFunciones(); 
+    definitiva += "\n\n\n\n\n";
+    definitiva += this.getCopiasVariables(); 
     definitiva += "\n\n\n\n\n";
     return definitiva; 
   }
@@ -54,6 +59,19 @@ class Rep {
       }
 
     }
+
+  }
+
+  public static addVariable(nombreMetodo:string , idVar:any , tipo:string){// necesito el nombre del metodo y de la clase 
+    if (Rep.t1 == true) {
+      let metodo = Rep.claseActual.getMETODO(nombreMetodo); // ya se en que clase estoy 
+      metodo.listVariables.push(new Variable(idVar , tipo));
+   }
+
+   if (Rep.t2 == true) {
+     let metodo = Rep.claseActual.getMETODO(nombreMetodo); 
+     metodo.listVariables.push(new Variable(idVar , tipo));
+   }
 
   }
 
@@ -120,6 +138,9 @@ class Rep {
     Rep.ListaClasesCopia = vacio3;
     let vacio4: any = [];
     Rep.ListaFuncionesCopia = vacio4;
+    Rep.nombreMetodoActual =  ""; 
+    let vacio5: any = [];
+    Rep.ListaVariablesCopia = vacio5; 
   }
   public static get2() {
     return Rep.ListaClases2;
@@ -296,7 +317,7 @@ class Rep {
         cad += "<tr>\n";// abre fila 
 
 
-        cad += "<td>" + (i + 1) + "</td><td>" + "  " + this.ListaFuncionesCopia[i].nombreClase + "  </td><td>" + this.ListaFuncionesCopia[i].nombreFuncion + "</td><td>"+this.ListaFuncionesCopia[i].tipo+"</td><td>" + this.ListaFuncionesCopia[i].listaDeParametros + "</td>"+"<td>" + this.ListaFuncionesCopia[i].tipoDeRetorno + "</td>";
+        cad += "<td>" + (i + 1) + "</td><td>" + "  " + this.ListaFuncionesCopia[i].nombreClase + "  </td><td>" + this.ListaFuncionesCopia[i].nombreFuncion + "</td><td>"+this.ListaFuncionesCopia[i].tipo+"</td><td>" + this.ListaFuncionesCopia[i].listaDeParametros + "</td>"+"<td>" + this.ListaFuncionesCopia[i].tipoDeRetorno +" :"+this.ListaFuncionesCopia[i].tipo+ "</td>";
         
         
         cad += "</tr>\n";// cierra fila 
@@ -327,6 +348,11 @@ class Rep {
           if (metodos1[i].id == metodos2[j].id) {
             console.log("mismo nombre de metodo mas sospechoso");
             // el nombre cumple  , en clase y nombre del metodo 
+            /*
+            en este ambito busco variables copia 
+            */ 
+           this.buscarVariablesCopia(nombreclase , metodos1[i].id ,metodos1[i].listVariables , metodos2[j].listVariables);
+
             if(metodos1[i].tipo == metodos2[j].tipo){
               // veamos el tipo ya verficado 
               console.log("mismo Tipo en la funcion bai bai :)");
@@ -346,6 +372,93 @@ class Rep {
 
 
   }
+
+
+
+  public static buscarVariablesCopia(nombreClase:string , nombreMetodo:string , listaVar1:Array<Variable> , listaVar2:Array<Variable>):any{// necesito la clase , el metodo donde estoy y el arreglo de las variables 
+   console.log("-----------°°-------------");
+   console.log(listaVar1);
+   console.log(listaVar2);
+   console.log("------------°°------------");
+    for(let i = 0 ; i <listaVar1.length ; i++){
+      for(let j = 0 ; j < listaVar2.length ; j++){// j es el puntero de las lista de variables 2 
+
+        if(listaVar1[i].id == listaVar2[j].id){
+          
+          if(listaVar1[i].tipo == listaVar2[j].tipo){
+              console.log("coincide el tipo bai bai tenemos una copia de una variable.:!!!");
+              //    constructor(tipo:any, id:any , nMetodo:string , nClase: string){
+              this.ListaVariablesCopia.push(new VariableCopia(listaVar1[i].tipo , listaVar2[j].id ,nombreMetodo ,nombreClase ));
+          }
+          
+        }
+
+      }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*             REPORTE DE VARIABLES COPIA        */ 
+
+public static getCopiasVariables(): string {
+
+    /*
+    Este reporte deberá mostrar un listado de las variables que se consideran copia, para
+    considerar una variable como copia deberá pertenecer al mismo métodos y/o función y a la
+    misma clase, así como el mismo tipo. Este reporte mostrará el tipo de la variable, nombre, la
+    función y/o método al que pertenece, la clase a la que pertenece.
+    */
+
+
+
+  var cad: string = "";
+  if (this.ListaVariablesCopia.length != 0) {
+
+
+    cad += "<body class=\"MIfondo\">\n";
+    cad += "<div align=\"center\"  class=\"MIfondo\"> \n";
+    cad += "<h1 class = \"tituloTb\">REPORTE DE VARIABLES COPIA </h1>\n";
+    cad += "<table border=\"2\" align=\"center\" class=\"tabl\">\n";
+    cad += "<tr>\n";
+    cad += "<th>#</th><th>TIPO</th><th>ID</th><th>NOMBRE METODO </th><th>NOMBRE CLASE </th>\n";
+    cad += "</tr>\n";
+    
+    for (var i = 0; i < this.ListaVariablesCopia.length; i++) {
+      cad += "<tr>\n";// abre fila 
+
+
+    cad += "<td>" + (i + 1) + "</td><td>" + "  " + this.ListaVariablesCopia[i].tipo + "  </td><td>" + this.ListaVariablesCopia[i].id + "</td><td>"+this.ListaVariablesCopia[i].nombreMetodo+"</td><td>" + this.ListaVariablesCopia[i].nameClase + "</td>\n";
+      
+      
+      cad += "</tr>\n";// cierra fila 
+    }
+
+    cad += "</table>\n";
+    cad += "</div>\n";
+    cad += "</body>\n";
+    cad += "<br><br><br><br><br>"; 
+
+  } else {
+    console.log("no hay clases copia");
+  }
+  return cad;
+}
+
+
+
+
+
 
 
 

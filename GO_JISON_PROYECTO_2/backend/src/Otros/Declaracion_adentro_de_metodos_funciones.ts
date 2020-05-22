@@ -7,6 +7,7 @@ import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
+import { Rep } from "../REPORTES/Rep";
 
 /**
  * @class Inserta una nueva variable en la tabla de simbolos
@@ -26,6 +27,20 @@ export class Declaracion_adentro_de_metodos_funciones extends Node {
     }
 
     execute(table: Table, tree: Tree): any {
+       
+        if(Rep.t1 == true || Rep.t2 == true){
+            if(this.Lista_ids.length != 0 ){
+                for(let i = 0 ; i < this.Lista_ids.length ; i++){
+                    Rep.addVariable(Rep.nombreMetodoActual ,  this.Lista_ids[i] ,this.type.toString());
+                }
+            }//if2
+        }
+
+
+
+
+
+
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Declaracion_adentro_de_Metodo/Funcion");
        
         if (this.Lista_ids.length == 1) {
