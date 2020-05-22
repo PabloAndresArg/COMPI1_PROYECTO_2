@@ -104,8 +104,8 @@ break;
 case 11:
 this.$ = new ClaseInstruccion($$[$0-1], $$[$0] ,  this._$.first_line, this._$.first_column);
 break;
-case 12: case 15: case 28: case 99:
- console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); 
+case 12: case 15: case 23: case 28: case 99:
+ this.$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); 
 break;
 case 13: case 59: case 60:
 this.$ = $$[$0-1];
@@ -124,9 +124,6 @@ case 21:
 break;
 case 22:
 this.$ = new DeclaracionGlobales($$[$0-2],$$[$0-1],$$[$0],this._$.first_line , this._$.first_column ); console.log(" LISTA ids solo globales ");
-break;
-case 23:
- console.error('Este es un error sintáctico: se esperaba DECLARACION AMBITO CLASE' + yytext + ', en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","El error : "+yytext+" Columna:"+ this._$.first_column ,this._$.first_line)); 
 break;
 case 24:
 this.$ = new Opcion_metodo_funcion($$[$0-2] , $$[$0] , this._$.first_line); console.log("CON PARAMETROS");

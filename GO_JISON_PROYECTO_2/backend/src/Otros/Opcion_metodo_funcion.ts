@@ -38,9 +38,7 @@ export class Opcion_metodo_funcion extends Node {
 
     execute(table: Table, tree: Tree):any {
         /* UNA CLASE POSEE SU PROPIO AMBITO DE VARIABLES POR ESO LE CREO UNA TABLE */
-        console.log("PARAMETROS........................."); 
-     
-        console.log(this.listaParams); 
+
         if(this.listaParams.length != 0){
             GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>LISTA DE PARAMETROS\n"); 
             GraficaArbolAts.add("<ul>");
@@ -50,7 +48,7 @@ export class Opcion_metodo_funcion extends Node {
             GraficaArbolAts.add("</ul>"); 
             GraficaArbolAts.add("</li>"); 
         }
-        console.log("PARAMETROS........................."); 
+
 
         const newtable = new Table(table);
         for (let i = 0; i < this.contenido.length; i++) {
