@@ -17,6 +17,10 @@ body{
     text-align: center;
     color: deepskyblue;
 }
+
+#analizarJAVA2:hover{
+	background:rgba(250, 102, 16, 0.8);
+}
 #analizarJAVA{
     left: 1400px;
     right: 31px;

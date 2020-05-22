@@ -70,11 +70,11 @@
 
 <!--           Segunda Consola    -->
 <div class="contenedor">
-    <input id="fileInput2" title="Abrir" type="file" size="50" onchange="AbrirArchivo2(this.files)" class="btn btn-info">
-    <button onclick="agregar2();" title="AgregarPestana" id="btn42" class="btn btn-success text-black"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Pestana</button>
-    <button onclick="quitar2();" title="QuitarPestana" id="btn52" class="btn btn-danger text-black">Quitar Pestana <i class="fa fa-window-close" aria-hidden="true"></i></button>
-    <button onclick="errores2();" id="analizarJAVA2" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
-	<button onclick="ats2();" class="btn btn-success text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
+    <input id="fileInput2" title="Abrir" type="file" size="50" onchange="AbrirArchivo2(this.files)" class="btn btn-outline-secondary">
+    <button onclick="agregar2();" title="AgregarPestana" id="btn42" class="btn btn-outline-success text-black"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Pestana</button>
+    <button onclick="quitar2();" title="QuitarPestana" id="btn52" class="btn btn-outline-danger text-black">Quitar Pestana <i class="fa fa-window-close" aria-hidden="true"></i></button>
+    <button onclick="errores2();" id="analizarJAVA2" class="btn btn-outline-warning" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
+	<button onclick="ats2();" class="btn btn-outline-light text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
          
     
     <div id="pestanas2">
@@ -99,31 +99,6 @@
 
 
 
-<script>
-function analisis() {
-    var ventana_actual=document.getElementById(get_vent());
-    var texto=ventana_actual.value;
-    alert("ENTRADA: "+ texto);
-    var url = 'http://localhost:3000/comunicar/';
-
-
-
-    $.post(url, { text1: texto  , text2: "QUE TAL"}, function (data, status) {
-        if (status.toString() == "success") {
-            console.log(data)
-            
-            createJSTree(data.toString());
-           
-            alert("El resultado es: " + data.toString());
-        } else {
-            alert("Error estado de conexion:" + status);
-        }
-    });
-    console.log("OK LLAMANDO AL METODO");    
-}
-
-
-</script>
 
 
 <!--                 REPORTE ATS          -->	
