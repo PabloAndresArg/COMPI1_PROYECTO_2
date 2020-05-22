@@ -14,9 +14,11 @@ let CErrores=require('../ManejoErrores/Errores');
  */
 
 import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+import { Rep } from "../REPORTES/Rep";
+import { Metodo } from "../REPORTES/Metodo";
 export class DeclaracionFuncion extends Node {
     type: Type;
-    identifier: String;
+    identifier: string;
     value: Node;
     
     /**
@@ -27,13 +29,16 @@ export class DeclaracionFuncion extends Node {
      * @param line Linea de la sentencia if
      * @param column Columna de la sentencia if
      */
-    constructor(type: Type, identifier: String, OpcionMetodoFUncion: Node, line: Number, column: Number) {
+    constructor(type: Type, identifier: string, OpcionMetodoFUncion: Node, line: Number, column: Number) {
         super(type, line, column);
         this.identifier = identifier;
         this.value = OpcionMetodoFUncion;
     }
 
     execute(table: Table, tree: Tree) :any{
+        Rep.addMetodo( Rep.claseActual , new Metodo( this.identifier , this.type.toString() ));
+
+
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionFunciones\n"); 
 
         /*ACA HAY UN AMBITO NUEVO */ 

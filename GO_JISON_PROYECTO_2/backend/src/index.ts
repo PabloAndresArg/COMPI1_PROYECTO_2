@@ -9,8 +9,10 @@ import { Node } from './Abstract/Node';
 import { fstat } from 'fs';
 import { json } from 'body-parser';
 
+import {Rep} from './REPORTES/Rep';
 
 import { GraficaArbolAts } from './ManejoErrores/GraficaArbolAts';
+import { Clase } from './REPORTES/Clase';
 
 
 var bodyParser = require("body-parser");
@@ -244,4 +246,63 @@ app.post('/ats/', function (req, res) { // PARA ESTA FUNCION SOLO ES NECESARIA U
 
   }
 
+});
+
+
+
+
+
+
+
+
+app.post('/reportes/', function (req, res) { // PARA ESTA FUNCION SOLO ES NECESARIA UNA ENTRADA DE TEXTO 
+  console.log("°°°°°°°°REPORTE DE COPIAS PETICION°°°°°°°°°");
+  GraficaArbolAts.clear();
+  Errores.clear();
+  Rep.clear(); 
+  console.log(req.body);
+  var entrada1 = req.body.text1;
+  var entrada2 = req.body.text2;
+  const tree1 = MyParser_300445.parse(entrada1);
+  const tabla1 = new Table(null);
+  
+  // se supone que viene sin errores 
+  Rep.t1 = true ; 
+    try {// lo mando a recorrer 
+    tree1.instructions.map((m: any) => {
+      const res = m.execute(tabla1, tree1);
+    });
+  } catch (error) {
+    console.log("ERRORES en la entrada1 EJECUCION ATS ");
+    console.log(Errores.geterror());
+  }
+Rep.t1 = false;
+
+
+
+
+
+const tree2 = MyParser_300445.parse(entrada2);
+const tabla2 = new Table(null);
+
+
+
+
+// se supone que viene sin errores 
+Rep.t2 = true; // activo
+  try {// lo mando a recorrer 
+  tree2.instructions.map((m: any) => {
+    const res = m.execute(tabla2, tree2);
+  });
+} catch (error) {
+  console.log("ERRORES en la entrada1 EJECUCION ATS ");
+  console.log(Errores.geterror());
+}
+Rep.t2 = false; // corto el flujo ya no agarra mas clases 
+/*
+
+Rep.printClases1(); 
+Rep.printClases2();  */
+Rep.DeterminarCopiaClases();
+res.send(Rep.getCopiasClases());
 });

@@ -7,6 +7,9 @@ import { Continue } from "../Expresiones/Continue";
 import { Break } from "../Expresiones/Break";
 import { Simbol } from "../Simbols/Simbol";
 import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+import { Rep } from "../REPORTES/Rep";
+import { Clase } from "../REPORTES/Clase";
+import { report } from "process";
 /**
  * @class Reasigna el valor de una variable existente
  */
@@ -14,7 +17,7 @@ import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts';
 
 
 export class ClaseInstruccion extends Node {
-    identifier: String;
+    identifier: string;
     contenido:  Array<Node>;
 
     /**
@@ -24,7 +27,7 @@ export class ClaseInstruccion extends Node {
      * @param line
      * @param column 
      */
-    constructor(identifier: String, value:  Array<Node>, line: Number, column: Number) {
+    constructor(identifier: string, value:  Array<Node>, line: Number, column: Number) {
         super(null, line, column);
         this.identifier = identifier;
         this.contenido = value;
@@ -32,6 +35,17 @@ export class ClaseInstruccion extends Node {
     }
 
     execute(table: Table, tree: Tree) :any{
+            Rep.claseActual = this.identifier; 
+            Rep.addClase(new Clase(this.identifier));
+        console.log("static " +Rep.claseActual);
+
+
+
+
+
+
+
+
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>CLASE\n");
        // CIERRA DE UNA VEZ PORQUE NO AVANZA RECURSIVAMENTE 
         GraficaArbolAts.add("<ul>");

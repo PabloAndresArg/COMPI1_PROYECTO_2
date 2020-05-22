@@ -16,20 +16,25 @@ let CErrores=require('../ManejoErrores/Errores');
 
 
 import {GraficaArbolAts} from '../ManejoErrores/GraficaArbolAts'; 
+import { Rep } from "../REPORTES/Rep";
+import { Metodo } from "../REPORTES/Metodo";
 
 
 export class DeclaracionMetodo extends Node {
     type: Type;
-    identifier: String;
+    identifier: string;
     value: Node;
 
-    constructor(type: Type, identifier: String, value: Node , line: Number, column: Number) {
+    constructor(type: Type, identifier: string, value: Node , line: Number, column: Number) {
         super(type, line, column);
         this.identifier = identifier;
         this.value = value;
     }
 
     execute(table: Table, tree: Tree):any {
+        Rep.addMetodo( Rep.claseActual , new Metodo( this.identifier , this.type.toString() ));
+
+
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>DeclaracionMetodos\n"); 
 
 

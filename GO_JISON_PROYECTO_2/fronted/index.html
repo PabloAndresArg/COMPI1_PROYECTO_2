@@ -46,8 +46,7 @@
         <button onclick="quitar();" title="QuitarPestana" id="btn5" class="btn btn-danger text-black">Quitar Pestana <i class="fa fa-window-close" aria-hidden="true"></i></button>
         <button onclick="errores();" id="analizarJAVA" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
 		<button onclick="ats();" class="btn btn-success text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
-         
-		
+      
 		   <!--         <button onclick="abrirUrl('arbol.html','arbol');" class="btn btn-success text-black">arbol <i class="fa fa-code" aria-hidden="true"></i></button>   -->
 
         <div id="pestanas">
@@ -75,7 +74,8 @@
     <button onclick="quitar2();" title="QuitarPestana" id="btn52" class="btn btn-outline-danger text-black">Quitar Pestana <i class="fa fa-window-close" aria-hidden="true"></i></button>
     <button onclick="errores2();" id="analizarJAVA2" class="btn btn-outline-warning" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
 	<button onclick="ats2();" class="btn btn-outline-light text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
-         
+    <button onclick="reportes();" class="btn btn-outline-info text-black">¿COPIA?<i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
+		     
     
     <div id="pestanas2">
         <ul id=lista2>
@@ -95,8 +95,10 @@
 
 </body>
 
+<!--             REPORTE DE CLASES REPETIDAS -->
+<div id = "copias">
 
-
+</div>
 
 
 
@@ -138,6 +140,33 @@
 
 
 <!--     	      FIN DEL REPORTE    ATS     -->
+
+<script>
+   function reportes() {
+    /*            esta ventana es una porque es la segunada consola         */    
+  var ventana_actual2=document.getElementById("textarea");
+  var ventana_actual1=document.getElementById(get_vent());
+
+   var texto2 = ventana_actual2.value;// consola 2 
+   var texto1 = ventana_actual1.value; // consola 1 
+   alert("ENTRADA1: "+ texto1);
+   alert("ENTRADA2: "+ texto2);
+    //copias
+   var url = 'http://localhost:3000/reportes/';
+   var copias_div = document.getElementById("copias");
+   $.post(url, { text1: texto1 , text2: texto2 }, function (data, status) {
+         if (status.toString() == "success") {
+             console.log(data)
+            copias_div.innerHTML = data;    
+   
+         } else {
+             alert("Error estado de conexion:" + status);
+         }
+     });
+
+ }
+</script>
+
 
 
 </html>
