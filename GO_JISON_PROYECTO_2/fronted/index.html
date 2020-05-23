@@ -47,7 +47,6 @@
         <button onclick="errores();" id="analizarJAVA" >ANALIZAR <i class="fa fa-code" aria-hidden="true"></i></button>
 		<button onclick="ats();" class="btn btn-success text-black">ATS <i class="fa fa-code" aria-hidden="true"></i></button>
       
-		   <!--         <button onclick="abrirUrl('arbol.html','arbol');" class="btn btn-success text-black">arbol <i class="fa fa-code" aria-hidden="true"></i></button>   -->
 
         <div id="pestanas">
             <ul id=lista>
@@ -67,7 +66,25 @@
 
 
 
-<!--           Segunda Consola    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="contenedor">
     <input id="fileInput2" title="Abrir" type="file" size="50" onchange="AbrirArchivo2(this.files)" class="btn btn-outline-secondary">
     <button onclick="agregar2();" title="AgregarPestana" id="btn42" class="btn btn-outline-success text-black"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Pestana</button>
@@ -95,7 +112,7 @@
 
 </body>
 
-<!--             REPORTE DE CLASES REPETIDAS -->
+
 <div id = "copias">
 
 </div>
@@ -103,7 +120,6 @@
 
 
 
-<!--                 REPORTE ATS          -->	
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -114,36 +130,35 @@
     </head>
     <body>
 
-<!--  ------------------------------Reporte AST 1------------------------------ -->
+
         <h1 style="color: azure;" id="tituloAST"></h1>
-        <!-- En el div que sigue meto el ast metido desde el backend  -->
+     
         <div id= "ats" >		
         </div>
-<!--  ---------------------------------Errores Consola 1------------------------------- -->
- <!-- Aca despliego los errores  --> 
+
  <div id="erroresConsola1">
 </div>
-  <!--  ------------------------------Reporte AST 2------------------------------ -->
+
   <h1 style="color: azure;" id="tituloAST2"></h1>
-  <!-- En el div que sigue meto el ast metido desde el backend  -->
+ 
   <div id= "ats2" >		
   </div>
-<!--  ------------------------------- Errores Consola 2-------------------------------------- -->
+
 <div id="erroresConsola2">
 </div>
 
-<!--  -------------------------------------------------------------------- -->
+
 
 <script src="./jstree/dist/jstree.min.js"></script>
 </body>
 </html>
 
 
-<!--     	      FIN DEL REPORTE    ATS     -->
+
 
 <script>
    function reportes() {
-    /*            esta ventana es una porque es la segunada consola         */    
+  
   var ventana_actual2=document.getElementById("textarea");
   var ventana_actual1=document.getElementById(get_vent());
 
