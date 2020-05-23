@@ -241,12 +241,12 @@ class Rep {
 
     // tiene que coincidir la longitud del vector con el contador para determinar que es copia 
     if (cont == metodos1.length) {
-      res.push(true); // si es copia 
-      res.push(cont); // metodos repetidos 
+      res.push(true); 
+      res.push(cont); 
       return res;
     } else {
-      res.push(false); // si es copia 
-      res.push(cont); // metodos repetidos  
+      res.push(false); 
+      res.push(cont);  
       return res;
     }
 

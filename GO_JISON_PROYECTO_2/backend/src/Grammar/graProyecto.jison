@@ -53,8 +53,8 @@ no  ([\"]*)
 entero [0-9]+
 decimal [0-9]+("."[0-9]+)
 caracter (\'[^☼]\')
-stringliteral (\"[^☼]*[\\"]*\")                  // FALTA ARREGLAR EL CASO DE COMILLAS ADENTRO DE COMILLAS 
-
+//stringliteral (\"[^☼]*[\\"]*\")                  // FALTA ARREGLAR EL CASO DE COMILLAS ADENTRO DE COMILLAS 
+stringliteral (\"[^"]*\") 
 
 id ([a-zA-Z_])[a-zA-Z0-9_]*
 
@@ -90,10 +90,11 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 "%"                   return '%'
 "."                   return '.'
 
+"<="                  return '<='
+">="                 {console.log("||||| MAYOR O IGUAL ||||"); return '>=' ;}
 "<"                   return '<'
 ">"                   return '>'
-"<="                  return '<='
-">="                  return '>='
+
 "=="                  return '=='
 "!="                  return '!='
 "||"                  return '||'
@@ -148,7 +149,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 %left '||'
 %left '&&'
 %left '==', '!='
-%left '>=', '<=', '<', '>'
+%left '>=' , '<=' , '<' , '>'
 %left '+' '-'
 %left '*' '/'
 %left '^' '%'
@@ -194,14 +195,14 @@ IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, thi
        
                        
 SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
-              | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
               ;
                
 // tengo que retornar algo en los errores para que mi arbol no truene 
 
 BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR_P '}' {$$ = $2;}              /* este es para que acepte vacios*/
                                | '{' '}' {$$ = [];}
-                               | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+                               | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
                                ;
 
 
@@ -217,7 +218,7 @@ OPCION_ID_MAIN: 'main'  {$$ = $1}
 DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new DeclaracionMetodo($1, $2 , $4 ,  this._$.first_line , this._$.first_column);console.log("METODO");}
                         | TIPO id '(' OPCION_METODO_FUNCION { $$ = new DeclaracionFuncion($1, $2 , $4 ,  this._$.first_line , this._$.first_column); console.log("FUNCION"); }
                         | TIPO LISTA_IDS ASIGNACION {$$ = new DeclaracionGlobales($1,$2,$3,this._$.first_line , this._$.first_column ); console.log(" LISTA ids solo globales ");}
-                        | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+                        | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
                         ; 
 
 
@@ -230,10 +231,10 @@ DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$
 
 INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
               | INSTRUCCION               { $$ = [$1]; }
-              | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
               ;
 
-INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;console.log("SENTENCIA IMPRIME");}
+INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
             | WHILE                {$$ = $1;}
             | IF                   {$$ = $1;}
             | DOWHILE              {$$ = $1;}
@@ -274,6 +275,7 @@ SENTENCIAIMPRIME: 'System' '.' 'out' '.'  OPCIONIMPRIME '(' EXPRESION ')' ';' { 
 
 OPCIONIMPRIME : 'println' {$$ = $1 ; }
 	       | 'print' {$$ = $1;}
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
               ; 
 
 
@@ -308,7 +310,7 @@ EXPRESION : '-' EXPRESION %prec UMENOS	    { $$ = new Arithmetic($2, null, '-', 
           | EXPRESION '^' EXPRESION	    { $$ = new Arithmetic($1, $3, '^', this._$.first_line, this._$.first_column); }
           | EXPRESION '<' EXPRESION	    { $$ = new Relational($1, $3, '<', this._$.first_line, this._$.first_column); }
           | EXPRESION '>' EXPRESION           { $$ = new Relational($1, $3, '>', this._$.first_line, this._$.first_column); }
-          | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', this._$.first_line, this._$.first_column); }
+          | EXPRESION '>=' EXPRESION	    { $$ = new Relational($1, $3, '>=', this._$.first_line, this._$.first_column); console.log(">====="); }
           | EXPRESION '<=' EXPRESION	    { $$ = new Relational($1, $3, '<=', this._$.first_line, this._$.first_column); }
           | EXPRESION '==' EXPRESION	    { $$ = new Relational($1, $3, '==', this._$.first_line, this._$.first_column); }
           | EXPRESION '!=' EXPRESION	    { $$ = new Relational($1, $3, '!=', this._$.first_line, this._$.first_column); }
@@ -354,7 +356,7 @@ BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONESWITCH {$$=$1;}
 
 INSTRUCCIONESWITCH : INSTRUCCIONESWITCH INSTRUCCIONSWITCH { $1.push($2); $$ = $1; }
               | INSTRUCCIONSWITCH               { $$ = [$1]; }
-              | error { $$=[]; console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 // LO MISMO PERO NO TIENE EL BREAK para que no se encicle 
 INSTRUCCIONSWITCH : SENTENCIAIMPRIME     {$$ = $1;}
