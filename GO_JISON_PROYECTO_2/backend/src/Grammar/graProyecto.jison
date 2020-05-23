@@ -75,8 +75,8 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 
 {decimal}             return 'decimal'
 {entero}              return 'entero' 
-{stringliteral}       {console.log("string LITERAL....");return 'STRING_LITERAL'}
-{comentarioBloque}    {console.log("comBloque reconocido");return 'comentarioBloque'}
+{stringliteral}       {console.log("STRING QUEMADO ");return 'STRING_LITERAL'}
+{comentarioBloque}    {console.log("comentario Bloque reconocido");return 'comentarioBloque'}
 {comentarioLinea}     {console.log("comLinea reconocido"); return 'comentarioLinea'}
 ":"                   return ':'
 "/"                   return '/'
@@ -171,10 +171,10 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 
 
 
-INICIO : LISTA_IMPORTES_CLASES EOF {$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
-       |  LISTA_IMPORTE EOF {$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
-       |  LISTA_CLASES  EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
-       | EOF{$$ = new Tree($1);console.log("se genera el arbol"); return $$;}
+INICIO : LISTA_IMPORTES_CLASES EOF {$$ = new Tree($1);console.log("CREACION DEL ARBOL"); return $$;}
+       |  LISTA_IMPORTE EOF {$$ = new Tree($1);console.log("CREACION DEL ARBOL"); return $$;}
+       |  LISTA_CLASES  EOF{$$ = new Tree($1);console.log("CREACION DEL ARBOL"); return $$;}
+       | EOF{$$ = new Tree($1);console.log("CREACION DEL ARBOL"); return $$;}
        ;
 
 LISTA_IMPORTES_CLASES:  LISTA_IMPORTE LISTA_CLASES {let init =  new Inicio($1, $2); $$ = init.Lista_importes_clases}
@@ -195,14 +195,14 @@ IMPORTE: 'import' 'id' ';'   {$$ = new Importe($2, $2 ,  this._$.first_line, thi
        
                        
 SENTENCIA_CLASE:'class' 'id' BLOQUE_DECLARACIONES_METFUNVAR {$$ = new ClaseInstruccion($2, $3 ,  this._$.first_line, this._$.first_column);}
-              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
                
 // tengo que retornar algo en los errores para que mi arbol no truene 
 
 BLOQUE_DECLARACIONES_METFUNVAR : '{' LISTA_DECLARACIONES_METFUNVAR_P '}' {$$ = $2;}              /* este es para que acepte vacios*/
                                | '{' '}' {$$ = [];}
-                               | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+                               | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
                                ;
 
 
@@ -218,7 +218,7 @@ OPCION_ID_MAIN: 'main'  {$$ = $1}
 DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$ = new DeclaracionMetodo($1, $2 , $4 ,  this._$.first_line , this._$.first_column);console.log("METODO");}
                         | TIPO id '(' OPCION_METODO_FUNCION { $$ = new DeclaracionFuncion($1, $2 , $4 ,  this._$.first_line , this._$.first_column); console.log("FUNCION"); }
                         | TIPO LISTA_IDS ASIGNACION {$$ = new DeclaracionGlobales($1,$2,$3,this._$.first_line , this._$.first_column ); console.log(" LISTA ids solo globales ");}
-                        | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+                        | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
                         ; 
 
 
@@ -231,7 +231,7 @@ DECLARACION_AMBITO_CLASE: 'void' OPCION_ID_MAIN '(' OPCION_METODO_FUNCION   { $$
 
 INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $1.push($2); $$ = $1; }
               | INSTRUCCION               { $$ = [$1]; }
-              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 
 INSTRUCCION : SENTENCIAIMPRIME     {$$ = $1;}
@@ -275,7 +275,7 @@ SENTENCIAIMPRIME: 'System' '.' 'out' '.'  OPCIONIMPRIME '(' EXPRESION ')' ';' { 
 
 OPCIONIMPRIME : 'println' {$$ = $1 ; }
 	       | 'print' {$$ = $1;}
-              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); } 
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ; 
 
 
@@ -356,7 +356,7 @@ BLOQUEINST_CON_OPCION_VACIA:  INSTRUCCIONESWITCH {$$=$1;}
 
 INSTRUCCIONESWITCH : INSTRUCCIONESWITCH INSTRUCCIONSWITCH { $1.push($2); $$ = $1; }
               | INSTRUCCIONSWITCH               { $$ = [$1]; }
-              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
+              | error {  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); }  
               ;
 // LO MISMO PERO NO TIENE EL BREAK para que no se encicle 
 INSTRUCCIONSWITCH : SENTENCIAIMPRIME     {$$ = $1;}
@@ -394,46 +394,23 @@ ASIGNACION_SIMPLE: id '=' EXPRESION ';'  {$$ = new Asignacion($1, $3,this._$.fir
                   |id '(' ')' ';'     {$$ = new Llamada_metodo($1 ,[], this._$.first_line, this._$.first_column); console.log("NO LLEVA PARAMAETTROS");}
                  ;
 
-/*
-OPCION_ASIGNACION: '=' EXPRESION ';'
-                 | '(' LISTA_EXPRESIONES_LLAMADA_METODO ')' ';'   {console.log("lleva_parametros")}
-                 | ')' ';'                                   {console.log("NO LLEVA PARAMAETTROS")}
-                 ;*/
+
 // LISTA_EXPRESIONES A VECES DICE ARRAY ENTRE ARRAY :v 
 EXPRESION_METODO: id '(' LISTA_EXPRESIONES_LLAMADA_METODO ')'  {$$ = new Llamada_metodo($1 ,$3, this._$.first_line, this._$.first_column);console.log("SI lleva parametros")}
                 | id '(' ')'     {$$ = new Llamada_metodo($1 ,[], this._$.first_line, this._$.first_column); console.log("NO LLEVA PARAMAETTROS");}
                 | id  { $$ = new Identificador($1, this._$.first_line, this._$.first_column); ;console.log("ID SIMPLE ")}
                 ;
 
-/*
-SENTENCIA_LLAMA_METODO : LISTA_EXPRESIONES_LLAMADA_METODO ')'   {console.log("lleva_parametros")}
-		          | ')'                                   {console.log("NO LLEVA PARAMAETTROS")}
-                        ;*/
-/*
-LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
-         | id  { $$ = [$1]; }
-         ; 
-*/
+
 LISTA_EXPRESIONES_LLAMADA_METODO: LISTA_EXPRESIONES_LLAMADA_METODO ',' EXPRESION  { $1.push($3); $$ = $1; }
                                 | EXPRESION { $$ = [$1]; }
                                 ;
 
-                                /*
-LISTA_EXPRESIONES_LLAMADA_METODO :EXPRESION  LISTA_EXPRESIONES_LLAMADA_METODOP 
-                                 ;
-LISTA_EXPRESIONES_LLAMADA_METODOP: LISTA_EXPRESIONES_LLAMADA_METODOP ',' EXPRESION   { $1.push($3); $$ = $1; }
-                                 | ',' EXPRESION { $$ = [$1]; }
-                                 | error { console.error('Este es un error sintáctico: [ ' + yytext + ' ] en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-                                 ;*/
 
 
 DECLARACION_ADENTRO_DE_METODOS_FUNCIONES: TIPO LISTA_IDS ASIGNACION { $$ = new Declaracion_adentro_de_metodos_funciones($1,$2,$3 ,this._$.first_line , this._$.first_column ); console.log("dec adentro de metodos");}
                                         ;
 
-/*
-DECLARACION_ADENTRO_DE_METODOS_FUNCIONESP: LISTA_IDS ASIGNACION {$$ = new Declaracion_adentro_de_metodos_funcionesP($1,$2);}
-                                         ;     
-*/   
 
 LISTA_IDS: LISTA_IDS ',' id  { $1.push($3); $$ = $1; }
          | id  { $$ = [$1]; }

@@ -84,10 +84,10 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1: case 2: case 3:
-this.$ = new Tree($$[$0-1]);console.log("se genera el arbol"); return this.$;
+this.$ = new Tree($$[$0-1]);console.log("CREACION DEL ARBOL"); return this.$;
 break;
 case 4:
-this.$ = new Tree($$[$0]);console.log("se genera el arbol"); return this.$;
+this.$ = new Tree($$[$0]);console.log("CREACION DEL ARBOL"); return this.$;
 break;
 case 5:
 let init =  new Inicio($$[$0-1], $$[$0]); this.$ = init.Lista_importes_clases
@@ -105,7 +105,7 @@ case 11:
 this.$ = new ClaseInstruccion($$[$0-1], $$[$0] ,  this._$.first_line, this._$.first_column);
 break;
 case 12: case 15: case 23: case 28: case 55: case 100:
-  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error --> "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); 
+  console.error('Este es un error sintáctico: [' + yytext + ']  en la linea: ' +  this._$.first_line + ', en la columna: ' + this._$.first_column); CErrores.Errores.add(new CNodoError.NodoError("Sintactico","error::=       "+yytext+"    Columna:"+ this._$.first_column ,this._$.first_line)); 
 break;
 case 13: case 60: case 61:
 this.$ = $$[$0-1];
@@ -968,9 +968,9 @@ case 6:return 82
 break;
 case 7:return 88 
 break;
-case 8:console.log("string LITERAL....");return 85
+case 8:console.log("STRING QUEMADO ");return 85
 break;
-case 9:console.log("comBloque reconocido");return 'comentarioBloque'
+case 9:console.log("comentario Bloque reconocido");return 'comentarioBloque'
 break;
 case 10:console.log("comLinea reconocido"); return 'comentarioLinea'
 break;
