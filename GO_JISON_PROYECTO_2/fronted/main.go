@@ -11,7 +11,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, "")
 }
 
-
 func main() {
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css/"))))

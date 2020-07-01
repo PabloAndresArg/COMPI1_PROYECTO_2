@@ -13,7 +13,6 @@ export class Table{
     constructor(Previous: Table){
         this.Previous = Previous;
         this.Variables = new Map<String, Simbol>();
-        
     }
 
     /**

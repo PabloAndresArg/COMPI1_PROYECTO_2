@@ -14,10 +14,15 @@ import {Rep} from './REPORTES/Rep';
 import { GraficaArbolAts } from './ManejoErrores/GraficaArbolAts';
 import { Clase } from './REPORTES/Clase';
 
+//----------- TRAYENDO MI JISON PARSER :3  ------------
+const analizador_jison = require('./Grammar/desde_cero.js');
+//----------------------------------------
+
+
 
 var bodyParser = require("body-parser");
 const parser = require('./Grammar/Grammar.js');
-const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON 
+const MyParser_300445 = require('./Grammar/graProyecto.js'); // ESTO ME SIRVE PARA LLAMAR A AL ARCHIVO.JISON
 const cors = require('cors');
 const app = express();
 const port = 3000;
@@ -37,6 +42,51 @@ app.listen(port, err => {
 
   return console.log(`server is listening on ${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// LLAMADA DE EJEMPLO
+
+app.post('/ejemplo', (req, res) => {
+  console.log("REALIZANDO LA PETICION DESDE EL FORMULARIO QUE SE ENCUENTRA EN la carpeta VIEWS por medio de un Form \n\n\n");
+  const entrada = req.body.entrada;
+  const tree = analizador_jison.parse(entrada);
+  console.log("-------------INICIA EL ARBOL----------------");
+  console.log(tree);
+  console.log("--------------------------------------------");
+  console.log("ok");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/', (req, res) => {
   res.render('views/index', {
@@ -112,7 +162,9 @@ app.post('/analizar', (req, res) => {
 
 
 
+app.post('/aprendiendo' , (req,res) =>{
 
+});
 
 
 
@@ -126,7 +178,7 @@ app.post('/analizarYO', (req, res) => {
     return res.redirect('/');
   }
   const tree = MyParser_300445.parse(entrada);
-  const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA 
+  const tabla = new Table(null); // EN ESTE CASO mando null porque previamente no tengo ninguna TABLA
   console.log("-------------INICIA EL ARBOL----------------");
   console.log(tree);
   console.log("------------------- FIN -------------------");
@@ -136,7 +188,7 @@ app.post('/analizarYO', (req, res) => {
   // console.log(json);
   } catch (error) {
     console.log("ERROR..!!!!!!!!!  AL PARSEAR A JISON ");
-  
+
   }
   */
   try {

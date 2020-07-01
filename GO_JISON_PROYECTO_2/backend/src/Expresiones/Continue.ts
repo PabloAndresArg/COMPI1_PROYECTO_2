@@ -21,6 +21,5 @@ export class Continue extends Node {
     execute(table: Table, tree: Tree){
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Sentencia_continue</li>\n");
         return this;
-    
     }
 }

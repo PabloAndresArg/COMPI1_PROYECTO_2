@@ -5,10 +5,10 @@ import { GraficaArbolAts } from "../ManejoErrores/GraficaArbolAts";
 import { Rep } from "../REPORTES/Rep";
 
 /**
- * @class RETURN PARA LAS FUNCIONES 
+ * @class RETURN PARA LAS FUNCIONES
  */
 export class Return_funcion extends Node {
-    nombre:string; 
+    nombre:string;
     expresion:Node;
     /**
      * @constructor Retorna el objeto continue creado
@@ -17,25 +17,23 @@ export class Return_funcion extends Node {
      */
     constructor(nombre:string,exp: Node,line: Number, column: Number) {
         super(null, line, column);
-        this.nombre = nombre; 
-        this.expresion = exp; 
+        this.nombre = nombre;
+        this.expresion = exp;
     }
 
     execute(table: Table, tree: Tree){
         if(Rep.t1 == true || Rep.t2 == true){
             Rep.addTIPO_RETORNO(Rep.nombreMetodoActual , "retorno de funcion (return EXPRESION;)");
         }
-
-
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>Return_Metodo\n");
-        GraficaArbolAts.add("<ul>\n"); 
+        GraficaArbolAts.add("<ul>\n");
         GraficaArbolAts.add("<li data-jstree='{ \"opened\" : true }'>EXPRESION\n");
-        GraficaArbolAts.add("<ul>\n"); 
+        GraficaArbolAts.add("<ul>\n");
         this.expresion.execute(table , tree);
-        GraficaArbolAts.add("</ul>\n"); 
+        GraficaArbolAts.add("</ul>\n");
         GraficaArbolAts.add("</li>\n");
-        GraficaArbolAts.add("</ul>\n"); 
-        GraficaArbolAts.add("</li>\n"); 
+        GraficaArbolAts.add("</ul>\n");
+        GraficaArbolAts.add("</li>\n");
         return this;
     }
 }

@@ -5,12 +5,12 @@ import {Type} from "../utils/Type";
 import {types} from "../utils/Type";
 import {Metodo} from '../REPORTES/Metodo';
 export class Clase {
-  
+
     id:string;
     metodos:Array<Metodo> = [];
 
     constructor(nom:string){
-      this.id = nom; 
+      this.id = nom;
     }
 
     public addMetodo( m :Metodo){
@@ -23,7 +23,6 @@ export class Clase {
             if(this.metodos[i].id != undefined){
                 console.log(this.metodos[i]);
             }
-            
         }
         console.log("----------------------------------");
     }
@@ -41,10 +40,6 @@ export class Clase {
             }
         }
     }
-
-
-
-    
 
 
 }

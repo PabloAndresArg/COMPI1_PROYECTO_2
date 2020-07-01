@@ -88,7 +88,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 "*"                   return '*'
 "^"                   return '^'
 "%"                   return '%'
-"."                   return '.'
+"."                   return '.' // punto pero TOKEN
 
 "<="                  return '<='
 ">="                 {console.log("||||| MAYOR O IGUAL ||||"); return '>=' ;}
@@ -105,7 +105,7 @@ id ([a-zA-Z_])[a-zA-Z0-9_]*
 
 ","                   return ','
 "("                   return '('
-")"                   return ')'  
+")"                   return ')'
 
 "{"                   return '{'
 "}"                   return '}'

@@ -80,10 +80,14 @@ identifier ([a-zA-Z_])[a-zA-Z0-9_]*
 
 %%
 
-INICIO : INSTRUCCIONES EOF {$$ = new Tree($1); return $$;}
+INICIO : INSTRUCCIONES EOF {
+      $$ = new Tree($1);
+      return $$;
+ 
+ }
 ;
 
-INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $$ = $1; $$.push($2); }
+INSTRUCCIONES : INSTRUCCIONES INSTRUCCION { $$ = $1;  $$.push($2); }
               | INSTRUCCION               { $$ = [$1]; }
               ;
 
